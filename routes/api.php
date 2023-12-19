@@ -10,10 +10,14 @@ Route::get('first-test', function() {
         return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
     }
 
+
+    $color = rand_color();
+
+
     return response()->json([
-        "rgb" => rand_color(),
-        "time" => "2.000",
-        "status" => "fadeToRGB: no blink(1) detected",
+        "rgb" => $color,
+        "time" => "0.200",
+        "status" => "fadeToRGB: $color t:0.200",
     ]);
 });
 
