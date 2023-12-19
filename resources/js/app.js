@@ -113,3 +113,9 @@ requestPermission.addEventListener('click', function () {
             }
         );
 });
+
+disconnectBtn.addEventListener('click', async function () {
+    if ("usb" in navigator && "forget" in USBDevice.prototype) {
+        await device.forget();
+    }
+})
