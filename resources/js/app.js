@@ -45,8 +45,9 @@ var randomColor = function() {
 
 var blink1_setColor = function(r,g,b, fadeMillis) {
     var rgbstr = "rgb(" +r+", "+g+", "+b+")";
+
     console.log("setColor: "+ rgbstr);
-    colorswatch.style.backgroundColor = rgbstr;
+
     if( !connected ) return;
     var th = (fadeMillis/10) >> 8;
     var tl = (fadeMillis/10) & 0xff;
