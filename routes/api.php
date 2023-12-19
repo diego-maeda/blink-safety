@@ -12,7 +12,7 @@ Route::get('first-test', function() {
 
     return response()->json([
         "rgb" => rand_color(),
-        "time" => "5.000",
+        "time" => "2.000",
         "status" => "fadeToRGB: no blink(1) detected",
     ]);
 });
