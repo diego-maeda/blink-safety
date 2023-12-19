@@ -19,9 +19,10 @@ var transferInfo = {
     // note data contains report id as first byte
 };
 
-// var updateStatus = function (statusStr) {
-//     blink1Status.innerText = statusStr;
-// }
+// This function is responsible for updating the support text for the user interface
+let updateStatus = function (statusStr) {
+    blink1Status.innerText = statusStr;
+};
 
 // var randomColor = function() {
 //     if( !connected ) return;
@@ -70,58 +71,37 @@ var transferInfo = {
 //     updateColor();
 // });
 
-// var onEvent = function (usbEvent) {
-//     if (usbEvent.resultCode) {
-//         console.log("Error: " + usbEvent.error);
-//         connected = false;
-//         return;
-//     }
-// };
-
-var gotPermission = function (result) {
-    requestPermission.style.display = 'none';
-    console.log('App was granted the "usbDevices" permission.');
-    usb.findDevices(DEVICE_INFO,
-        function (devices) {
-            if (!devices || !devices.length) {
-                updateStatus("no device found");
-                console.log('device not found');
-                return;
-            }
-            console.log('Found device: ' + devices[0].handle);
-            blink1Device = devices[0];
-            console.log("blink1Device:");
-            console.log(blink1Device);
-            updateStatus("connected!");
-            connected = true;
-            // randomColor();
-        });
+let onEvent = function (event) {
+    if (event.resultCode) {
+        updateStatus(event.error)
+        connected = false;
+        return;
+    }
 };
 
-var permissionObj = {permissions: [{'usbDevices': [DEVICE_INFO]}]};
+// This is the code responsible for requesting access to the USB port with the Blink(1) device, with this we can access
+// it and make it global for the script
 requestPermission.addEventListener('click', function () {
-    console.log('Permission requested');
-
-    navigator.usb.requestDevice({ filters: [{ vendorId: BLINK1_VENDOR_ID }] })
+    // We request the navigator for access to USB devices filtering the Blink(1) vendor ID declared previously
+    navigator.usb.requestDevice({filters: [{vendorId: BLINK1_VENDOR_ID}]})
+        // If the device is successfully detected we open the connection with the device and make it global for the script
         .then(device => {
+            // Update the user interface status with the USB product detected
+            updateStatus('Device detected: ' + device.productName)
+
+            // Logs the device productName and manufacturerName for
             console.log(device.productName);      // "Arduino Micro"
             console.log(device.manufacturerName); // "Arduino LLC"
+
+            // Change the status to connected
+            connected = true;
+
+            // Give global access to the device
+            blink1Device = device;
         })
-        .catch(error => { console.error(error); });
-
-    // chrome.permissions.request(permissionObj, function (result) {
-    //
-    //     if (result) {
-    //         gotPermission();
-    //     } else {
-    //         console.log('App was not granted the "usbDevices" permission.');
-    //         console.log(chrome.runtime.lastError);
-    //     }
-    // });
+        // If an error is thrown then we just change the status box for user information
+        .catch(error => {
+                updateStatus(error);
+            }
+        );
 });
-
-// chrome.permissions.contains(permissionObj, function (result) {
-//     if (result) {
-//         gotPermission();
-//     }
-// });
