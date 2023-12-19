@@ -3,21 +3,15 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-
 Route::get('first-test', function() {
+
+    function rand_color(): string
+    {
+        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+    }
+
     return response()->json([
-        "rgb" => "#0000ff",
+        "rgb" => rand_color(),
         "time" => "5.000",
         "status" => "fadeToRGB: no blink(1) detected",
     ]);
