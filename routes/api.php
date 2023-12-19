@@ -13,11 +13,16 @@ Route::get('first-test', function() {
 
     $color = rand_color();
 
-
     return response()->json([
-        "rgb" => $color,
-        "time" => "0.200",
-        "status" => "fadeToRGB: $color t:0.200",
+        "pattern"=> [
+            "name" => "policeflash",
+            "pattern" => "0,#FF0000,0.5,#0000FF,0.5",
+            "playcount" =>  0,
+            "playedColor" => "#000000",
+            "playing" => false,
+            "playpos" => 0,
+        ],
+        "status" => "pattern add",
     ]);
 });
 
