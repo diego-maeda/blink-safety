@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('first-test', function() {
+    return response()->json([
+        "rgb" => "#0000ff",
+        "time" => "5.000",
+        "status" => "fadeToRGB: no blink(1) detected",
+    ]);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
