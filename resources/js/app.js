@@ -36,10 +36,6 @@ var randomColor = function() {
     var g = Math.floor((Math.random() * 255));
     var b = Math.floor((Math.random() * 255));
 
-    redval.value = r;
-    grnval.value = g;
-    bluval.value = b;
-
     console.log("randomColor: "+ r+","+g+","+b);
 
     blink1_setColor(r,g,b, 100);
