@@ -124,7 +124,7 @@ disconnectBtn.addEventListener('click', async function () {
 })
 
 /**
- * Detects new changes
+ * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
  */
 Echo.channel('police-department.33705').listen('DomesticAbuseDetected', (event) => {
     if(connected){

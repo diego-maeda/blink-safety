@@ -74,7 +74,6 @@ class RetrieveStPetersburgData extends Command
             }
         } catch (\Exception $exception) {
             Log::error($exception);
-
         }
     }
 }

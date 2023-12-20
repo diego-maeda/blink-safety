@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * This is the model used to store the events in the database
+ */
 class Event extends Model
 {
     use HasFactory;

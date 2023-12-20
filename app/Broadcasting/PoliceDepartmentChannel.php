@@ -4,6 +4,9 @@ namespace App\Broadcasting;
 
 use App\Models\User;
 
+/**
+ * This channel was created in case we need to authorize the connection to an specific PD
+ */
 class PoliceDepartmentChannel
 {
     /**
