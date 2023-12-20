@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\DomesticAbuseDetected;
+use App\Models\Event;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -33,7 +34,7 @@ class RetrieveStPetersburgData extends Command
     public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subDays(30)->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subMinutes(30)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
             $response = Http::withHeaders([
@@ -41,11 +42,36 @@ class RetrieveStPetersburgData extends Command
             ])->get("https://stat.stpete.org/resource/2eks-pg5j.json?\$where=crime_date between '$start_date' and '$end_date' AND starts_with(type_of_engagement, 'DOMESTIC')");
 
             if($response->ok()){
-                //TODO gotta check the response before dispatching the event, but should be quite ok
-                DomesticAbuseDetected::dispatch('33705');
-                dd($response->body());
-            }
 
+                foreach($response->json() as $event){
+
+                    // Try to locate the event and make sure its new
+                    $db_event = Event::where(['event_id' => $event['id']])->first();
+
+                    Log::info($event);
+
+                    // If the event is new we store it and create a new dispatch a new broadcast
+                    if(empty($db_event)){
+                        Event::create([
+                            'event_id' => $event['id'],
+                            'event_number' => $event['event_number'],
+                            'type_of_engagement' => $event['type_of_engagement'],
+                            'sub_engagement' => $event['sub_engagement'],
+                            'classification' => $event['classification'],
+                            'display_address' => $event['display_address'],
+                            'crime_date' => $event['crime_date'],
+                            'crime_time' => $event['crime_time'],
+                            'latitude' => $event['latitude'],
+                            'longitude' => $event['longitude'],
+                            'neighborhood_name' => $event['neighborhood_name'],
+                            'council_district' => $event['council_district'],
+                            'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
+                        ]);
+                        // Dispatch the event to broadcast
+                        DomesticAbuseDetected::dispatch('33705');
+                    }
+                }
+            }
         } catch (\Exception $exception) {
             Log::error($exception);
 
