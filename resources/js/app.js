@@ -43,12 +43,13 @@ var randomColor = function() {
     setTimeout( randomColor, 1000);
 }
 
-var blink1_setColor = function(r,g,b, fadeMillis) {
-    var rgbstr = "rgb(" +r+", "+g+", "+b+")";
+let blink1_setColor = function(r,g,b, fadeMillis) {
+    let rgbstr = "rgb(" +r+", "+g+", "+b+")";
 
     console.log("setColor: "+ rgbstr);
 
     if( !connected ) return;
+
     var th = (fadeMillis/10) >> 8;
     var tl = (fadeMillis/10) & 0xff;
     transferInfo.data = new Uint8Array([0x01,0x63, r,g,b, th,tl, 0x00,0x00]).buffer
@@ -111,8 +112,25 @@ requestPermission.addEventListener('click', function () {
         );
 });
 
+/**
+ * Disconnects the device
+ */
 disconnectBtn.addEventListener('click', async function () {
     if ("usb" in navigator && "forget" in USBDevice.prototype) {
         await device.forget();
+    }
+
+    window.Echo.leaveChannel(`police-department.33705`);
+})
+
+/**
+ * Detects new changes
+ */
+Echo.channel('police-department.33705').listen('DomesticAbuseDetected', (event) => {
+    if(connected){
+        console.log('Event triggered');
+        randomColor();
+    } else {
+        updateStatus('An event was triggered but no device was ready for it');
     }
 })

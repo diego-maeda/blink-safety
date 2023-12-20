@@ -2,11 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Events\DomesticAbuseDetected;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
+/**
+ * This command will retrieve St. Petersburg data from time to time
+ */
 class RetrieveStPetersburgData extends Command
 {
     /**
@@ -26,10 +30,10 @@ class RetrieveStPetersburgData extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subDays(10)->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subDays(30)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
             $response = Http::withHeaders([
@@ -37,6 +41,8 @@ class RetrieveStPetersburgData extends Command
             ])->get("https://stat.stpete.org/resource/2eks-pg5j.json?\$where=crime_date between '$start_date' and '$end_date' AND starts_with(type_of_engagement, 'DOMESTIC')");
 
             if($response->ok()){
+                //TODO gotta check the response before dispatching the event, but should be quite ok
+                DomesticAbuseDetected::dispatch('33705');
                 dd($response->body());
             }
 

@@ -107,6 +107,7 @@
                 </div>
             </div>
         </div>
+        @vite('resources/js/bootstrap.js')
         @vite('resources/js/app.js')
     </body>
 </html>
