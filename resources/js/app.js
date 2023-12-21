@@ -117,7 +117,7 @@ requestPermission.addEventListener('click', function () {
  */
 disconnectBtn.addEventListener('click', async function () {
     if ("usb" in navigator && "forget" in USBDevice.prototype) {
-        await USBDevice.forget();
+        await blink1Device.forget();
     }
 
     Echo.leaveChannel(`police-department.33705`);
