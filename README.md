@@ -13,8 +13,13 @@ minutes.
 
 Sending the code to Github.
 
-Start creating the integration channel for blink1, my aproach on this will be using the web api to provide a json signal
+Start creating the integration channel for blink1, my approach on this will be using the web api to provide a json signal
 everytime an url is called.
 
 Creating a new integration through a webpage to detect the device.
 https://developer.chrome.com/docs/capabilities/usb?hl=en
+
+Creating the mechanism to disconnect the device for the user.
+
+Connecting the system to websocket, for now the choice was defined with pusher because its free tier would suffice.
+
