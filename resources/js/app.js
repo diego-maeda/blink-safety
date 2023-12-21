@@ -1,9 +1,6 @@
-var BLINK1_VENDOR_ID = 10168;
-var BLINK1_PRODUCT_ID = 493;
-var DEVICE_INFO = {"vendorId": BLINK1_VENDOR_ID, "productId": BLINK1_PRODUCT_ID};
-
+const BLINK1_VENDOR_ID = 10168;
 var blink1Device;
-var usb = chrome.usb;
+var usb = navigator.usb;
 
 var connected = false;
 
@@ -78,7 +75,6 @@ let onEvent = function (event) {
     if (event.resultCode) {
         updateStatus(event.error)
         connected = false;
-        return;
     }
 };
 
