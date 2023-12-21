@@ -101,9 +101,9 @@ requestPermission.addEventListener('click', function () {
 
             // Give global access to the device
             blink1Device = selectedDevice;
-
-            randomColor()
         })
+        .then(() => blink1Device.claimInterface(1))
+        .then(() => randomColor())
         // If an error is thrown then we just change the status box for user information
         .catch(error => {
                 updateStatus(error);
@@ -118,7 +118,7 @@ requestPermission.addEventListener('click', function () {
 disconnectBtn.addEventListener('click', async function () {
     if ("usb" in navigator && "forget" in USBDevice.prototype) {
         // Checks if the device is connected before trying to disconnect
-        if(blink1Device){
+        if (blink1Device) {
             await blink1Device.forget();
         }
     }
