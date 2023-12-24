@@ -2,15 +2,15 @@ document.getElementById('start-button').addEventListener('click', handleConnectC
 document.getElementById('stop-button').addEventListener('click', handleDisconnectClick);
 
 async function handleConnectClick() {
-    let acolor = [ 255, 0, 255 ];  // purple
+    let acolor = [255, 0, 255];  // purple
     let device = await openDevice();
-    await fadeToColor(device, acolor );
+    await fadeToColor(device, acolor);
 }
 
 async function handleDisconnectClick() {
-    let acolor = [ 0, 0, 0 ]; // off
+    let acolor = [0, 0, 0]; // off
     let device = await openDevice();
-    if( !device ) return;
+    if (!device) return;
     await fadeToColor(device, acolor);
     await device.close();
 }
@@ -27,28 +27,28 @@ async function openDevice() {
     if (!device) {
         // this returns an array now
         let devices = await navigator.hid.requestDevice({
-            filters: [{ vendorId, productId }],
+            filters: [{vendorId, productId}],
         });
-        console.log("devices:",devices);
+        console.log("devices:", devices);
         device = devices[0];
 
         updateId(device.id)
         updateStatus('Blink1 device connected!')
 
-        if( !device ) return null;
+        if (!device) return null;
     }
 
     if (!device.opened) {
         await device.open();
     }
-    console.log("device opened:",device);
+    console.log("device opened:", device);
     return device;
 }
 
-async function fadeToColor(device, [r, g, b] ) {
-    if(!device) return;
+async function fadeToColor(device, [r, g, b]) {
+    if (!device) return;
     const reportId = 1;
-    const data = Uint8Array.from([0x63, r, g, b, 0x00, 0x10, 0x00, 0x00 ]);
+    const data = Uint8Array.from([0x63, r, g, b, 0x00, 0x10, 0x00, 0x00]);
     try {
         await device.sendFeatureReport(reportId, data);
     } catch (error) {
@@ -75,8 +75,10 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
     // This will make the background blink and turn off in 3 seconds
     blinkPurpleAndTurnOff();
 
+
     let device = await openDevice();
-    await fadeToColor(device,  [ 255, 0, 255 ]);
+    if (!device) return;
+    await fadeToColor(device, [255, 0, 255]);
 });
 
 
