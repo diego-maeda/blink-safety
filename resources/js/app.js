@@ -20,7 +20,6 @@ async function openDevice() {
     const productId = 0x01ed;  // blink1 pid
 
     const device_list = await navigator.hid.getDevices();
-    console.log(device_list)
 
     let device = device_list.find(d => d.vendorId === vendorId && d.productId === productId);
 
@@ -32,16 +31,18 @@ async function openDevice() {
         console.log("devices:", devices);
         device = devices[0];
 
-        updateId(device.id)
-        updateStatus('Blink1 device connected!')
-
         if (!device) return null;
     }
 
     if (!device.opened) {
         await device.open();
     }
+
+    updateId(device.id)
+    updateStatus('Blink1 device connected!')
+
     console.log("device opened:", device);
+
     return device;
 }
 
@@ -70,7 +71,6 @@ let updateStatus = function (statusStr) {
  */
 Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e) => {
     console.log('Connected to the channel #33705')
-    console.log(e);
 
     // This will make the background blink and turn off in 3 seconds
     blinkPurpleAndTurnOff();
