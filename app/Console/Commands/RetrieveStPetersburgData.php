@@ -34,24 +34,22 @@ class RetrieveStPetersburgData extends Command
     public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subMinutes(30)->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subDays(30)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
             $response = Http::withHeaders([
                 'X-App-Token' => 'e4VAbacu29Rs5RFhaDtjwFtmB',
             ])->get("https://stat.stpete.org/resource/2eks-pg5j.json?\$where=crime_date between '$start_date' and '$end_date' AND starts_with(type_of_engagement, 'DOMESTIC')");
 
-            if($response->ok()){
+            if ($response->ok()) {
 
-                foreach($response->json() as $event){
+                foreach ($response->json() as $event) {
 
                     // Try to locate the event and make sure its new
                     $db_event = Event::where(['event_id' => $event['id']])->first();
 
-                    Log::info($event);
-
                     // If the event is new we store it and create a new dispatch a new broadcast
-                    if(empty($db_event)){
+                    if (empty($db_event)) {
                         Event::create([
                             'event_id' => $event['id'],
                             'event_number' => $event['event_number'],
@@ -63,7 +61,7 @@ class RetrieveStPetersburgData extends Command
                             'crime_time' => $event['crime_time'],
                             'latitude' => $event['latitude'],
                             'longitude' => $event['longitude'],
-                            'neighborhood_name' => $event['neighborhood_name'],
+                            'neighborhood_name' => (array_key_exists('neighborhood_name', $event)) ? $event['neighborhood_name'] : '',
                             'council_district' => $event['council_district'],
                             'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
                         ]);
