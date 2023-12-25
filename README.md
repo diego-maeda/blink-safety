@@ -1,8 +1,57 @@
-## Blink-safety
+# Blink-safety
+# todo add blink safety logo
+___
+## Summary
+* [Meet Blink-Safety](#meet-blink-safety)
+* [Project Status](#project-status)
+* [Blink-safety Background](#blink-safety-background)
+* [Technologies](#technologies)
+* [Descrição do Projeto](#descrição-do-projeto)
+* [Status do Projeto](#status-do-Projeto)
+* [Funcionalidades e Demonstração da Aplicação](#funcionalidades-e-demonstração-da-aplicação)
+* [Acesso ao Projeto](#acesso-ao-projeto)
+* [Tecnologias utilizadas](#tecnologias-utilizadas)
+* [Pessoas Contribuidoras](#pessoas-contribuidoras)
+* [Pessoas Desenvolvedoras do Projeto](#pessoas-desenvolvedoras)
+* [Licença](#licença)
+* [Conclusão](#conclusão)
 
-Blink-safety is a project that helps increase awareness to domestic violence.
+### Meet Blink-Safety
+Blink-Safety is an open-source initiative empowering communities to break the silence on domestic violence. Through educational resources, survivor support platforms, and creative advocacy campaigns, Blink-Safety aims to educate the public, challenge societal norms, and ultimately prevent future abuse. Join us in building a safer world, one blink at a time. Get involved by sharing your story, volunteering your skills, or contributing to the project's codebase.
 
-The problem faced
+### Project Status
+Ongoing project
+
+### Blink-Safety Background
+It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of CASA (Community Action Stops Abuse), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
+
+### Technologies 
+Below, you'll discover the primary technology stack employed to drive the project:
+
+<img height="75" loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" />
+<img height="75" loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />
+<img height="75" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original-wordmark.svg" />
+
+Other tech used:
+
+[Pusher](https://pusher.com/)
+
+[Blink1](https://blink1.thingm.com/)
+
+### :hammer: Funcionalidades do projeto
+We utilize the Police Department API to identify instances of Domestic Violence. Upon detection, we store this information in our database and promptly relay it to the broadcast system (Pusher.com). Through this system, every user connected to the platform receives immediate notifications regarding these cases.
+
+### :oncoming_police_car: Covered Police Departments
+- Florida State
+  - St. Petersburg
+
+
+
+# add how to install
+
+# Roadmap
+
+
 
 We need to connect the blink1 dongle with the api services from police departments.
 
