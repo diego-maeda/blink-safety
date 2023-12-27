@@ -3,7 +3,7 @@
 ___
 ## Summary
 * [Meet Blink-Safety](#purpleheart-meet-blink-safety)
-* [Project Progress](#chartwithupwardstrends-project-progress)
+* [Project Progress](#chartwithupwardstrend-project-progress)
 * [Blink-safety Background](#book-blink-safety-background)
 * [Technology Stack](#computer-technology-stack)
 * [Project Walkthrough](#hammer-project-walkthrough)
