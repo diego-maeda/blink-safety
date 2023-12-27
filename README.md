@@ -58,6 +58,7 @@ Since Blink-Safety is an open-sourced project you can use it according to our li
 To get started using Laravel Sail, follow these steps:
 
 1. **Clone the Project:**
+
    Get the project onto your local machine by cloning it using Git.
 
     ```bash
@@ -65,6 +66,7 @@ To get started using Laravel Sail, follow these steps:
     ```
 
 2. **Install PHP Dependencies:**
+
    Use Composer to install all PHP dependencies required by the project.
 
     ```bash
@@ -72,9 +74,11 @@ To get started using Laravel Sail, follow these steps:
     ```
 
 3. **Environment Configuration:**
+
    Duplicate the `.env.example` file and rename the duplicate to `.env`. Customize the settings in the `.env` file according to your environment.
 
 4. **Install Frontend Dependencies:**
+
    Utilize either `npm` or `yarn` to install the frontend dependencies specified in the project.
 
     ```bash
@@ -83,9 +87,11 @@ To get started using Laravel Sail, follow these steps:
     ```
 
 5. **Setting up Real-time Communication (Pusher):**
+
    If the project uses Pusher for real-time communication, ensure you have set up an account for Pusher or use an available open-sourced alternative. Configure the necessary credentials in your `.env` file.
 
 6. **Launch the Application with Sail:**
+
    Finally, execute the following command to launch the application using Laravel Sail in detached mode:
 
     ```bash
