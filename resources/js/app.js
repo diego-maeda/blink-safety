@@ -6,7 +6,8 @@ document.getElementById('stop-button').addEventListener('click', handleDisconnec
  * @returns {Promise<void>}
  */
 async function handleConnectClick() {
-    await openDevice();
+    let device = await openDevice();
+    blink1_getChipId(device);
 }
 
 /**
@@ -54,6 +55,28 @@ async function openDevice() {
     return device;
 }
 
+/**
+ * Get chip's id
+ * @param device
+ * @returns {Promise<number>}
+ */
+async function blink1_getChipId(device) {
+    const reportId = 2;
+    const data = new Uint8Array(60); // 60-byte report on reportId 2
+    data[0] = 0x55; // 'U'
+    try {
+        await device.sendFeatureReport(reportId, data);
+    } catch (error) {
+        console.error('getChipId: failed:', error);
+    }
+    console.log("receiving...");
+    let chipid_resp = await device.receiveFeatureReport(reportId);
+    console.log("blink1 chipid response:", chipid_resp,
+        chipid_resp.buffer,
+    );
+
+    updateId(chipid_resp.getUint32(2));
+}
 
 async function fadeToColor(device, [r, g, b]) {
     if (!device) return;
@@ -84,10 +107,10 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
     // This will make the background blink and turn off in 3 seconds
     blinkPurpleAndTurnOff();
 
-
     let device = await openDevice();
     if (!device) return;
     await fadeToColor(device, [255, 0, 255]);
+    await sleep(1000);
     await fadeToColor(device, [0,0,0])
 });
 
@@ -110,4 +133,8 @@ function blinkPurpleAndTurnOff() {
         clearInterval(intervalId);
         bg.style.backgroundColor = ""; // Ensure background is off after stopping
     }, 3000);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
