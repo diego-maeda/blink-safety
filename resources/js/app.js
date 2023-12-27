@@ -7,7 +7,7 @@ document.getElementById('stop-button').addEventListener('click', handleDisconnec
  */
 async function handleConnectClick() {
     let device = await openDevice();
-    blink1_getChipId(device);
+    await blink1_getChipId(device);
 }
 
 /**
@@ -74,7 +74,6 @@ async function blink1_getChipId(device) {
     console.log("blink1 chipid response:", chipid_resp,
         chipid_resp.buffer,
     );
-
     updateId(chipid_resp.getUint32(2));
 }
 
@@ -108,6 +107,7 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
     blinkPurpleAndTurnOff();
 
     let device = await openDevice();
+    console.log('Device: ' + device);
     if (!device) return;
     await fadeToColor(device, [255, 0, 255]);
     await sleep(1000);
