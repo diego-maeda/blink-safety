@@ -57,7 +57,7 @@ Since Blink-Safety is an open-sourced project you can use it according to our li
 
 To get started using Laravel Sail, follow these steps:
 
-1. **Clone the Project:**
+1. **Clone the Project**
 
    Get the project onto your local machine by cloning it using Git.
 
@@ -65,7 +65,7 @@ To get started using Laravel Sail, follow these steps:
     git clone <project_repository_url>
     ```
 
-2. **Install PHP Dependencies:**
+2. **Install PHP Dependencies**
 
    Use Composer to install all PHP dependencies required by the project.
 
@@ -73,11 +73,11 @@ To get started using Laravel Sail, follow these steps:
     composer install
     ```
 
-3. **Environment Configuration:**
+3. **Environment Configuration**
 
    Duplicate the `.env.example` file and rename the duplicate to `.env`. Customize the settings in the `.env` file according to your environment.
 
-4. **Install Frontend Dependencies:**
+4. **Install Frontend Dependencies**
 
    Utilize either `npm` or `yarn` to install the frontend dependencies specified in the project.
 
@@ -86,11 +86,11 @@ To get started using Laravel Sail, follow these steps:
     yarn install
     ```
 
-5. **Setting up Real-time Communication (Pusher):**
+5. **Setting up Real-time Communication (Pusher)**
 
    If the project uses Pusher for real-time communication, ensure you have set up an account for Pusher or use an available open-sourced alternative. Configure the necessary credentials in your `.env` file.
 
-6. **Launch the Application with Sail:**
+6. **Launch the Application with Sail**
 
    Finally, execute the following command to launch the application using Laravel Sail in detached mode:
 
@@ -104,7 +104,8 @@ Now, you should be able to access your Laravel application via your preferred br
 
 ___
 # :construction: Roadmap
-
+- Implement all florida PDs
+- Implement a Google Maps with a Heat map of the last occurrences
 
 
 We need to connect the blink1 dongle with the api services from police departments.
