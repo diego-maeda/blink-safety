@@ -8,7 +8,7 @@ ___
 * [Technology Stack](#computer-technology-stack)
 * [Project Walkthrough](#hammer-project-walkthrough)
 * [Covered Police Departments](#oncomingpolicecar-covered-police-departments)
-* [How to install](#hammerandwrench-how-to-install-the-project)
+* [How to install the project](#hammerandwrench-how-to-install-the-project)
 * [Roadmap](#construction-roadmap)
 
 ___
@@ -21,6 +21,7 @@ ___
 Currently, the project is actively underway, with various tasks being worked on. New features are being developed, and improvements are continually being made to enhance the overall project.
 
 This status indicates that the project is in an active phase, with ongoing development and updates.
+___
 
 ### :book: Blink-Safety Background
 It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of CASA (Community Action Stops Abuse), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
@@ -46,6 +47,7 @@ This technology stack powers various aspects of the project, facilitating its fu
 ___
 ### :hammer: Project walkthrough
 We utilize the Police Department API to identify instances of Domestic Violence. Upon detection, we store this information in our database and promptly relay it to the broadcast system (Pusher.com). Through this system, every user connected to the platform receives immediate notifications regarding these cases.
+
 
 ### :oncoming_police_car: Covered Police Departments
 - Florida State
