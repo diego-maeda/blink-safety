@@ -6,15 +6,23 @@ ___
 * [Project Status](#project-status)
 * [Blink-safety Background](#blink-safety-background)
 * [Project Walkthrough](#hammer-project-walkthrough)
+* [Covered Police Departments](#oncomingpolicecar-covered-police-departments)
+* [How to install](#how-to-install-the-project)
+* [Roadmap](#roadmap)
+
+___
 
 ### Meet Blink-Safety
 Blink-Safety is an open-source initiative empowering communities to break the silence on domestic violence. Through educational resources, survivor support platforms, and creative advocacy campaigns, Blink-Safety aims to educate the public, challenge societal norms, and ultimately prevent future abuse. Join us in building a safer world, one blink at a time. Get involved by sharing your story, volunteering your skills, or contributing to the project's codebase.
+___
 
 ### Project Status
 Ongoing project
+___
 
 ### Blink-Safety Background
 It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of CASA (Community Action Stops Abuse), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
+___
 
 ### Technologies 
 Below, you'll discover the primary technology stack employed to drive the project:
@@ -25,22 +33,25 @@ Below, you'll discover the primary technology stack employed to drive the projec
     <img height="75" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original-wordmark.svg" />
 </div>
 
+
 Other tech used:
 
 [Pusher](https://pusher.com/)
 
 [Blink1](https://blink1.thingm.com/)
-
+___
 ### :hammer: Project walkthrough
 We utilize the Police Department API to identify instances of Domestic Violence. Upon detection, we store this information in our database and promptly relay it to the broadcast system (Pusher.com). Through this system, every user connected to the platform receives immediate notifications regarding these cases.
 
 ### :oncoming_police_car: Covered Police Departments
 - Florida State
-  - St. Petersburg
+  - St. Petersburg 
 
 
+### How to install the project
+Since Blink-Safety is an open-sourced project you can use it according to our license.
 
-# add how to install
+
 
 # Roadmap
 
