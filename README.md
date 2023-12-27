@@ -2,29 +2,30 @@
 # todo add blink safety logo
 ___
 ## Summary
-* [Meet Blink-Safety](#meet-blink-safety)
-* [Project Status](#project-status)
-* [Blink-safety Background](#blink-safety-background)
+* [Meet Blink-Safety](#purpleheart-meet-blink-safety)
+* [Project Status](#whitecheckmark-project-status)
+* [Blink-safety Background](#book-blink-safety-background)
+* [Technologies](#computer-technologies)
 * [Project Walkthrough](#hammer-project-walkthrough)
 * [Covered Police Departments](#oncomingpolicecar-covered-police-departments)
-* [How to install](#how-to-install-the-project)
-* [Roadmap](#roadmap)
+* [How to install](#hammerandwrench-how-to-install-the-project)
+* [Roadmap](#construction-roadmap)
 
 ___
 
-### Meet Blink-Safety
+### :purple_heart: Meet Blink-Safety
 Blink-Safety is an open-source initiative empowering communities to break the silence on domestic violence. Through educational resources, survivor support platforms, and creative advocacy campaigns, Blink-Safety aims to educate the public, challenge societal norms, and ultimately prevent future abuse. Join us in building a safer world, one blink at a time. Get involved by sharing your story, volunteering your skills, or contributing to the project's codebase.
 ___
 
-### Project Status
+### :white_check_mark: Project Status
 Ongoing project
 ___
 
-### Blink-Safety Background
+### :book: Blink-Safety Background
 It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of CASA (Community Action Stops Abuse), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
 ___
 
-### Technologies 
+### :computer: Technologies
 Below, you'll discover the primary technology stack employed to drive the project:
 
 <div>
@@ -48,12 +49,12 @@ We utilize the Police Department API to identify instances of Domestic Violence.
   - St. Petersburg 
 
 ___
-### How to install the project
+### :hammer_and_wrench: How to install the project
 Since Blink-Safety is an open-sourced project you can use it according to our license.
 
 
 ___
-# Roadmap
+# :construction: Roadmap
 
 
 
