@@ -3,9 +3,9 @@
 ___
 ## Summary
 * [Meet Blink-Safety](#purpleheart-meet-blink-safety)
-* [Project Status](#whitecheckmark-project-status)
+* [Project Progress](#chartwithupwardstrends-project-progress)
 * [Blink-safety Background](#book-blink-safety-background)
-* [Technologies](#computer-technologies)
+* [Technology Stack](#computer-technology-stack)
 * [Project Walkthrough](#hammer-project-walkthrough)
 * [Covered Police Departments](#oncomingpolicecar-covered-police-departments)
 * [How to install](#hammerandwrench-how-to-install-the-project)
@@ -17,29 +17,32 @@ ___
 Blink-Safety is an open-source initiative empowering communities to break the silence on domestic violence. Through educational resources, survivor support platforms, and creative advocacy campaigns, Blink-Safety aims to educate the public, challenge societal norms, and ultimately prevent future abuse. Join us in building a safer world, one blink at a time. Get involved by sharing your story, volunteering your skills, or contributing to the project's codebase.
 ___
 
-### :white_check_mark: Project Status
-Ongoing project
-___
+### :chart_with_upwards_trend: Project Progress
+Currently, the project is actively underway, with various tasks being worked on. New features are being developed, and improvements are continually being made to enhance the overall project.
+
+This status indicates that the project is in an active phase, with ongoing development and updates.
 
 ### :book: Blink-Safety Background
 It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of CASA (Community Action Stops Abuse), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
 ___
 
-### :computer: Technologies
-Below, you'll discover the primary technology stack employed to drive the project:
+### :computer: Technology Stack
+Here's an overview of the primary technologies driving this project:
 
-<div>
-    <img height="75" loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" />
-    <img height="75" loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />
-    <img height="75" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original-wordmark.svg" />
-</div>
+<p align="center">
+  <img height="75" loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" alt="Laravel">
+  <img height="75" loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+  <img height="75" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original-wordmark.svg" alt="GitHub">
+</p>
 
 
-Other tech used:
+Additionally, other technologies utilized include:
 
 [Pusher](https://pusher.com/)
 
 [Blink1](https://blink1.thingm.com/)
+
+This technology stack powers various aspects of the project, facilitating its functionalities and interactions.
 ___
 ### :hammer: Project walkthrough
 We utilize the Police Department API to identify instances of Domestic Violence. Upon detection, we store this information in our database and promptly relay it to the broadcast system (Pusher.com). Through this system, every user connected to the platform receives immediate notifications regarding these cases.
