@@ -52,6 +52,46 @@ ___
 ### :hammer_and_wrench: How to install the project
 Since Blink-Safety is an open-sourced project you can use it according to our license.
 
+To get started using Laravel Sail, follow these steps:
+
+1. **Clone the Project:**
+   Get the project onto your local machine by cloning it using Git.
+
+    ```bash
+    git clone <project_repository_url>
+    ```
+
+2. **Install PHP Dependencies:**
+   Use Composer to install all PHP dependencies required by the project.
+
+    ```bash
+    composer install
+    ```
+
+3. **Environment Configuration:**
+   Duplicate the `.env.example` file and rename the duplicate to `.env`. Customize the settings in the `.env` file according to your environment.
+
+4. **Install Frontend Dependencies:**
+   Utilize either `npm` or `yarn` to install the frontend dependencies specified in the project.
+
+    ```bash
+    npm install   # or
+    yarn install
+    ```
+
+5. **Setting up Real-time Communication (Pusher):**
+   If the project uses Pusher for real-time communication, ensure you have set up an account for Pusher or use an available open-sourced alternative. Configure the necessary credentials in your `.env` file.
+
+6. **Launch the Application with Sail:**
+   Finally, execute the following command to launch the application using Laravel Sail in detached mode:
+
+    ```bash
+    sail up -d
+    ```
+
+   This command starts the necessary containers and gets your Laravel application up and running.
+
+Now, you should be able to access your Laravel application via your preferred browser at the designated address. Happy coding!
 
 ___
 # :construction: Roadmap
@@ -65,7 +105,7 @@ The first PD we could connect was St. Petersburg, FL through a public API.
 Since we have to keep pooling the API for the server we need to keep a timeframe to run, for now we are using every 10
 minutes.
 
-Sending the code to Github.
+Sending the code to GitHub.
 
 Start creating the integration channel for blink1, my approach on this will be using the web api to provide a json signal
 everytime an url is called.
