@@ -1,12 +1,18 @@
 document.getElementById('start-button').addEventListener('click', handleConnectClick);
 document.getElementById('stop-button').addEventListener('click', handleDisconnectClick);
 
+/**
+ * Handle the connection with the blink1 device
+ * @returns {Promise<void>}
+ */
 async function handleConnectClick() {
-    let acolor = [255, 0, 255];  // purple
-    let device = await openDevice();
-    await fadeToColor(device, acolor);
+    await openDevice();
 }
 
+/**
+ * Handle the disconnect with the blink1 device
+ * @returns {Promise<void>}
+ */
 async function handleDisconnectClick() {
     let acolor = [0, 0, 0]; // off
     let device = await openDevice();
@@ -15,6 +21,10 @@ async function handleDisconnectClick() {
     await device.close();
 }
 
+/**
+ * Open the device connection preparing it for the next connection
+ * @returns {Promise<*|null>}
+ */
 async function openDevice() {
     const vendorId = 0x27b8; // blink1 vid
     const productId = 0x01ed;  // blink1 pid
@@ -41,10 +51,9 @@ async function openDevice() {
     updateId(device.id)
     updateStatus('Blink1 device connected!')
 
-    console.log("device opened:", device);
-
     return device;
 }
+
 
 async function fadeToColor(device, [r, g, b]) {
     if (!device) return;
@@ -79,6 +88,7 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
     let device = await openDevice();
     if (!device) return;
     await fadeToColor(device, [255, 0, 255]);
+    await fadeToColor(device, [0,0,0])
 });
 
 

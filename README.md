@@ -44,6 +44,9 @@ Additionally, other technologies utilized include:
 
 [Blink1](https://blink1.thingm.com/)
 
+**Blink1 Browser Compatibility**
+<a href="https://ibb.co/55CfGYN"><img src="https://i.ibb.co/gDQBmv5/Captura-de-Tela-2023-12-27-a-s-09-22-44.png" alt="Captura-de-Tela-2023-12-27-a-s-09-22-44" border="0"></a>
+
 This technology stack powers various aspects of the project, facilitating its functionalities and interactions.
 ___
 ### :hammer: Project walkthrough
