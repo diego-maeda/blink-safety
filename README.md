@@ -47,12 +47,12 @@ We utilize the Police Department API to identify instances of Domestic Violence.
 - Florida State
   - St. Petersburg 
 
-
+___
 ### How to install the project
 Since Blink-Safety is an open-sourced project you can use it according to our license.
 
 
-
+___
 # Roadmap
 
 
