@@ -334,7 +334,6 @@ function togglePrecinctList(precinct) {
                 </div>
                 <div class="flex justify-center my-3">
                     {{ new Date().getFullYear() }} - Blink-Safety
-
                 </div>
             </div>
         </v-footer>
