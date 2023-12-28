@@ -13,6 +13,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
+        'precinct',
         'event_id',
         'event_number',
         'type_of_engagement',

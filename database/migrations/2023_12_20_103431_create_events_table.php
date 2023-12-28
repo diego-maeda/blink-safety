@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string('precinct');
             $table->string('event_id');
             $table->string('event_number');
             $table->string('type_of_engagement');

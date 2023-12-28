@@ -46,11 +46,12 @@ class RetrieveStPetersburgData extends Command
                 foreach ($response->json() as $event) {
 
                     // Try to locate the event and make sure its new
-                    $db_event = Event::where(['event_id' => $event['id']])->first();
+                    $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
 
                     // If the event is new we store it and create a new dispatch a new broadcast
                     if (empty($db_event)) {
                         Event::create([
+                            'precinct' => '33705',
                             'event_id' => $event['id'],
                             'event_number' => $event['event_number'],
                             'type_of_engagement' => $event['type_of_engagement'],

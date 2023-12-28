@@ -1,140 +1,47 @@
-document.getElementById('start-button').addEventListener('click', handleConnectClick);
-document.getElementById('stop-button').addEventListener('click', handleDisconnectClick);
+import './bootstrap';
+import '../css/app.css';
 
-/**
- * Handle the connection with the blink1 device
- * @returns {Promise<void>}
- */
-async function handleConnectClick() {
-    let device = await openDevice();
-    await blink1_getChipId(device);
-}
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
-/**
- * Handle the disconnect with the blink1 device
- * @returns {Promise<void>}
- */
-async function handleDisconnectClick() {
-    let acolor = [0, 0, 0]; // off
-    let device = await openDevice();
-    if (!device) return;
-    await fadeToColor(device, acolor);
-    await device.close();
-}
+// Vuetify
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
-/**
- * Open the device connection preparing it for the next connection
- * @returns {Promise<*|null>}
- */
-async function openDevice() {
-    const vendorId = 0x27b8; // blink1 vid
-    const productId = 0x01ed;  // blink1 pid
+const vuetify = createVuetify({
+    theme: {
+        themes: {
+            light: {
+                dark: false,
+                colors: {
+                    primary: '#8E24AA',
+                    secondary: '#FF4081'
+                }
+            },
+        },
+    },
+    components,
+    directives,
+})
 
-    const device_list = await navigator.hid.getDevices();
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-    let device = device_list.find(d => d.vendorId === vendorId && d.productId === productId);
-
-    if (!device) {
-        // this returns an array now
-        let devices = await navigator.hid.requestDevice({
-            filters: [{vendorId, productId}],
-        });
-        console.log("devices:", devices);
-        device = devices[0];
-
-        if (!device) return null;
-    }
-
-    if (!device.opened) {
-        await device.open();
-    }
-
-    updateId(device.id)
-    updateStatus('Blink1 device connected!')
-
-    return device;
-}
-
-/**
- * Get chip's id
- * @param device
- * @returns {Promise<number>}
- */
-async function blink1_getChipId(device) {
-    const reportId = 2;
-    const data = new Uint8Array(60); // 60-byte report on reportId 2
-    data[0] = 0x55; // 'U'
-    try {
-        await device.sendFeatureReport(reportId, data);
-    } catch (error) {
-        console.error('getChipId: failed:', error);
-    }
-    console.log("receiving...");
-    let chipid_resp = await device.receiveFeatureReport(reportId);
-    console.log("blink1 chipid response:", chipid_resp,
-        chipid_resp.buffer,
-    );
-    updateId(chipid_resp.getUint32(2));
-}
-
-async function fadeToColor(device, [r, g, b]) {
-    if (!device) return;
-    const reportId = 1;
-    const data = Uint8Array.from([0x63, r, g, b, 0x00, 0x10, 0x00, 0x00]);
-    try {
-        await device.sendFeatureReport(reportId, data);
-    } catch (error) {
-        console.error('fadeToColor: failed:', error);
-    }
-}
-
-// This function is responsible for updating the support text for the blink1 Id interface
-let updateId = function (id) {
-    blink1Id.innerText = id;
-}
-// This function is responsible for updating the support text for the user interface
-let updateStatus = function (statusStr) {
-    blink1Status.innerText = statusStr;
-};
-
-/**
- * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
- */
-Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e) => {
-    console.log('Connected to the channel #33705')
-
-    // This will make the background blink and turn off in 3 seconds
-    blinkPurpleAndTurnOff();
-
-    let device = await openDevice();
-    console.log('Device: ' + device);
-    if (!device) return;
-    await fadeToColor(device, [255, 0, 255]);
-    await sleep(1000);
-    await fadeToColor(device, [0,0,0])
+createInertiaApp({
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(ZiggyVue)
+            .use(vuetify)
+            .mount(el);
+    },
+    progress: {
+        color: '#4B5563',
+    },
 });
-
-
-/**
- * This code will blink the background of the code when a new event is received
- */
-function blinkPurpleAndTurnOff() {
-    let intervalId;
-
-    let bg = document.getElementById('alertBg');
-
-    function togglePurple() {
-        bg.style.backgroundColor = bg.style.backgroundColor === "purple" ? "" : "purple";
-    }
-
-    intervalId = setInterval(togglePurple, 500); // Blink every second
-
-    setTimeout(() => {
-        clearInterval(intervalId);
-        bg.style.backgroundColor = ""; // Ensure background is off after stopping
-    }, 3000);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
