@@ -46,6 +46,8 @@ async function handleDisconnectClick() {
     if (!device) return;
     await fadeToColor(device, black_color);
     await device.close();
+
+    connected = false;
 }
 
 /**
@@ -79,6 +81,8 @@ async function openDevice() {
     if (!device.opened) {
         await device.open();
     }
+
+    connected = true;
 
     // Update the device status
     device_status = 'Blink(1) device connected!';
