@@ -34,7 +34,7 @@ class RetrieveStPetersburgData extends Command
     public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subDays(30)->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subDays(60)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
             $response = Http::withHeaders([
@@ -57,13 +57,13 @@ class RetrieveStPetersburgData extends Command
                             'type_of_engagement' => $event['type_of_engagement'],
                             'sub_engagement' => $event['sub_engagement'],
                             'classification' => $event['classification'],
-                            'display_address' => $event['display_address'],
+                            'display_address' => (array_key_exists('display_address', $event)) ? $event['display_address'] : 'No display address available.',
                             'crime_date' => $event['crime_date'],
                             'crime_time' => $event['crime_time'],
                             'latitude' => $event['latitude'],
                             'longitude' => $event['longitude'],
                             'neighborhood_name' => (array_key_exists('neighborhood_name', $event)) ? $event['neighborhood_name'] : '',
-                            'council_district' => $event['council_district'],
+                            'council_district' => (array_key_exists('council_district', $event)) ? $event['council_district'] : '',
                             'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
                         ]);
                         // Dispatch the event to broadcast

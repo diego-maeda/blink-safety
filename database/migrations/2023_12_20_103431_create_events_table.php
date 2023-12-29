@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('type_of_engagement');
             $table->string('sub_engagement');
             $table->string('classification');
-            $table->text('display_address');
+            $table->text('display_address')->nullable();
             $table->dateTime('crime_date');
-            $table->time('crime_time');
+            $table->time('crime_time')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('neighborhood_name');
