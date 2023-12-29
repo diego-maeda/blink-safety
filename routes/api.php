@@ -1,14 +1,13 @@
 <?php
 
 use App\Events\DomesticAbuseDetected;
+use App\Http\Controllers\PreviousController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('test-event', function(){
+Route::get('test-event', function () {
     DomesticAbuseDetected::dispatch('33705');
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/previous/{id}', [PreviousController::class, 'previous']);

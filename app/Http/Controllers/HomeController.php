@@ -16,6 +16,7 @@ class HomeController extends Controller
 
         return Inertia::render('New', [
             'last_incident' => [
+                'id' => $event->id,
                 'since' => Carbon::createFromDate($event->crime_date)->diffForHumans() , // How long ago it happened
                 'time' => Carbon::createFromDate($event->crime_date)->format('m/d/Y H:i:s'), // Crime date
                 'type' => $event->type_of_engagement, // Type of crime

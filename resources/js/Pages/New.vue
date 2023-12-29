@@ -1,11 +1,20 @@
 <script setup>
 import {Head} from '@inertiajs/vue3';
 import logo from '/resources/img/blink-safety-logo.svg';
+import axios from 'axios';
+import {reactive} from 'vue'
 
-defineProps({ last_incident: Object })
+const props = defineProps({last_incident: Object})
 
+const incident = reactive({
+    id: props.last_incident.id,
+    since: props.last_incident.since,
+    time: props.last_incident.time,
+    type: props.last_incident.type,
+    display_address: props.last_incident.display_address,
+})
 // Is device connected
-let connected = false;
+let connected = false
 
 // Device status
 let device_status = 'No device detected';
@@ -13,9 +22,11 @@ let device_status = 'No device detected';
 // Purple Color
 let purple_color = [255, 0, 255];
 
+// Red Color
+let red_color = [255, 0, 0];
+
 // Off Color
 let black_color = [0, 0, 0];
-
 
 /**
  * Handle the connection with the blink1 device
@@ -44,6 +55,15 @@ async function handleConnectClick() {
 async function handleDisconnectClick() {
     let device = await openDevice();
     if (!device) return;
+
+    console.log('Disconnecting...')
+
+    await fadeToColor(device, red_color);
+    await sleep(500);
+    await fadeToColor(device, black_color);
+    await sleep(500);
+    await fadeToColor(device, red_color);
+    await sleep(500);
     await fadeToColor(device, black_color);
     await device.close();
 
@@ -109,6 +129,8 @@ async function fadeToColor(device, [r, g, b]) {
 Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e) => {
     console.log('Connected to the channel #33705')
 
+    //TODO UPDATE ON NEW EVENT
+
     let device = await openDevice();
     if (!device) return;
     await fadeToColor(device, [255, 0, 255]);
@@ -130,16 +152,36 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function testBlink1(){
-    let device = await openDevice();
-    if (!device) return;
-    await fadeToColor(device, [255, 0, 0]);
-    await sleep(1000);
-    await fadeToColor(device, [0, 255, 0]);
-    await sleep(1000);
-    await fadeToColor(device, [0, 0, 255]);
-    await sleep(1000);
-    await fadeToColor(device, [0, 0, 0]);
+async function previousEvent() {
+    // Load last event feed and replace the data on last_incident
+    let last_id = Number(incident['id']);
+
+    let id_search = last_id - 1
+
+    if (id_search !== 0) {
+        axios.get('/api/previous/' + id_search)
+            .then((response) => {
+                    incident.id = response.data.last_incident.id,
+                    incident.since = response.data.last_incident.since,
+                    incident.time = response.data.last_incident.time,
+                    incident.type = response.data.last_incident.type,
+                    incident.display_address = response.data.last_incident.display_address
+                }
+            )
+            .catch((error) => console.log(error));
+
+        let device = await openDevice();
+        if (!device) return;
+        await fadeToColor(device, purple_color);
+        await sleep(1000);
+        await fadeToColor(device, black_color);
+        await sleep(1000);
+        await fadeToColor(device, purple_color);
+        await sleep(1000);
+        await fadeToColor(device, black_color);
+    } else {
+        console.log(`You have reached the first event`);
+    }
 }
 
 </script>
@@ -153,19 +195,20 @@ async function testBlink1(){
             <div class="h-full w-full flex flex-col justify-center items-center">
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
-                <p class="max-w-60 text-center text-lg"><strong>{{ last_incident['since'] }}</strong> since last reported domestic violence incident in St. Peterburg FL</p>
+                <p class="max-w-60 text-center text-lg"><strong>{{ incident['since'] }}</strong> since last reported
+                    domestic violence incident in St. Peterburg FL</p>
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
-                    <p>{{last_incident['time']}}</p>
-                    <p>{{ last_incident['type'] }}</p>
-                    <p>{{ last_incident['display_address'] }}</p>
+                    <p>{{ incident['time'] }}</p>
+                    <p>{{ incident['type'] }}</p>
+                    <p>{{ incident['display_address'] }}</p>
                 </div>
 
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">About</a> |
                     <a @click="handleDisconnectClick" class="cursor-pointer">Disconnect</a> |
                     <a @click="handleConnectClick" class="cursor-pointer">Connect</a>
-                    <a @click="testBlink1" class="cursor-pointer"> | Test</a>
+                    <a @click="previousEvent" class="cursor-pointer"> | Previous</a>
                 </div>
             </div>
         </v-main>
