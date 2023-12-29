@@ -150,7 +150,7 @@ async function testBlink1(){
 
                 <p class="max-w-60 text-center text-lg"><strong>{{ last_incident['since'] }}</strong> since last reported domestic violence incident in St. Peterburg FL</p>
 
-                <div class="bg-purple-300 p-6 rounded-lg max-w-60 my-5">
+                <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
                     <p>{{last_incident['time']}}</p>
                     <p>{{ last_incident['type'] }}</p>
                     <p>{{ last_incident['display_address'] }}</p>
@@ -158,9 +158,9 @@ async function testBlink1(){
 
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">About</a> |
-                    <a v-if="connected" @click="handleDisconnectClick">Disconnect</a>
-                    <a v-else @click="handleConnectClick">Connect</a>
-                    <a @click="testBlink1" v-if="connected"> | Test</a>
+                    <a v-if="connected" @click="handleDisconnectClick" class="cursor-pointer">Disconnect</a>
+                    <a v-else @click="handleConnectClick" class="cursor-pointer">Connect</a>
+                    <a @click="testBlink1" v-if="connected" class="cursor-pointer"> | Test</a>
                 </div>
             </div>
         </v-main>
