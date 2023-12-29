@@ -85,6 +85,7 @@ async function openDevice() {
     connected = true;
 
     // Update the device status
+    console.log('Blink(1) device connected!');
     device_status = 'Blink(1) device connected!';
 
     // Returns the device selected
@@ -162,9 +163,9 @@ async function testBlink1(){
 
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">About</a> |
-                    <a v-if="connected" @click="handleDisconnectClick" class="cursor-pointer">Disconnect</a>
-                    <a v-else @click="handleConnectClick" class="cursor-pointer">Connect</a>
-                    <a @click="testBlink1" v-if="connected" class="cursor-pointer"> | Test</a>
+                    <a @click="handleDisconnectClick" class="cursor-pointer">Disconnect</a> |
+                    <a @click="handleConnectClick" class="cursor-pointer">Connect</a>
+                    <a @click="testBlink1" class="cursor-pointer"> | Test</a>
                 </div>
             </div>
         </v-main>
