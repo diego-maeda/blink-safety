@@ -34,7 +34,7 @@ class RetrieveStPetersburgData extends Command
     public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subDays(30)->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subMinutes(30)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
             $response = Http::withHeaders([

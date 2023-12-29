@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function __invoke(): Response
     {
-        $event = Event::latest('created_at')->first();
+        $event = Event::latest('crime_date')->first();
 
         return Inertia::render('New', [
             'last_incident' => [
