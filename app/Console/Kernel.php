@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:retrieve-st-petersburg-data')->everyThirtyMinutes();
+        $schedule->command('app:retrieve-st-petersburg-data ')->everyFiveMinutes();
     }
 
     /**

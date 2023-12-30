@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Events\DomesticAbuseDetected;
 use App\Models\Event;
+use App\Models\Run;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -71,6 +72,14 @@ class RetrieveStPetersburgData extends Command
                     }
                 }
             }
+
+            Run::create([
+               'command' => 'app:retrieve-st-petersburg-data'
+            ]);
+
+            // TODO DISPATCH AN EMAIL TO WARN ABOUT THE UPDATE?
+
+
         } catch (\Exception $exception) {
             Log::error($exception);
         }

@@ -4,7 +4,11 @@ import logo from '/resources/img/blink-safety-logo.svg';
 import axios from 'axios';
 import {reactive} from 'vue'
 
-const props = defineProps({last_incident: Object})
+const props = defineProps({
+        last_incident: Object,
+        last_run: Object
+    }
+)
 
 const incident = reactive({
     id: props.last_incident.id,
@@ -13,8 +17,11 @@ const incident = reactive({
     type: props.last_incident.type,
     display_address: props.last_incident.display_address,
 })
-// Is device connected
-let connected = false
+
+const data = reactive({
+    connected: false,
+    last_run: props.last_run
+})
 
 // Device status
 let device_status = 'No device detected';
@@ -67,7 +74,7 @@ async function handleDisconnectClick() {
     await fadeToColor(device, black_color);
     await device.close();
 
-    connected = false;
+    data.connected = false;
 }
 
 /**
@@ -102,7 +109,7 @@ async function openDevice() {
         await device.open();
     }
 
-    connected = true;
+    data.connected = true;
 
     // Update the device status
     console.log('Blink(1) device connected!');
@@ -129,7 +136,16 @@ async function fadeToColor(device, [r, g, b]) {
 Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e) => {
     console.log('Connected to the channel #33705')
 
-    //TODO UPDATE ON NEW EVENT
+    axios.get('/api/latest/')
+        .then((response) => {
+                incident.id = response.data.last_incident.id,
+                    incident.since = response.data.last_incident.since,
+                    incident.time = response.data.last_incident.time,
+                    incident.type = response.data.last_incident.type,
+                    incident.display_address = response.data.last_incident.display_address
+            }
+        )
+        .catch((error) => console.log(error));
 
     let device = await openDevice();
     if (!device) return;
@@ -162,10 +178,10 @@ async function previousEvent() {
         axios.get('/api/previous/' + id_search)
             .then((response) => {
                     incident.id = response.data.last_incident.id,
-                    incident.since = response.data.last_incident.since,
-                    incident.time = response.data.last_incident.time,
-                    incident.type = response.data.last_incident.type,
-                    incident.display_address = response.data.last_incident.display_address
+                        incident.since = response.data.last_incident.since,
+                        incident.time = response.data.last_incident.time,
+                        incident.type = response.data.last_incident.type,
+                        incident.display_address = response.data.last_incident.display_address
                 }
             )
             .catch((error) => console.log(error));
@@ -206,9 +222,14 @@ async function previousEvent() {
 
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">About</a> |
-                    <a @click="handleDisconnectClick" class="cursor-pointer">Disconnect</a> |
-                    <a @click="handleConnectClick" class="cursor-pointer">Connect</a>
-                    <a @click="previousEvent" class="cursor-pointer"> | Previous</a>
+                    <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">Disconnect</a>
+                    <a @click="handleConnectClick" class="cursor-pointer" v-if="!data.connected">Connect</a>
+                    <a @click="previousEvent" class="cursor-pointer" v-if="data.connected"> | Previous</a>
+                </div>
+
+                <div class="text-gray-600 text-center">
+                    <p>Last updated: {{ data.last_run['last_updated'] }}</p>
+                    <p>Updating next at {{data.last_run['next_update']}}</p>
                 </div>
             </div>
         </v-main>
