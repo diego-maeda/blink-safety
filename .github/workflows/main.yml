@@ -164,7 +164,7 @@ jobs:
   clean-up:
     name: 'Clean up the server'
     runs-on: 'ubuntu-latest'
-    needs: [ create-deployment-artifacts,prepare-release-on-server,activate-release,run-after-hook]
+    needs: [ create-deployment-artifacts,prepare-release-on-server,activate-release,run-after-hooks]
     steps:
       - name: Run clean up
         uses: appleboy/ssh-action@master
