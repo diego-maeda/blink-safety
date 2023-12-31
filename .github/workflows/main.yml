@@ -178,7 +178,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           envs: RELEASES_DIR,ARTIFACTS_DIR
           script: |
-            cd ${RELEASES_DIR} && ls -t -1 | tail -n +6 | xargs rm -rF
-            cd ${ARTIFACTS_DIR} && ls -t -1 | tail -n +6 | xargs rm -rF
+            cd ${RELEASES_DIR} && ls -t -1 | tail -n +6 | xargs rm -Rf
+            cd ${ARTIFACTS_DIR} && ls -t -1 | tail -n +6 | xargs rm -Rf
 
 
