@@ -58,8 +58,8 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}]
-          target: "/home/blink-safety/artifacts/" ${{github.sha}}
           source: ${{github.sha}}.tar.gz
+          target: "/home/blink-safety/artifacts/" ${{github.sha}}
 
 
 
