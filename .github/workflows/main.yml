@@ -129,12 +129,13 @@ jobs:
             printf "%s "${LARAVEL_ENV}" > "${BASE_DIR}/.env"
             ln -s -n -f ${BASE_DIR}/.env ${RELEASES_DIR}/${GITHUB_SHA}
 
+            echo "Running database migrations"
+            php artisan migrate --force
+
             echo "Activating the new release"
             ln -s -n -f ${RELEASES_DIR}/${GITHUB_SHA} ${ACTIVE_RELEASE_DIR}
 
             echo "Reloading PHP8.2-FPM"
             service php8.2-fpm reload
 
-            echo "Running database migrations"
-            php artisan migrate --force
 
