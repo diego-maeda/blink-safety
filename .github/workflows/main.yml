@@ -74,11 +74,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          envs: |
-            GITHUB_SHA
-            ARTIFACTS_DIR
-            BASE_DIR
-            RELEASES_DIR
+          envs: GITHUB_SHA,ARTIFACTS_DIR,BASE_DIR,RELEASES_DIR,STORAGE_DIR
           script: |
             mkdir -p "${RELEASES_DIR}/${GITHUB_SHA}"
             tar xzf "${ARTIFACTS_DIR}/${GITHUB_SHA}.tar.gz" -C "${RELEASES_DIR}/${GITHUB_SHA}"
