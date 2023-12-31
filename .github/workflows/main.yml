@@ -105,7 +105,7 @@ jobs:
             cd ${RELEASES_DIR}/${GITHUB_SHA}
             echo "Deployment started ..."
 
-            echo "Running database migrations
+            echo "Running database migrations"
             php artisan migrate --force
 
   activate-release:
