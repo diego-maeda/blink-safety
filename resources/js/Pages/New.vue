@@ -3,6 +3,13 @@ import {Head} from '@inertiajs/vue3';
 import logo from '/resources/img/blink-safety-logo.svg';
 import axios from 'axios';
 import {reactive} from 'vue'
+// Favicon import
+import appleTouchIcon from '/resources/img/apple-touch-icon.png';
+import favicon32 from '/resources/img/favicon-32x32.png'
+import favicon16 from '/resources/img/favicon-16x16.png'
+import favicon from '/resources/img/favicon.ico'
+import siteManifest from '/resources/img/site.webmanifest';
+
 
 const props = defineProps({
         last_incident: Object,
@@ -195,7 +202,15 @@ async function previousEvent() {
 </script>
 
 <template>
-    <Head title="Welcome to"/>
+    <Head>
+        <title>Welcome to</title>
+        <meta head-key="description" name="description" content="Blink-Safety bringing awareness to Domestic Violence" />
+        <link rel="apple-touch-icon" sizes="180x180" :href="appleTouchIcon">
+        <link rel="icon" type="image/png" sizes="32x32" :href="favicon32">
+        <link rel="icon" type="image/png" sizes="16x16" :href="favicon16">
+        <link rel="icon" type="image/png" sizes="16x16" :href="favicon">
+        <link rel="manifest" :href="siteManifest">
+    </Head>
 
     <v-app>
         <!-- MAIN -->
@@ -203,13 +218,13 @@ async function previousEvent() {
             <div class="h-full w-full flex flex-col justify-center items-center">
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
-                <p class="max-w-60 text-center text-lg"><strong>{{ incident['since'] }}</strong> since last reported
+                <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since last reported
                     domestic violence incident in St. Peterburg FL</p>
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
-                    <p>{{ incident['time'] }}</p>
-                    <p>{{ incident['type'] }}</p>
-                    <p>{{ incident['display_address'] }}</p>
+                    <p>{{ data.incident['time'] }}</p>
+                    <p>{{ data.incident['type'] }}</p>
+                    <p>{{ data.incident['display_address'] }}</p>
                 </div>
 
                 <div class="text-purple-900">
