@@ -133,7 +133,7 @@ async function fadeToColor(device, [r, g, b]) {
 /**
  * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
  */
-Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e) => {
+Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async () => {
     console.log('Connected to the channel #33705')
 
     axios.get('/api/latest/')
@@ -170,7 +170,7 @@ function sleep(ms) {
 
 async function previousEvent() {
     // Load last event feed and replace the data on last_incident
-    let last_id = Number(incident['id']);
+    let last_id = Number(data.incident['id']);
 
     let id_search = last_id - 1
 
@@ -212,7 +212,7 @@ async function previousEvent() {
         <link rel="manifest" :href="siteManifest">
     </Head>
 
-    <v-app>
+    <v-app>k
         <!-- MAIN -->
         <v-main>
             <div class="h-full w-full flex flex-col justify-center items-center">
