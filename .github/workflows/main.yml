@@ -126,7 +126,7 @@ jobs:
           envs: GITHUB_SHA,RELEASES_DIR,ACTIVE_RELEASE_DIR
           script: |
             echo "Copying the contents to .env"
-            printf "%s "${LARAVEL_ENV}" > "${BASE_DIR}/.env"
+            printf "%s" "${LARAVEL_ENV}" > "${BASE_DIR}/.env"
             ln -s -n -f ${BASE_DIR}/.env ${RELEASES_DIR}/${GITHUB_SHA}
 
             echo "Running database migrations"
