@@ -64,16 +64,30 @@ jobs:
       - name: Extract files and create directories
         uses: appleboy/ssh-action@master
         env:
-          GITHUB_SHA: ${{ github.sha}}
+          GITHUB_SHA: ${{ github.sha }}
+          ARTIFACTS_DIR: /home/blink-safety/artifacts
+          BASE_DIR: /home/blink-safety
+          RELEASES_DIR: /home/blink-safety/releases
+          STORAGE_DIR: /home/blink-safety/storage
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          envs: GITHUB_SHA
+          envs: |
+            GITHUB_SHA
+            ARTIFACTS_DIR
+            BASE_DIR
+            RELEASES_DIR
           script: |
-            mkdir -p "/home/blink-safety/releases/${GITHUB_SHA}"
-            tar xzf "/home/blink-safety/artifacts/${GITHUB_SHA}.tar.gz" -C "/home/blink-safety/releases/${GITHUB_SHA}"
+            mkdir -p "${RELEASES_DIR}/${GITHUB_SHA}"
+            tar xzf "${ARTIFACTS_DIR}/${GITHUB_SHA}.tar.gz" -C "${RELEASES_DIR}/${GITHUB_SHA}"
+            rm -rf "${RELEASES_DIR}/${GITHUB_SHA}/storage"
+
+            mkdir -p ${STORAGE_DIR}/{app,public,framework,logs}
+            mkdir -p ${STORAGE_DIR}/framework/{cache,sessions,testing,views}
+            chgrp -R www-data ${STORAGE_DIR}  ${BASE_DIR}/bootstrap/cache
+            chmod -R ug+rwx ${STORAGE_DIR}  ${BASE_DIR}/bootstrap/cache
 
 
 
