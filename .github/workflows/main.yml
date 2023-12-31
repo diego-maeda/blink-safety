@@ -61,6 +61,21 @@ jobs:
           source: ${{github.sha}}.tar.gz
           target: /home/blink-safety/artifacts
 
+      - name: Extract files and create directories
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha}}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          envs: GITHUB_SHA
+          script: |
+            mkdir -p "/home/blink-safety/releases/${{GITHUB_SHA}}"
+            tar xzf "/home/blink-safety/artifacts/${{GITHUB_SHA}}.tar.gz" -C "/home/blink-safety/releases/${{GITHUB_SHA}}"
+
+
 
 
 
