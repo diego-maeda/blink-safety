@@ -117,8 +117,10 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           GITHUB_SHA: ${{ github.sha }}
+          BASE_DIR: /home/blink-safety
           RELEASES_DIR: /home/blink-safety/releases
           ACTIVE_RELEASE_DIR: /home/blink-safety/current
+          LARAVEL_ENV: ${{ secrets.LARAVEL_ENV }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -126,6 +128,10 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           envs: GITHUB_SHA,RELEASES_DIR,ACTIVE_RELEASE_DIR
           script: |
+            echo "Copying the contents to .env"
+            printf "%s "${LARAVEL_ENV}" > "${BASE_DIR}/.env"
+            ln -s -n -f ${BASE_DIR}/.env ${RELEASES_DIR}/${GITHUB_SHA}
+
             echo "Activating the new release"
             ln -s -n -f ${RELEASES_DIR}/${GITHUB_SHA} ${ACTIVE_RELEASE_DIR}
 
