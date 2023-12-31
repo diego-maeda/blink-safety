@@ -80,10 +80,13 @@ class RetrieveStPetersburgData extends Command
                'command' => 'app:retrieve-st-petersburg-data'
             ]);
 
+            $this->info('Command successful.');
+
             // TODO DISPATCH AN EMAIL TO WARN ABOUT THE UPDATE?
 
 
         } catch (\Exception $exception) {
+            $this->info('Something went wrong.');
             Log::error($exception);
         }
     }
