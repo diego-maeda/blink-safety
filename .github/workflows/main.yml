@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-deployment-artifacts
     steps:
-      - uses: action/download-artifacts@v2
+      - uses: actions/download-artifact@v2
         with:
           name: app-build
 
