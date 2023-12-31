@@ -25,7 +25,7 @@ jobs:
           extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml, pgsql
 
       - name: Install Composer dependencies
-        run: composer install --no-dev --no-interaction --prefer-dist
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Compile CSS and Javascript
         run: |
@@ -131,7 +131,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          envs: GITHUB_SHA,RELEASES_DIR,ACTIVE_RELEASE_DIR,LARAVEL_ENV
+          envs: GITHUB_SHA,BASE_DIR,RELEASES_DIR,ACTIVE_RELEASE_DIR,LARAVEL_ENV
           script: |
             echo "Copying the contents to .env"
             printf "%s" "${LARAVEL_ENV}" > "${BASE_DIR}/.env"
@@ -146,8 +146,6 @@ jobs:
             echo "Reloading PHP8.2-FPM"
             service php8.2-fpm reload
 
-
-
   run-after-hooks:
     name: 'Running hooks after setup'
     runs-on: 'ubuntu-latest'
@@ -157,15 +155,25 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           GITHUB_SHA: ${{ github.sha }}
-          RELEASES_DIR: /home/blink-safety/releases
+          ACTIVE_RELEASE_DIR: /home/blink-safety/current
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          envs: GITHUB_SHA,RELEASES_DIR
+          envs: GITHUB_SHA,ACTIVE_RELEASE_DIR
           script: |
-            cd ${RELEASES_DIR}/${GITHUB_SHA}
+            cd ${ACTIVE_RELEASE_DIR}
+
+            echo "Caching events"
+            php artisan event:cache
+
+            echo "Caching routes"
+            php artisan route:cache
+
+            echo "Caching views"
+            php artisan view:cache
+
             echo "Deployment finished ..."
 
   clean-up:
@@ -185,7 +193,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           envs: RELEASES_DIR,ARTIFACTS_DIR
           script: |
-            cd ${RELEASES_DIR} && ls -t -1 | tail -n +6 | xargs rm -Rf
-            cd ${ARTIFACTS_DIR} && ls -t -1 | tail -n +6 | xargs rm -Rf
+            cd ${RELEASES_DIR} && ls -t -1 | tail -n +5 | xargs rm -Rf
+            cd ${ARTIFACTS_DIR} && ls -t -1 | tail -n +5 | xargs rm -Rf
 
 
