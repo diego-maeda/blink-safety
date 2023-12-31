@@ -42,6 +42,7 @@ jobs:
         with:
           name: app-build
           path: ${{ github.sha }}.tar.gz
+
   prepare-release-on-server:
     runs-on: ubuntu-latest
     needs: create-deployment-artifacts
@@ -85,8 +86,30 @@ jobs:
             chgrp -R www-data ${STORAGE_DIR}  ${BASE_DIR}/bootstrap/cache
             chmod -R ug+rwx ${STORAGE_DIR}  ${BASE_DIR}/bootstrap/cache
 
+  run-before-hooks:
+    name: 'Running setup before activation'
+    runs-on: 'ubuntu-latest'
+    needs: [create-deployment-artifacts,prepare-release-on-server]
+    steps:
+      - name: Run before hooks
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          ARTIFACTS_DIR: /home/blink-safety/artifacts
+          BASE_DIR: /home/blink-safety
+          RELEASES_DIR: /home/blink-safety/releases
+          STORAGE_DIR: /home/blink-safety/storage
+          ACTIVE_RELEASE_DIR: /home/blink-safety/current
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          envs: GITHUB_SHA,ARTIFACTS_DIR,BASE_DIR,RELEASES_DIR,STORAGE_DIR
+          script: |
+            cd ${RELEASES_DIR}/${GITHUB_SHA}
+            echo "Deployment started ..."
 
-
-
+            php artisan migrate
 
 
