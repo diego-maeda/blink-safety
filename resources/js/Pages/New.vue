@@ -10,17 +10,10 @@ const props = defineProps({
     }
 )
 
-const incident = reactive({
-    id: props.last_incident.id,
-    since: props.last_incident.since,
-    time: props.last_incident.time,
-    type: props.last_incident.type,
-    display_address: props.last_incident.display_address,
-})
-
 const data = reactive({
     connected: false,
-    last_run: props.last_run
+    last_run: props.last_run,
+    incident: props.last_incident
 })
 
 // Device status
@@ -138,11 +131,11 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
 
     axios.get('/api/latest/')
         .then((response) => {
-                incident.id = response.data.last_incident.id,
-                    incident.since = response.data.last_incident.since,
-                    incident.time = response.data.last_incident.time,
-                    incident.type = response.data.last_incident.type,
-                    incident.display_address = response.data.last_incident.display_address
+                data.incident.id = response.data.last_incident.id;
+                data.incident.since = response.data.last_incident.since;
+                data.incident.time = response.data.last_incident.time;
+                data.incident.type = response.data.last_incident.type;
+                data.incident.display_address = response.data.last_incident.display_address;
             }
         )
         .catch((error) => console.log(error));
@@ -177,14 +170,13 @@ async function previousEvent() {
     if (id_search !== 0) {
         axios.get('/api/previous/' + id_search)
             .then((response) => {
-                    incident.id = response.data.last_incident.id,
-                        incident.since = response.data.last_incident.since,
-                        incident.time = response.data.last_incident.time,
-                        incident.type = response.data.last_incident.type,
-                        incident.display_address = response.data.last_incident.display_address
-                }
-            )
-            .catch((error) => console.log(error));
+                data.incident.id = response.data.last_incident.id;
+                data.incident.since = response.data.last_incident.since;
+                data.incident.time = response.data.last_incident.time;
+                data.incident.type = response.data.last_incident.type;
+                data.incident.display_address = response.data.last_incident.display_address;
+
+            }).catch((error) => console.log(error));
 
         let device = await openDevice();
         if (!device) return;
@@ -229,7 +221,7 @@ async function previousEvent() {
 
                 <div class="text-gray-600 text-center">
                     <p>Last updated: {{ data.last_run['last_updated'] }}</p>
-                    <p>Updating next at {{data.last_run['next_update']}}</p>
+                    <p>Updating next at {{ data.last_run['next_update'] }}</p>
                 </div>
             </div>
         </v-main>

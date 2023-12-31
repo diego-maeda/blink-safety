@@ -38,6 +38,9 @@ class RetrieveStPetersburgData extends Command
             $start_date = Carbon::now()->subDay()->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
+            Log::info('Start date: ' . $start_date);
+            Log::info('End date: ' . $end_date);
+
             $response = Http::withHeaders([
                 'X-App-Token' => 'e4VAbacu29Rs5RFhaDtjwFtmB',
             ])->get("https://stat.stpete.org/resource/2eks-pg5j.json?\$where=crime_date between '$start_date' and '$end_date' AND starts_with(type_of_engagement, 'DOMESTIC')");
