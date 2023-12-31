@@ -123,7 +123,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          envs: GITHUB_SHA,RELEASES_DIR,ACTIVE_RELEASE_DIR
+          envs: GITHUB_SHA,RELEASES_DIR,ACTIVE_RELEASE_DIR,LARAVEL_ENV
           script: |
             echo "Copying the contents to .env"
             printf "%s" "${LARAVEL_ENV}" > "${BASE_DIR}/.env"
