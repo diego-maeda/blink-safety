@@ -27,6 +27,13 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
+      - name: Clone .env before compiling
+        env:
+          LARAVEL_ENV: ${{ secrets.LARAVEL_ENV }}
+        run: |
+          echo "Copying the contents to .env"
+          printf "%s" "${LARAVEL_ENV}" > ".env"
+
       - name: Compile CSS and Javascript
         run: |
           npm install
