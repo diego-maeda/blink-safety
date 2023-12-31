@@ -42,7 +42,6 @@ jobs:
         with:
           name: app-build
           path: ${{ github.sha }}.tar.gz
-
   prepare-release-on-server:
     runs-on: ubuntu-latest
     needs: create-deployment-artifacts
@@ -95,21 +94,42 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           GITHUB_SHA: ${{ github.sha }}
-          ARTIFACTS_DIR: /home/blink-safety/artifacts
-          BASE_DIR: /home/blink-safety
           RELEASES_DIR: /home/blink-safety/releases
-          STORAGE_DIR: /home/blink-safety/storage
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          envs: GITHUB_SHA,RELEASES_DIR
+          script: |
+            cd ${RELEASES_DIR}/${GITHUB_SHA}
+            echo "Deployment started ..."
+
+            echo "Running database migrations
+            php artisan migrate --force
+
+  activate-release:
+    name: 'Activating the release'
+    runs-on: 'ubuntu-latest'
+    needs: [create-deployment-artifacts,prepare-release-on-server,run-before-hooks]
+    steps:
+      - name: Run before hooks
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          RELEASES_DIR: /home/blink-safety/releases
           ACTIVE_RELEASE_DIR: /home/blink-safety/current
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          envs: GITHUB_SHA,ARTIFACTS_DIR,BASE_DIR,RELEASES_DIR,STORAGE_DIR
+          envs: GITHUB_SHA,RELEASES_DIR,ACTIVE_RELEASE_DIR
           script: |
-            cd ${RELEASES_DIR}/${GITHUB_SHA}
-            echo "Deployment started ..."
+            echo "Activating the new release"
+            ln -s -n -f ${RELEASES_DIR}/${GITHUB_SHA} ${ACTIVE_RELEASE_DIR}
 
-            php artisan migrate
+            echo "Reloading PHP8.2-FPM"
+            service php8.2-fpm reload
 
 
