@@ -20,7 +20,11 @@ php artisan clear-compiled
 php artisan optimize
 
 # Compile npm assets
-npm run prod
+npm run build
+
+# add chmod
+sudo chgrp -R www-data storage bootstrap/cache
+sudo chmod -R ug+rwx storage bootstrap/cache
 
 # Run database migrations
 php artisan migrate --force
