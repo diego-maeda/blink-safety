@@ -82,6 +82,7 @@ jobs:
 
             mkdir -p ${STORAGE_DIR}/{app,public,framework,logs}
             mkdir -p ${STORAGE_DIR}/framework/{cache,sessions,testing,views}
+            mkdir -p ${STORAGE_DIR}/framework/cache/data
             chgrp -R www-data ${STORAGE_DIR}  ${BASE_DIR}/bootstrap/cache
             chmod -R ug+rwx ${STORAGE_DIR}  ${BASE_DIR}/bootstrap/cache
 
@@ -137,5 +138,47 @@ jobs:
 
             echo "Reloading PHP8.2-FPM"
             service php8.2-fpm reload
+
+
+
+  run-after-hooks:
+    name: 'Running hooks after setup'
+    runs-on: 'ubuntu-latest'
+    needs: [create-deployment-artifacts,prepare-release-on-server,activate-release]
+    steps:
+      - name: Run after hooks
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          RELEASES_DIR: /home/blink-safety/releases
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          envs: GITHUB_SHA,RELEASES_DIR
+          script: |
+            cd ${RELEASES_DIR}/${GITHUB_SHA}
+            echo "Deployment finished ..."
+
+  clean-up:
+    name: 'Clean up the server'
+    runs-on: 'ubuntu-latest'
+    needs: [ create-deployment-artifacts,prepare-release-on-server,activate-release,run-after-hook]
+    steps:
+      - name: Run clean up
+        uses: appleboy/ssh-action@master
+        env:
+          RELEASES_DIR: /home/blink-safety/releases
+          ARTIFACTS_DIR: /home/blink-safety/artifacts
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSHKEY }}
+          envs: RELEASES_DIR,ARTIFACTS_DIR
+          script: |
+            cd ${RELEASES_DIR} && ls -t -1 | tail -n +6 | xargs rm -rF
+            cd ${ARTIFACTS_DIR} && ls -t -1 | tail -n +6 | xargs rm -rF
 
 
