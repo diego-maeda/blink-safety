@@ -105,9 +105,6 @@ jobs:
             cd ${RELEASES_DIR}/${GITHUB_SHA}
             echo "Deployment started ..."
 
-            echo "Running database migrations"
-            php artisan migrate --force
-
   activate-release:
     name: 'Activating the release'
     runs-on: 'ubuntu-latest'
@@ -138,4 +135,6 @@ jobs:
             echo "Reloading PHP8.2-FPM"
             service php8.2-fpm reload
 
+            echo "Running database migrations"
+            php artisan migrate --force
 
