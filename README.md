@@ -2,7 +2,9 @@
 <img src="https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg" width="250"/>
 
 
-![Static Badge](https://img.shields.io/badge/License-MIT-green)
+![License Badge](https://img.shields.io/badge/License-MIT-green)
+![Laravel Badge](https://img.shields.io/badge/Laravel-10-red)
+![Node Badge](https://img.shields.io/badge/Node.js-20-blue)
 
 ___
 ## Summary
