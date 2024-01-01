@@ -1,7 +1,7 @@
 # Blink-safety
 ![Logo for Blink-Safety.](https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg)
-# todo add badges
-![GitHub License](https://img.shields.io/github/license/diego-maeda/blink-safety)
+
+![Static Badge](https://img.shields.io/badge/License-MIT-green)
 
 ___
 ## Summary
