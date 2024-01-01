@@ -1,5 +1,6 @@
-# Blink-safety
-![Logo for Blink-Safety.](https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg)
+
+<img src="https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg" width="250"/>
+
 
 ![Static Badge](https://img.shields.io/badge/License-MIT-green)
 
