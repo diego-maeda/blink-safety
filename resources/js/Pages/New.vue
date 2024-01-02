@@ -10,6 +10,8 @@ import favicon16 from '/resources/img/favicon-16x16.png'
 import favicon from '/resources/img/favicon.ico'
 import siteManifest from '/resources/img/site.webmanifest';
 
+import moment from "moment";
+
 
 const props = defineProps({
         last_incident: Object,
@@ -20,7 +22,8 @@ const props = defineProps({
 const data = reactive({
     connected: false,
     last_run: props.last_run,
-    incident: props.last_incident
+    incident: props.last_incident,
+    time_elapsed: '',
 })
 
 // Device status
@@ -199,6 +202,14 @@ async function previousEvent() {
     }
 }
 
+// TODO This function needs to be re-triggered by pusher when a new event is run on the server
+
+function calculateElapsedTime(){
+    data.time_elapsed = moment.utc(props.last_run.created_at).fromNow();
+}
+calculateElapsedTime();
+setInterval(calculateElapsedTime, 60*1000);
+
 </script>
 
 <template>
@@ -212,13 +223,13 @@ async function previousEvent() {
         <link rel="manifest" :href="siteManifest">
     </Head>
 
-    <v-app>k
+    <v-app>
         <!-- MAIN -->
         <v-main>
             <div class="h-full w-full flex flex-col justify-center items-center">
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
-                <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since last reported
+                <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since the last report of
                     domestic violence incident in St. Peterburg FL</p>
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
@@ -234,8 +245,8 @@ async function previousEvent() {
                     <a @click="previousEvent" class="cursor-pointer" v-if="data.connected"> | Previous</a>
                 </div>
 
-                <div class="text-gray-600 text-center">
-                    <p>Last updated: {{ data.last_run['last_updated'] }}</p>
+                <div class="text-gray-600 text-center mt-3">
+                    <p>Last updated: {{ data.time_elapsed }}</p>
                     <p>Updating next at {{ data.last_run['next_update'] }}</p>
                 </div>
             </div>

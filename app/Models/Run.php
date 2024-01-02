@@ -21,15 +21,8 @@ class Run extends Model
      *
      * @var array
      */
-    protected $appends = ['last_updated', 'next_update'];
+    protected $appends = ['next_update'];
 
-
-    protected function lastUpdated(): Attribute
-    {
-        return new Attribute(
-            get: fn(mixed $value, array $attributes) => Carbon::createFromDate($attributes['created_at'])->diffForHumans()
-        );
-    }
 
     protected function nextUpdate():Attribute
     {
