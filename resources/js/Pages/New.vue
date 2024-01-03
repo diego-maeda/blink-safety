@@ -136,19 +136,14 @@ async function fadeToColor(device, [r, g, b]) {
 /**
  * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
  */
-Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async () => {
+Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (event) => {
     console.log('Connected to the channel #33705')
 
-    axios.get('/api/latest/')
-        .then((response) => {
-                data.incident.id = response.data.last_incident.id;
-                data.incident.since = response.data.last_incident.since;
-                data.incident.time = response.data.last_incident.time;
-                data.incident.type = response.data.last_incident.type;
-                data.incident.display_address = response.data.last_incident.display_address;
-            }
-        )
-        .catch((error) => console.log(error));
+    data.incident.id = event.id;
+    data.incident.since = event.since;
+    data.incident.time = event.time;
+    data.incident.type = event.type;
+    data.incident.display_address = event.display_address;
 
     let device = await openDevice();
     if (!device) return;
@@ -161,6 +156,13 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async ()
     await fadeToColor(device, [0, 0, 0]);
 
 });
+
+/**
+ * Everytime the database is updated we update the clock countdown
+ */
+Echo.channel('run').listen('DatabaseUpdated', async(event) => {
+    data.last_run = event.run;
+})
 
 /**
  * Creates a new sleep function which stops the app from closing
@@ -204,18 +206,19 @@ async function previousEvent() {
 
 // TODO This function needs to be re-triggered by pusher when a new event is run on the server
 
-function calculateElapsedTime(){
+function calculateElapsedTime() {
     data.time_elapsed = moment.utc(props.last_run.created_at).fromNow();
 }
+
 calculateElapsedTime();
-setInterval(calculateElapsedTime, 60*1000);
+setInterval(calculateElapsedTime, 60 * 1000);
 
 </script>
 
 <template>
     <Head>
         <title>Welcome to</title>
-        <meta head-key="description" name="description" content="Blink-Safety bringing awareness to Domestic Violence" />
+        <meta head-key="description" name="description" content="Blink-Safety bringing awareness to Domestic Violence"/>
         <link rel="apple-touch-icon" sizes="180x180" :href="appleTouchIcon">
         <link rel="icon" type="image/png" sizes="32x32" :href="favicon32">
         <link rel="icon" type="image/png" sizes="16x16" :href="favicon16">
@@ -229,8 +232,8 @@ setInterval(calculateElapsedTime, 60*1000);
             <div class="h-full w-full flex flex-col justify-center items-center">
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
-                <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since the last report of
-                    domestic violence incident in St. Peterburg FL</p>
+                <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since the last
+                    <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4" target="_blank" class="underline">police report</a> of a domestic violence incident in St. Peterburg FL</p>
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
                     <p>{{ data.incident['time'] }}</p>

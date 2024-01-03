@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Events\DatabaseUpdated;
 use App\Events\DomesticAbuseDetected;
+use App\Http\Resources\LastIncidentResource;
 use App\Models\Event;
 use App\Models\Run;
 use Illuminate\Console\Command;
@@ -23,6 +25,12 @@ class RetrieveStPetersburgData extends Command
     protected $signature = 'app:retrieve-st-petersburg-data';
 
     /**
+     * This will store the last new event if any
+     * @var ?Event $event | null
+     */
+    protected ?Event $event = null;
+
+    /**
      * The console command description.
      *
      * @var string
@@ -41,6 +49,8 @@ class RetrieveStPetersburgData extends Command
             Log::info('Start date: ' . $start_date);
             Log::info('End date: ' . $end_date);
 
+            $new_events = 0;
+
             $response = Http::withHeaders([
                 'X-App-Token' => 'e4VAbacu29Rs5RFhaDtjwFtmB',
             ])->get("https://stat.stpete.org/resource/2eks-pg5j.json?\$where=crime_date between '$start_date' and '$end_date' AND starts_with(type_of_engagement, 'DOMESTIC')");
@@ -52,9 +62,10 @@ class RetrieveStPetersburgData extends Command
                     // Try to locate the event and make sure its new
                     $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
 
+
                     // If the event is new we store it and create a new dispatch a new broadcast
                     if (empty($db_event)) {
-                        Event::create([
+                        $this->event = Event::create([
                             'precinct' => '33705',
                             'event_id' => $event['id'],
                             'event_number' => $event['event_number'],
@@ -70,22 +81,28 @@ class RetrieveStPetersburgData extends Command
                             'council_district' => (array_key_exists('council_district', $event)) ? $event['council_district'] : '',
                             'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
                         ]);
-                        // Dispatch the event to broadcast
-                        DomesticAbuseDetected::dispatch('33705');
+
+                        $new_events++;
                     }
                 }
             }
 
-            Run::create([
-               'command' => 'app:retrieve-st-petersburg-data'
+
+            // If any new events where created we retrieve the last one and update the UI broadcasting an event
+            if($new_events > 0){
+                DomesticAbuseDetected::dispatch('33705', new LastIncidentResource($this->event));
+            }
+
+            // After we finish running we update the UI notifying to update the next run as well
+            $run = Run::create([
+                'command' => 'app:retrieve-st-petersburg-data'
             ]);
+            DatabaseUpdated::dispatch($run);
+
 
             $this->info('Command successful.');
 
-            // TODO DISPATCH AN EMAIL TO WARN ABOUT THE UPDATE?
-
-
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->info('Something went wrong.');
             Log::error($exception);
         }

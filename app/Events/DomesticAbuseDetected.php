@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\LastIncidentResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -19,14 +20,21 @@ class DomesticAbuseDetected implements ShouldBroadcast
      * Police department zipcode
      * @string
      */
-    public string $pd_zipcode;
+    protected string $pd_zipcode;
+
+    /**
+     * The domestic violence case
+     * @var LastIncidentResource
+     */
+    public LastIncidentResource $event;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($pd_zipcode)
+    public function __construct($pd_zipcode, $event)
     {
         $this->pd_zipcode = $pd_zipcode;
+        $this->event = $event;
     }
 
     /**

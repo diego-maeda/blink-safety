@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Events\DomesticAbuseDetected;
+use App\Http\Resources\LastIncidentResource;
+use App\Models\Event;
 use Illuminate\Console\Command;
 
 class TestBroadcastCommand extends Command
@@ -26,6 +28,7 @@ class TestBroadcastCommand extends Command
      */
     public function handle(): void
     {
-        DomesticAbuseDetected::dispatch('33705');
+        $event = Event::first();
+        DomesticAbuseDetected::dispatch('33705', new LastIncidentResource($event));
     }
 }
