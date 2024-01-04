@@ -24,6 +24,7 @@ const data = reactive({
     last_run: props.last_run,
     incident: props.last_incident,
     time_elapsed: '',
+    next_update: '',
 })
 
 // Device status
@@ -169,6 +170,7 @@ Echo.channel('run').listen('DatabaseUpdated', async(event) => {
 
     // Recalculate the elapsed time
     calculateElapsedTime();
+    calculateNextRunTime();
 })
 
 /**
@@ -220,6 +222,13 @@ function calculateElapsedTime() {
 calculateElapsedTime();
 setInterval(calculateElapsedTime, 60 * 1000);
 
+function calculateNextRunTime(){
+    data.next_update = moment.utc(props.last_run.next_run).fromNow();
+}
+calculateNextRunTime();
+setInterval(calculateNextRunTime, 60 * 1000);
+
+
 </script>
 
 <template>
@@ -257,7 +266,7 @@ setInterval(calculateElapsedTime, 60 * 1000);
 
                 <div class="text-gray-600 text-center mt-3">
                     <p>Last updated: {{ data.time_elapsed }}</p>
-                    <p>Updating next at {{ data.last_run['next_run'] }}</p>
+                    <p>Updating next {{ data.next_update }}</p>
                 </div>
             </div>
         </v-main>
