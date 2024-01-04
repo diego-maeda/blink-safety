@@ -161,7 +161,14 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
  * Everytime the database is updated we update the clock countdown
  */
 Echo.channel('run').listen('DatabaseUpdated', async(event) => {
-    data.last_run = event.run;
+    console.log('Database has been updated!');
+
+    // Update the last run data
+    data.last_run.created_at = event.run.created_at;
+    data.last_run.next_run = event.run.next_run;
+
+    // Recalculate the elapsed time
+    calculateElapsedTime();
 })
 
 /**
@@ -250,7 +257,7 @@ setInterval(calculateElapsedTime, 60 * 1000);
 
                 <div class="text-gray-600 text-center mt-3">
                     <p>Last updated: {{ data.time_elapsed }}</p>
-                    <p>Updating next at {{ data.last_run['next_update'] }}</p>
+                    <p>Updating next at {{ data.last_run['next_run'] }}</p>
                 </div>
             </div>
         </v-main>

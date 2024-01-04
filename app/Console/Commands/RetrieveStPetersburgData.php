@@ -5,8 +5,10 @@ namespace App\Console\Commands;
 use App\Events\DatabaseUpdated;
 use App\Events\DomesticAbuseDetected;
 use App\Http\Resources\LastIncidentResource;
+use App\Http\Resources\LastRunResource;
 use App\Models\Event;
 use App\Models\Run;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -59,7 +61,7 @@ class RetrieveStPetersburgData extends Command
 
                 foreach ($response->json() as $event) {
 
-                    // Try to locate the event and make sure its new
+                    // Try to locate the event and make sure it's new
                     $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
 
 
@@ -97,7 +99,7 @@ class RetrieveStPetersburgData extends Command
             $run = Run::create([
                 'command' => 'app:retrieve-st-petersburg-data'
             ]);
-            DatabaseUpdated::dispatch($run);
+            DatabaseUpdated::dispatch(new LastRunResource($run));
 
 
             $this->info('Command successful.');

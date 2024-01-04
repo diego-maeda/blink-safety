@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\LastRunResource;
 use App\Models\Run;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,13 +17,13 @@ class DatabaseUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Run $run;
+    public LastRunResource $run;
 
     /**
      * Create a new event instance.
-     * @param Run $run
+     * @param LastRunResource $run
      */
-    public function __construct(Run $run)
+    public function __construct(LastRunResource $run)
     {
         $this->run = $run;
     }
