@@ -13,6 +13,12 @@ class EmptyResultsDetected implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
+     * Police department zipcode
+     * @string
+     */
+    protected string $pd_zipcode;
+
+    /**
      * Create a new event instance.
      */
     public function __construct($pd_zipcode)
