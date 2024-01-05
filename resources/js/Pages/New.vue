@@ -3,6 +3,7 @@ import {Head} from '@inertiajs/vue3';
 import logo from '/resources/img/blink-safety-logo.svg';
 import axios from 'axios';
 import {reactive} from 'vue'
+
 // Favicon import
 import appleTouchIcon from '/resources/img/apple-touch-icon.png';
 import favicon32 from '/resources/img/favicon-32x32.png'
@@ -10,9 +11,21 @@ import favicon16 from '/resources/img/favicon-16x16.png'
 import favicon from '/resources/img/favicon.ico'
 import siteManifest from '/resources/img/site.webmanifest';
 
-import moment from "moment";
-import {purple} from "vuetify/util/colors";
 
+//Locale imports
+import {useI18n} from "vue-i18n";
+
+const {t, locale} = useI18n({useScope: "global"});
+import en from '/resources/img/icons/en.png';
+import es from '/resources/img/icons/es.png';
+import pt from '/resources/img/icons/pt.png';
+
+import moment from "moment";
+import 'moment/dist/locale/pt-br';
+import 'moment/dist/locale/es.js';
+
+moment.locale('es')
+moment.locale('pt-br')
 
 const props = defineProps({
         last_incident: Object,
@@ -21,13 +34,20 @@ const props = defineProps({
 )
 
 const data = reactive({
+    // Blink1 Status
     connected: false,
-    last_run: props.last_run,
+    // Incident options
     incident: props.last_incident,
+    time_incident_elapsed: '',
+    // Last run options
+    last_run: props.last_run,
     time_elapsed: '',
     next_update: '',
+    // Dialog options - Prev/Next Functions
     dialog: false,
     dialog_message: '',
+    // Language selector
+    lang: 0,
 })
 
 // Device status
@@ -158,6 +178,7 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
     data.incident.time = event.time;
     data.incident.type = event.type;
     data.incident.display_address = event.display_address;
+    calculateElapsedIncident();
 
     let device = await openDevice();
     if (!device) return;
@@ -170,6 +191,7 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
     await fadeToColor(device, black_color);
     await sleep(1000);
     await fadeToColor(device, purple_color);
+
 }).listen('EmptyResultsDetected', async (event) => {
     //If no results are detected
     let device = await openDevice();
@@ -233,7 +255,7 @@ async function previousEvent() {
 
             }).catch(function (error) {
                 if (error.response) {
-                    data.dialog_message = "You've reached the first event";
+                    data.dialog_message = t('message.first_event');
                     data.dialog = true;
                 }
             }
@@ -272,14 +294,23 @@ async function nextEvent() {
 
             }).catch(function (error) {
                 if (error.response) {
-
-                    data.dialog_message = "You've reached the last event";
+                    data.dialog_message = t('message.last_event');
                     data.dialog = true;
                 }
             }
         );
     }
 }
+
+/**
+ * Calculate the elapsed time since the last incident
+ */
+function calculateElapsedIncident() {
+    data.time_incident_elapsed = moment.utc(props.last_incident.since).fromNow(true);
+}
+
+calculateElapsedIncident();
+setInterval(calculateElapsedTime, 60 * 1000);
 
 /**
  * Calculate the elapsed time from the last run
@@ -301,7 +332,18 @@ function calculateNextRunTime() {
 calculateNextRunTime();
 setInterval(calculateNextRunTime, 60 * 1000);
 
-
+/**
+ * Updates the translation according to the selected country flag
+ * @param lang
+ */
+function updateLocale(lang) {
+    console.log('Updating locale to: ' + lang);
+    locale.value = lang;
+    moment.locale(lang);
+    calculateElapsedIncident();
+    calculateElapsedTime();
+    calculateNextRunTime();
+}
 </script>
 
 <template>
@@ -318,13 +360,54 @@ setInterval(calculateNextRunTime, 60 * 1000);
     <v-app>
         <!-- MAIN -->
         <v-main>
+            <v-menu>
+                <template v-slot:activator="{ props }">
+                    <v-btn
+                        icon
+                        flat
+                        v-bind="props"
+                    >
+                        <img :src="en" alt="USA flag" height="25" width="25" v-if="$i18n.locale === 'en'">
+                        <img :src="pt" alt="Brazilian flag" height="25" width="25" v-else-if="$i18n.locale === 'pt-br'">
+                        <img :src="es" alt="Mexican flag" height="25" width="25" v-else-if="$i18n.locale === 'es'">
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item class="border-b border-gray-100" @click="updateLocale('en')">
+                        <template v-slot:prepend>
+                            <img :src="en" alt="USA flag" height="25" width="25" class="mr-3">
+                        </template>
+                        <v-list-item-title><strong>{{$t('message.english')}}</strong></v-list-item-title>
+                    </v-list-item>
+                    <v-list-item class="border-b border-gray-100" @click="updateLocale('pt-br')">
+                        <template v-slot:prepend>
+                            <img :src="pt" alt="Brazilian flag" height="25" width="25" class="mr-3">
+                        </template>
+                        <v-list-item-title><strong>{{$t('message.portuguese')}}</strong></v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="updateLocale('es')">
+                        <template v-slot:prepend>
+                            <img :src="es" alt="Mexican flag" height="25" width="25" class="mr-3">
+                        </template>
+                        <v-list-item-title><strong>{{$t('message.spanish')}}</strong></v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+<!--            <select v-model="$i18n.locale" @change="updateLocale(locale)">-->
+<!--                <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">-->
+<!--                    <img :src="locale" alt="">{{ locale }}-->
+<!--                </option>-->
+<!--            </select>-->
+
             <div class="h-full w-full flex flex-col justify-center items-center">
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
-                <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since the last
+                <p class="max-w-60 text-center text-lg"><strong>{{ data.time_incident_elapsed }}</strong>
+                    {{ $t('message.since_the_last') }}
                     <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4"
-                       target="_blank" class="underline">police report</a> of a domestic violence incident in St.
-                    Peterburg FL</p>
+                       target="_blank" class="underline">{{ $t('message.police_report') }}</a>
+                    {{ $t('message.domestic_violence_in_st_petersburg') }}</p>
+
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
                     <p>{{ data.incident['time'] }}</p>
@@ -333,19 +416,25 @@ setInterval(calculateNextRunTime, 60 * 1000);
                 </div>
 
                 <div class="mb-3 ">
-                    <v-btn color="purple" class="mr-1" tonal rounded @click="previousEvent">&lt; Prev</v-btn>
-                    <v-btn color="purple" class="ml-1" tonal rounded @click="nextEvent">Next &gt;</v-btn>
+                    <v-btn color="purple" class="mr-1" tonal rounded @click="previousEvent">&lt; {{
+                            $t('message.prev')
+                        }}
+                    </v-btn>
+                    <v-btn color="purple" class="ml-1" tonal rounded @click="nextEvent">{{ $t('message.next') }} &gt;
+                    </v-btn>
                 </div>
 
                 <div class="text-purple-900">
-                    <a href="https://github.com/diego-maeda/blink-safety" target="_blank">About</a> |
-                    <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">Disconnect</a>
-                    <a @click="handleConnectClick" class="cursor-pointer" v-if="!data.connected">Connect</a>
+                    <a href="https://github.com/diego-maeda/blink-safety" target="_blank">{{ $t('message.about') }}</a>
+                    |
+                    <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">{{$('message.disconnect')}}</a>
+                    <a @click="handleConnectClick" class="cursor-pointer"
+                       v-if="!data.connected">{{ $t('message.connect') }}</a>
                 </div>
 
                 <div class="text-gray-600 text-center mt-3">
-                    <p>Last updated: {{ data.time_elapsed }}</p>
-                    <p>Updating next {{ data.next_update }}</p>
+                    <p>{{ $t('message.last_updated') }} {{ data.time_elapsed }}</p>
+                    <p>{{ $t('message.updating_next') }} {{ data.next_update }}</p>
                 </div>
             </div>
             <v-dialog

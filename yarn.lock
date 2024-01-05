@@ -41,6 +41,27 @@
     lodash.clonedeep "^4.5.0"
     lodash.isequal "^4.5.0"
 
+"@intlify/core-base@9.4.1":
+  version "9.4.1"
+  resolved "https://registry.npmjs.org/@intlify/core-base/-/core-base-9.4.1.tgz"
+  integrity sha512-WIwx+elsZbxSMxRG5+LC+utRohFvmZMoDevfKOfnYMLbpCjCSavqTfHJAtfsY6ruowzqXeKkeLhRHbYbjoJx5g==
+  dependencies:
+    "@intlify/message-compiler" "9.4.1"
+    "@intlify/shared" "9.4.1"
+
+"@intlify/message-compiler@9.4.1":
+  version "9.4.1"
+  resolved "https://registry.npmjs.org/@intlify/message-compiler/-/message-compiler-9.4.1.tgz"
+  integrity sha512-aN2N+dUx320108QhH51Ycd2LEpZ+NKbzyQ2kjjhqMcxhHdxtOnkgdx+MDBhOy/CObwBmhC3Nygzc6hNlfKvPNw==
+  dependencies:
+    "@intlify/shared" "9.4.1"
+    source-map-js "^1.0.2"
+
+"@intlify/shared@9.4.1":
+  version "9.4.1"
+  resolved "https://registry.npmjs.org/@intlify/shared/-/shared-9.4.1.tgz"
+  integrity sha512-A51elBmZWf1FS80inf/32diO9DeXoqg9GR9aUDHFcfHoNDuT46Q+fpPOdj8jiJnSHSBh8E1E+6qWRhAZXdK3Ng==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz"
@@ -174,6 +195,11 @@
   dependencies:
     "@vue/compiler-dom" "3.3.13"
     "@vue/shared" "3.3.13"
+
+"@vue/devtools-api@^6.5.0":
+  version "6.5.1"
+  resolved "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.5.1.tgz"
+  integrity sha512-+KpckaAQyfbvshdDW5xQylLni1asvNSGme1JFs8I1+/H5pHEhqUKMEQD/qn3Nx5+/nycBq11qAEi8lk+LXI2dA==
 
 "@vue/reactivity-transform@3.3.13":
   version "3.3.13"
@@ -1177,6 +1203,15 @@ vite-plugin-full-reload@^1.0.5:
     rollup "^3.27.1"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-i18n@^9.0.0, vue-i18n@^9.4.1:
+  version "9.4.1"
+  resolved "https://registry.npmjs.org/vue-i18n/-/vue-i18n-9.4.1.tgz"
+  integrity sha512-vnQyYE9LBuNOqPpETIcCaGnAyLEqfeIvDcyZ9T+WBCWFTqWw1J8FuF1jfeDwpHBi5JKgAwgXyq1mt8jp/x/GPA==
+  dependencies:
+    "@intlify/core-base" "9.4.1"
+    "@intlify/shared" "9.4.1"
+    "@vue/devtools-api" "^6.5.0"
 
 vue@^3.0.0, vue@^3.2.25, vue@^3.2.41, vue@^3.3.0, vue@3.3.13:
   version "3.3.13"
