@@ -181,6 +181,9 @@ jobs:
             echo "Caching views"
             php artisan view:cache
 
+            echo "Update the events"
+            php artisan app:retrieve-st-petersburg-data
+
             echo "Deployment finished ..."
 
   clean-up:
