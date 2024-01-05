@@ -26,6 +26,7 @@ import 'moment/dist/locale/es.js';
 
 moment.locale('es')
 moment.locale('pt-br')
+moment.locale('en')
 
 const props = defineProps({
         last_incident: Object,
