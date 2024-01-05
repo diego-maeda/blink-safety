@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Events\DatabaseUpdated;
 use App\Events\DomesticAbuseDetected;
+use App\Events\EmptyResultsDetected;
 use App\Http\Resources\LastIncidentResource;
 use App\Http\Resources\LastRunResource;
 use App\Models\Event;
@@ -93,6 +94,8 @@ class RetrieveStPetersburgData extends Command
             // If any new events where created we retrieve the last one and update the UI broadcasting an event
             if($new_events > 0){
                 DomesticAbuseDetected::dispatch('33705', new LastIncidentResource($this->event));
+            } else {
+                EmptyResultsDetected::dispatch('33705');
             }
 
             // After we finish running we update the UI notifying to update the next run as well

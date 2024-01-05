@@ -11,6 +11,7 @@ import favicon from '/resources/img/favicon.ico'
 import siteManifest from '/resources/img/site.webmanifest';
 
 import moment from "moment";
+import {purple} from "vuetify/util/colors";
 
 
 const props = defineProps({
@@ -25,6 +26,8 @@ const data = reactive({
     incident: props.last_incident,
     time_elapsed: '',
     next_update: '',
+    dialog: false,
+    dialog_message: '',
 })
 
 // Device status
@@ -32,6 +35,9 @@ let device_status = 'No device detected';
 
 // Purple Color
 let purple_color = [255, 0, 255];
+
+// Pink Color
+let pink_color = [255, 56, 152];
 
 // Red Color
 let red_color = [255, 0, 0];
@@ -57,7 +63,6 @@ async function handleConnectClick() {
     await fadeToColor(device, black_color);
     await sleep(500);
 }
-
 
 /**
  * Handle the disconnect with the blink1 device
@@ -123,6 +128,14 @@ async function openDevice() {
     return device;
 }
 
+/**
+ * This function converts the color to send to the device
+ * @param device
+ * @param r
+ * @param g
+ * @param b
+ * @returns {Promise<void>}
+ */
 async function fadeToColor(device, [r, g, b]) {
     if (!device) return;
     const reportId = 1;
@@ -148,20 +161,27 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
 
     let device = await openDevice();
     if (!device) return;
-    await fadeToColor(device, [255, 0, 255]);
+    await fadeToColor(device, purple_color);
     await sleep(1000);
-    await fadeToColor(device, [0, 0, 0]);
+    await fadeToColor(device, black_color);
     await sleep(1000);
-    await fadeToColor(device, [255, 0, 255]);
+    await fadeToColor(device, purple_color);
     await sleep(1000);
-    await fadeToColor(device, [0, 0, 0]);
-
+    await fadeToColor(device, black_color);
+    await sleep(1000);
+    await fadeToColor(device, purple_color);
+}).listen('EmptyResultsDetected', async (event) => {
+    //If no results are detected
+    let device = await openDevice();
+    if (!device) return;
+    await fadeToColor(device, black_color);
+    await sleep(1000);
 });
 
 /**
  * Everytime the database is updated we update the clock countdown
  */
-Echo.channel('run').listen('DatabaseUpdated', async(event) => {
+Echo.channel('run').listen('DatabaseUpdated', async (event) => {
     console.log('Database has been updated!');
 
     // Update the last run data
@@ -182,6 +202,10 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/**
+ * Loads the previous event
+ * @returns {Promise<void>}
+ */
 async function previousEvent() {
     // Load last event feed and replace the data on last_incident
     let last_id = Number(data.incident['id']);
@@ -189,32 +213,77 @@ async function previousEvent() {
     let id_search = last_id - 1
 
     if (id_search !== 0) {
-        axios.get('/api/previous/' + id_search)
-            .then((response) => {
+        axios.get('/api/find-event/' + id_search)
+            .then(async (response) => {
                 data.incident.id = response.data.last_incident.id;
                 data.incident.since = response.data.last_incident.since;
                 data.incident.time = response.data.last_incident.time;
                 data.incident.type = response.data.last_incident.type;
                 data.incident.display_address = response.data.last_incident.display_address;
 
-            }).catch((error) => console.log(error));
+                let device = await openDevice();
+                if (!device) return;
+                await fadeToColor(device, pink_color);
+                await sleep(1000);
+                await fadeToColor(device, black_color);
+                await sleep(1000);
+                await fadeToColor(device, pink_color);
+                await sleep(1000);
+                await fadeToColor(device, black_color);
 
-        let device = await openDevice();
-        if (!device) return;
-        await fadeToColor(device, purple_color);
-        await sleep(1000);
-        await fadeToColor(device, black_color);
-        await sleep(1000);
-        await fadeToColor(device, purple_color);
-        await sleep(1000);
-        await fadeToColor(device, black_color);
-    } else {
-        console.log(`You have reached the first event`);
+            }).catch(function (error) {
+                if (error.response) {
+                    data.dialog_message = "You've reached the first event";
+                    data.dialog = true;
+                }
+            }
+        );
     }
 }
 
-// TODO This function needs to be re-triggered by pusher when a new event is run on the server
+/**
+ * Loads the next event
+ * @returns {Promise<void>}
+ */
+async function nextEvent() {
+    // Load last event feed and replace the data on last_incident
+    let last_id = Number(data.incident['id']);
 
+    let id_search = last_id + 1
+
+    if (id_search !== 0) {
+        axios.get('/api/find-event/' + id_search)
+            .then(async (response) => {
+                data.incident.id = response.data.last_incident.id;
+                data.incident.since = response.data.last_incident.since;
+                data.incident.time = response.data.last_incident.time;
+                data.incident.type = response.data.last_incident.type;
+                data.incident.display_address = response.data.last_incident.display_address;
+
+                let device = await openDevice();
+                if (!device) return;
+                await fadeToColor(device, pink_color);
+                await sleep(1000);
+                await fadeToColor(device, black_color);
+                await sleep(1000);
+                await fadeToColor(device, pink_color);
+                await sleep(1000);
+                await fadeToColor(device, black_color);
+
+            }).catch(function (error) {
+                if (error.response) {
+
+                    data.dialog_message = "You've reached the last event";
+                    data.dialog = true;
+                }
+            }
+        );
+    }
+}
+
+/**
+ * Calculate the elapsed time from the last run
+ */
 function calculateElapsedTime() {
     data.time_elapsed = moment.utc(props.last_run.created_at).fromNow();
 }
@@ -222,9 +291,13 @@ function calculateElapsedTime() {
 calculateElapsedTime();
 setInterval(calculateElapsedTime, 60 * 1000);
 
-function calculateNextRunTime(){
+/**
+ * Calculate the time for the next run
+ */
+function calculateNextRunTime() {
     data.next_update = moment.utc(props.last_run.next_run).fromNow();
 }
+
 calculateNextRunTime();
 setInterval(calculateNextRunTime, 60 * 1000);
 
@@ -249,7 +322,9 @@ setInterval(calculateNextRunTime, 60 * 1000);
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
                 <p class="max-w-60 text-center text-lg"><strong>{{ data.incident['since'] }}</strong> since the last
-                    <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4" target="_blank" class="underline">police report</a> of a domestic violence incident in St. Peterburg FL</p>
+                    <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4"
+                       target="_blank" class="underline">police report</a> of a domestic violence incident in St.
+                    Peterburg FL</p>
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
                     <p>{{ data.incident['time'] }}</p>
@@ -257,11 +332,15 @@ setInterval(calculateNextRunTime, 60 * 1000);
                     <p>{{ data.incident['display_address'] }}</p>
                 </div>
 
+                <div class="mb-3 ">
+                    <v-btn color="purple" class="mr-1" tonal rounded @click="previousEvent">&lt; Prev</v-btn>
+                    <v-btn color="purple" class="ml-1" tonal rounded @click="nextEvent">Next &gt;</v-btn>
+                </div>
+
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">About</a> |
                     <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">Disconnect</a>
                     <a @click="handleConnectClick" class="cursor-pointer" v-if="!data.connected">Connect</a>
-                    <a @click="previousEvent" class="cursor-pointer" v-if="data.connected"> | Previous</a>
                 </div>
 
                 <div class="text-gray-600 text-center mt-3">
@@ -269,6 +348,25 @@ setInterval(calculateNextRunTime, 60 * 1000);
                     <p>Updating next {{ data.next_update }}</p>
                 </div>
             </div>
+            <v-dialog
+                v-model="data.dialog"
+                width="auto"
+            >
+                <v-card>
+                    <v-toolbar color="primary">
+                        <v-toolbar-title>Blink-Safety</v-toolbar-title>
+
+                        <v-spacer></v-spacer>
+
+                        <v-btn icon="true" @click="data.dialog = false">
+                            <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+                    <v-card-text>
+                        <div class="text-lg pa-12"> {{ data.dialog_message }}</div>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
         </v-main>
         <!-- MAIN -->
     </v-app>
