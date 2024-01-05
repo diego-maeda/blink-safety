@@ -156,7 +156,7 @@ jobs:
   run-after-hooks:
     name: 'Running hooks after setup'
     runs-on: 'ubuntu-latest'
-    needs: [create-deployment-artifacts,prepare-release-on-server,activate-release]
+    needs: [create-deployment-artifacts,prepare-release-on-server,run-before-hooks,activate-release]
     steps:
       - name: Run after hooks
         uses: appleboy/ssh-action@master
@@ -189,7 +189,7 @@ jobs:
   clean-up:
     name: 'Clean up the server'
     runs-on: 'ubuntu-latest'
-    needs: [ create-deployment-artifacts,prepare-release-on-server,activate-release,run-after-hooks]
+    needs: [ create-deployment-artifacts,prepare-release-on-server,run-before-hooks,activate-release,run-after-hooks]
     steps:
       - name: Run clean up
         uses: appleboy/ssh-action@master
