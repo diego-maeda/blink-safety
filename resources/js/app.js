@@ -40,7 +40,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const i18n = createI18n({
             legacy: false,
-            locale: 'pt-br', // user locale by props
+            locale: 'en', // user locale by props
             fallbackLocale: "en", // set fallback locale
             messages: messages, // set locale messages
         });
