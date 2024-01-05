@@ -57,8 +57,9 @@ ___
 ### :hammer: Project walkthrough
 We utilize the Police Department API to identify instances of Domestic Violence. Upon detection, we store this information in our database and promptly relay it to the broadcast system (Pusher.com). Through this system, every user connected to the platform receives immediate notifications regarding these cases.
 
-** Communication explained**
-<img src="">
+**Communication explained**
+<img src="https://github.com/diego-maeda/blink-safety/blob/main/.github/docs/comms.png">
+
 ### :oncoming_police_car: Covered Police Departments
 - Florida State
   - St. Petersburg 
