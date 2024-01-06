@@ -63,7 +63,7 @@ class RetrieveOrlandoData extends Command
                             'precinct' => '32803',
                             'event_id' => $incident['@attributes']['incident'],
                             'event_number' => $incident['@attributes']['incident'],
-                            'type_of_engagement' => $incident['DESC'],
+                            'type_of_engagement' => strtoupper($incident['DESC']),
                             'sub_engagement' => 'Unknown',
                             'classification' => 'Unknown',
                             'display_address' => $incident['LOCATION'],

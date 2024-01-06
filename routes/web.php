@@ -15,7 +15,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'city']);
 Route::get('/{state}/{city}', [HomeController::class, 'city']);
 
 Route::get('/v2', function(){
