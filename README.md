@@ -63,6 +63,7 @@ We utilize the Police Department API to identify instances of Domestic Violence.
 ### :oncoming_police_car: Covered Police Departments
 - Florida State
   - St. Petersburg 
+  - Orlando
 
 ___
 ### :hammer_and_wrench: How to install the project

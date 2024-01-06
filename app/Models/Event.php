@@ -21,6 +21,7 @@ class Event extends Model
         'classification',
         'display_address',
         'crime_date',
+        'crime_time',
         'latitude',
         'longitude',
         'neighborhood_name',

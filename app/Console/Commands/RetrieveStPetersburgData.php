@@ -28,17 +28,17 @@ class RetrieveStPetersburgData extends Command
     protected $signature = 'app:retrieve-st-petersburg-data';
 
     /**
-     * This will store the last new event if any
-     * @var ?Event $event | null
-     */
-    protected ?Event $event = null;
-
-    /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'This command will retrieve the data from the St. Petersburg PD';
+
+    /**
+     * This will store the last new event if any
+     * @var ?Event $event | null
+     */
+    protected ?Event $event = null;
 
     /**
      * Execute the console command.
@@ -65,7 +65,6 @@ class RetrieveStPetersburgData extends Command
                     // Try to locate the event and make sure it's new
                     $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
 
-
                     // If the event is new we store it and create a new dispatch a new broadcast
                     if (empty($db_event)) {
                         $this->event = Event::create([
@@ -85,6 +84,7 @@ class RetrieveStPetersburgData extends Command
                             'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
                         ]);
 
+                        // We update this counter to make sure only to broadcast one notification per run
                         $new_events++;
                     }
                 }
@@ -94,6 +94,7 @@ class RetrieveStPetersburgData extends Command
             // If any new events where created we retrieve the last one and update the UI broadcasting an event
             if($new_events > 0){
                 DomesticAbuseDetected::dispatch('33705', new LastIncidentResource($this->event));
+            // Otherwise we notify the UI to turn off the lights
             } else {
                 EmptyResultsDetected::dispatch('33705');
             }
@@ -108,7 +109,7 @@ class RetrieveStPetersburgData extends Command
             $this->info('Command successful.');
 
         } catch (Exception $exception) {
-            $this->info('Something went wrong.');
+            $this->error('Something went wrong.');
             Log::error($exception);
         }
     }
