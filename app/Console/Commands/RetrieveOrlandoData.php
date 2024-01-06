@@ -91,7 +91,8 @@ class RetrieveOrlandoData extends Command
 
             // After we finish running we update the UI notifying to update the next run as well
             $run = Run::create([
-                'command' => 'app:retrieve-orlando-data'
+                'precinct' => '32803',
+                'command' => 'app:retrieve-orlando-data',
             ]);
             DatabaseUpdated::dispatch(new LastRunResource($run));
 

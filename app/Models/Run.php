@@ -15,6 +15,7 @@ class Run extends Model
     use HasFactory;
 
     protected $fillable = [
+        'precinct',
         'command',
     ];
 }

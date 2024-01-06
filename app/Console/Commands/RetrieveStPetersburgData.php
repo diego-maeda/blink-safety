@@ -101,6 +101,7 @@ class RetrieveStPetersburgData extends Command
 
             // After we finish running we update the UI notifying to update the next run as well
             $run = Run::create([
+                'precinct' => '33705',
                 'command' => 'app:retrieve-st-petersburg-data'
             ]);
             DatabaseUpdated::dispatch(new LastRunResource($run));

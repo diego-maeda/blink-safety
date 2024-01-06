@@ -3,7 +3,7 @@ export default {
         message: {
             since_the_last: 'since the last',
             police_report: 'police report',
-            domestic_violence_in_st_petersburg: 'of a domestic violence incident in St. Petersburg FL',
+            domestic_violence_in_st_petersburg: 'of a domestic violence incident in ',
             prev: 'prev',
             next: 'next',
             about: 'About',
@@ -23,7 +23,7 @@ export default {
         message: {
             since_the_last: 'desde o último',
             police_report: 'relatório policial',
-            domestic_violence_in_st_petersburg: 'de um caso de violência doméstica em St. Petersburg - Flórida',
+            domestic_violence_in_st_petersburg: 'de um caso de violência doméstica em ',
             prev: 'Anterior',
             next: 'Próximo',
             about: 'Sobre',
@@ -43,7 +43,7 @@ export default {
         message: {
             since_the_last: 'desde el último',
             police_report: 'reporte policial',
-            domestic_violence_in_st_petersburg: 'de un caso de violencia doméstica en San Petersburgo - Florida',
+            domestic_violence_in_st_petersburg: 'de un caso de violencia doméstica en ',
             prev: 'Anterior',
             next: 'Próximo',
             about: 'Acerca',
