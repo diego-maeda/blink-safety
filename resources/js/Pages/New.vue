@@ -407,7 +407,7 @@ function updateLocale(lang) {
                     {{ $t('message.since_the_last') }}
                     <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4"
                        target="_blank" class="underline">{{ $t('message.police_report') }}</a>
-                    {{ $t('message.domestic_violence_in_st_petersburg') }}</p>
+                    {{ $t('message.domestic_violence_in_st_petersburg') }} St. Petersburg FL</p>
 
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
