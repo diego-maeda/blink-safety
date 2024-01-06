@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="77.792038"
+   height="77.501999"
+   viewBox="0 0 77.792038 77.501999"
+   xml:space="preserve"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+<desc
+   id="desc1">Created with Fabric.js 3.6.6</desc>
+<defs
+   id="defs1" />
+<g
+   transform="translate(38.893043,38.753)"
+   id="g5">
+<g
+   id="g4">
+		<g
+   id="g1">
+<path
+   style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+   transform="translate(-49.36,-49.11)"
+   d="m 49.507,10.357 c -21.367,0 -38.75,17.384 -38.75,38.751 0,7.399 2.093,14.577 6.058,20.795 l -6.277,16.49 c -0.156,0.409 -0.05,0.87 0.268,1.17 0.205,0.194 0.472,0.296 0.742,0.296 0.149,0 0.3,-0.03 0.442,-0.094 L 27.351,80.89 c 6.524,4.562 14.172,6.969 22.157,6.969 21.368,0 38.751,-17.384 38.751,-38.751 0,-21.367 -17.384,-38.751 -38.752,-38.751 z m 0,71.785 c -6.983,0 -13.664,-2.16 -19.319,-6.248 -0.796,-0.574 -1.735,-0.878 -2.715,-0.878 -0.658,0 -1.295,0.136 -1.893,0.404 l -5.721,2.561 2.494,-6.556 c 0.531,-1.389 0.359,-2.957 -0.458,-4.196 -3.544,-5.389 -5.418,-11.654 -5.418,-18.12 0,-8.808 3.439,-17.099 9.686,-23.346 6.246,-6.247 14.538,-9.687 23.346,-9.687 18.215,0 33.033,14.819 33.033,33.033 -0.002,18.214 -14.82,33.033 -33.035,33.033 z"
+   stroke-linecap="round"
+   id="path1" />
+</g>
+		<g
+   transform="translate(-9.65)"
+   id="g2">
+<path
+   style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+   transform="translate(-39.71,-49.11)"
+   d="m 45.957,50.559 c -1.264,1.055 -3.069,1.582 -5.415,1.582 h -4.496 v 7.764 H 31.564 V 38.312 h 9.271 c 2.137,0 3.841,0.557 5.112,1.67 1.271,1.113 1.906,2.837 1.906,5.171 0,2.549 -0.632,4.35 -1.896,5.406 z M 42.514,42.78 c -0.571,-0.479 -1.372,-0.718 -2.401,-0.718 h -4.066 v 6.357 h 4.066 c 1.029,0 1.83,-0.259 2.401,-0.776 0.571,-0.517 0.857,-1.338 0.857,-2.461 0,-1.123 -0.286,-1.924 -0.857,-2.402 z"
+   stroke-linecap="round"
+   id="path2" />
+</g>
+		<g
+   transform="translate(9.05)"
+   id="g3">
+<path
+   style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+   transform="translate(-58.41,-49.11)"
+   d="m 67.159,38.312 v 3.823 H 60.7 V 59.904 H 56.159 V 42.135 h -6.49 v -3.823 z"
+   stroke-linecap="round"
+   id="path3" />
+</g>
+</g>
+</g>
+</svg>

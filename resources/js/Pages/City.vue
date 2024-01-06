@@ -16,9 +16,9 @@ import siteManifest from '/resources/img/site.webmanifest';
 import {useI18n} from "vue-i18n";
 
 const {t, locale} = useI18n({useScope: "global"});
-import en from '/resources/img/icons/en.png';
-import es from '/resources/img/icons/es.png';
-import pt from '/resources/img/icons/pt.png';
+import en from '/resources/img/icons/english.svg';
+import es from '/resources/img/icons/spanish.svg';
+import pt from '/resources/img/icons/portuguese.svg';
 
 import moment from "moment";
 import 'moment/dist/locale/pt-br';

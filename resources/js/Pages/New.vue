@@ -16,9 +16,9 @@ import siteManifest from '/resources/img/site.webmanifest';
 import {useI18n} from "vue-i18n";
 
 const {t, locale} = useI18n({useScope: "global"});
-import en from '/resources/img/icons/en.png';
-import es from '/resources/img/icons/es.png';
-import pt from '/resources/img/icons/pt.png';
+import en from '/resources/img/icons/english.svg';
+import es from '/resources/img/icons/spanish.svg';
+import pt from '/resources/img/icons/portuguese.svg';
 
 import moment from "moment";
 import 'moment/dist/locale/pt-br';
@@ -368,9 +368,9 @@ function updateLocale(lang) {
                         flat
                         v-bind="props"
                     >
-                        <img :src="en" alt="USA flag" height="25" width="25" v-if="$i18n.locale === 'en'">
-                        <img :src="pt" alt="Brazilian flag" height="25" width="25" v-else-if="$i18n.locale === 'pt-br'">
-                        <img :src="es" alt="Mexican flag" height="25" width="25" v-else-if="$i18n.locale === 'es'">
+                        <img :src="en" alt="English" height="25" width="25" v-if="$i18n.locale === 'en'">
+                        <img :src="pt" alt="Portuguese" height="25" width="25" v-else-if="$i18n.locale === 'pt-br'">
+                        <img :src="es" alt="Spanish" height="25" width="25" v-else-if="$i18n.locale === 'es'">
                     </v-btn>
                 </template>
                 <v-list>
@@ -394,11 +394,6 @@ function updateLocale(lang) {
                     </v-list-item>
                 </v-list>
             </v-menu>
-<!--            <select v-model="$i18n.locale" @change="updateLocale(locale)">-->
-<!--                <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">-->
-<!--                    <img :src="locale" alt="">{{ locale }}-->
-<!--                </option>-->
-<!--            </select>-->
 
             <div class="h-full w-full flex flex-col justify-center items-center">
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
