@@ -431,7 +431,7 @@ function updateLocale(lang) {
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">{{ $t('message.about') }}</a>
                     |
-                    <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">{{$('message.disconnect')}}</a>
+                    <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">{{$t('message.disconnect')}}</a>
                     <a @click="handleConnectClick" class="cursor-pointer"
                        v-if="!data.connected">{{ $t('message.connect') }}</a>
                 </div>
