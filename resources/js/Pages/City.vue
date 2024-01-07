@@ -29,6 +29,7 @@ moment.locale('pt-br')
 moment.locale('en')
 
 const props = defineProps({
+        precinct: String,
         city: String,
         state: String,
         last_incident: Object,
@@ -232,38 +233,34 @@ function sleep(ms) {
  * @returns {Promise<void>}
  */
 async function previousEvent() {
-    // Load last event feed and replace the data on last_incident
-    let last_id = Number(data.incident['id']);
 
-    let id_search = last_id - 1
+    axios.post('/api/find-previous-event', {
+        id: data.incident['id'],
+        precinct: props.precinct
+    }).then(async (response) => {
+        data.incident.id = response.data.last_incident.id;
+        data.incident.since = response.data.last_incident.since;
+        data.incident.time = response.data.last_incident.time;
+        data.incident.type = response.data.last_incident.type;
+        data.incident.display_address = response.data.last_incident.display_address;
 
-    if (id_search !== 0) {
-        axios.get('/api/find-event/' + id_search)
-            .then(async (response) => {
-                data.incident.id = response.data.last_incident.id;
-                data.incident.since = response.data.last_incident.since;
-                data.incident.time = response.data.last_incident.time;
-                data.incident.type = response.data.last_incident.type;
-                data.incident.display_address = response.data.last_incident.display_address;
+        let device = await openDevice();
+        if (!device) return;
+        await fadeToColor(device, pink_color);
+        await sleep(1000);
+        await fadeToColor(device, black_color);
+        await sleep(1000);
+        await fadeToColor(device, pink_color);
+        await sleep(1000);
+        await fadeToColor(device, black_color);
 
-                let device = await openDevice();
-                if (!device) return;
-                await fadeToColor(device, pink_color);
-                await sleep(1000);
-                await fadeToColor(device, black_color);
-                await sleep(1000);
-                await fadeToColor(device, pink_color);
-                await sleep(1000);
-                await fadeToColor(device, black_color);
-
-            }).catch(function (error) {
-                if (error.response) {
-                    data.dialog_message = t('message.first_event');
-                    data.dialog = true;
-                }
+    }).catch(function (error) {
+            if (error.response) {
+                data.dialog_message = t('message.first_event');
+                data.dialog = true;
             }
-        );
-    }
+        }
+    );
 }
 
 /**
@@ -271,38 +268,35 @@ async function previousEvent() {
  * @returns {Promise<void>}
  */
 async function nextEvent() {
-    // Load last event feed and replace the data on last_incident
-    let last_id = Number(data.incident['id']);
 
-    let id_search = last_id + 1
+    axios.post('/api/find-next-event', {
+        id: data.incident['id'],
+        precinct: props.precinct
+    }).then(async (response) => {
+            data.incident.id = response.data.last_incident.id;
+            data.incident.since = response.data.last_incident.since;
+            data.incident.time = response.data.last_incident.time;
+            data.incident.type = response.data.last_incident.type;
+            data.incident.display_address = response.data.last_incident.display_address;
 
-    if (id_search !== 0) {
-        axios.get('/api/find-event/' + id_search)
-            .then(async (response) => {
-                data.incident.id = response.data.last_incident.id;
-                data.incident.since = response.data.last_incident.since;
-                data.incident.time = response.data.last_incident.time;
-                data.incident.type = response.data.last_incident.type;
-                data.incident.display_address = response.data.last_incident.display_address;
+            let device = await openDevice();
+            if (!device) return;
+            await fadeToColor(device, pink_color);
+            await sleep(1000);
+            await fadeToColor(device, black_color);
+            await sleep(1000);
+            await fadeToColor(device, pink_color);
+            await sleep(1000);
+            await fadeToColor(device, black_color);
 
-                let device = await openDevice();
-                if (!device) return;
-                await fadeToColor(device, pink_color);
-                await sleep(1000);
-                await fadeToColor(device, black_color);
-                await sleep(1000);
-                await fadeToColor(device, pink_color);
-                await sleep(1000);
-                await fadeToColor(device, black_color);
-
-            }).catch(function (error) {
-                if (error.response) {
-                    data.dialog_message = t('message.last_event');
-                    data.dialog = true;
-                }
+        }).catch(function (error) {
+            if (error.response) {
+                data.dialog_message = t('message.last_event');
+                data.dialog = true;
             }
-        );
-    }
+        }
+    );
+
 }
 
 /**
@@ -374,7 +368,8 @@ function updateLocale(lang) {
                             v-bind="props"
                         >
                             <img :src="en" alt="USA flag" height="25" width="25" v-if="$i18n.locale === 'en'">
-                            <img :src="pt" alt="Brazilian flag" height="25" width="25" v-else-if="$i18n.locale === 'pt-br'">
+                            <img :src="pt" alt="Brazilian flag" height="25" width="25"
+                                 v-else-if="$i18n.locale === 'pt-br'">
                             <img :src="es" alt="Mexican flag" height="25" width="25" v-else-if="$i18n.locale === 'es'">
                         </v-btn>
                     </template>
@@ -383,19 +378,19 @@ function updateLocale(lang) {
                             <template v-slot:prepend>
                                 <img :src="en" alt="USA flag" height="25" width="25" class="mr-3">
                             </template>
-                            <v-list-item-title><strong>{{$t('message.english')}}</strong></v-list-item-title>
+                            <v-list-item-title><strong>{{ $t('message.english') }}</strong></v-list-item-title>
                         </v-list-item>
                         <v-list-item class="border-b border-gray-100" @click="updateLocale('pt-br')">
                             <template v-slot:prepend>
                                 <img :src="pt" alt="Brazilian flag" height="25" width="25" class="mr-3">
                             </template>
-                            <v-list-item-title><strong>{{$t('message.portuguese')}}</strong></v-list-item-title>
+                            <v-list-item-title><strong>{{ $t('message.portuguese') }}</strong></v-list-item-title>
                         </v-list-item>
                         <v-list-item @click="updateLocale('es')">
                             <template v-slot:prepend>
                                 <img :src="es" alt="Mexican flag" height="25" width="25" class="mr-3">
                             </template>
-                            <v-list-item-title><strong>{{$t('message.spanish')}}</strong></v-list-item-title>
+                            <v-list-item-title><strong>{{ $t('message.spanish') }}</strong></v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -410,7 +405,7 @@ function updateLocale(lang) {
                     {{ $t('message.since_the_last') }}
                     <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4"
                        target="_blank" class="underline">{{ $t('message.police_report') }}</a>
-                    {{ $t('message.domestic_violence_in_st_petersburg') }} {{props.city}} {{props.state}}</p>
+                    {{ $t('message.domestic_violence_in_st_petersburg') }} {{ props.city }} {{ props.state }}</p>
 
 
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
@@ -431,7 +426,8 @@ function updateLocale(lang) {
                 <div class="text-purple-900">
                     <a href="https://github.com/diego-maeda/blink-safety" target="_blank">{{ $t('message.about') }}</a>
                     |
-                    <a @click="handleDisconnectClick" class="cursor-pointer" v-if="data.connected">{{$t('message.disconnect')}}</a>
+                    <a @click="handleDisconnectClick" class="cursor-pointer"
+                       v-if="data.connected">{{ $t('message.disconnect') }}</a>
                     <a @click="handleConnectClick" class="cursor-pointer"
                        v-if="!data.connected">{{ $t('message.connect') }}</a>
                 </div>

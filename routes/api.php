@@ -9,4 +9,6 @@ Route::get('test-event', function () {
     Artisan::call('app:test-broadcast-command');
 });
 
-Route::get('/find-event/{id}', [EventsController::class, 'find']);
+Route::post('/find-previous-event', [EventsController::class, 'findPrevious']);
+Route::post('/find-next-event', [EventsController::class, 'findNext']);
+
