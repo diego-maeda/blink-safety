@@ -1,4 +1,5 @@
 <script setup>
+import {Head} from "@inertiajs/vue3";
 import {computed} from 'vue'
 import error from '/resources/img/errors/error.webp';
 
@@ -24,6 +25,9 @@ const description = computed(() => {
 </script>
 
 <template>
+    <Head>
+        <title>{{title}}</title>
+    </Head>
     <div class="flex justify-center flex-col items-center p-8">
 
         <v-img :height="250" :width="446" :src="error"></v-img>
