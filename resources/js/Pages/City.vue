@@ -11,7 +11,6 @@ import favicon16 from '/resources/img/favicon-16x16.png'
 import favicon from '/resources/img/favicon.ico'
 import siteManifest from '/resources/img/site.webmanifest';
 
-
 //Locale imports
 import {useI18n} from "vue-i18n";
 
@@ -28,6 +27,22 @@ moment.locale('es')
 moment.locale('pt-br')
 moment.locale('en')
 
+// Firebase imports
+import {getMessaging, getToken, onMessage} from 'firebase/messaging';
+import firebaseApp from '../firebase';
+
+// Initialize Firebase Cloud Messaging and get a reference to the service
+const messaging = getMessaging(firebaseApp);
+getToken(messaging, {vapidKey: "BCuD_-ZBQkXBWmrecTWCiSeK1xHvi0mrOJpl8wwi37Qs74R_KcutzYm9ZtlzRCH1lQUIb-__qRrW8F1Y1jo76OQ"});
+
+onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload);
+    // ...
+});
+
+// Add the public key generated from the console here.
+// End - Firebase imports
+
 const props = defineProps({
         precinct: String,
         city: String,
@@ -36,6 +51,7 @@ const props = defineProps({
         last_run: Object
     }
 )
+
 
 const data = reactive({
     // Blink1 Status
@@ -273,23 +289,23 @@ async function nextEvent() {
         id: data.incident['id'],
         precinct: props.precinct
     }).then(async (response) => {
-            data.incident.id = response.data.last_incident.id;
-            data.incident.since = response.data.last_incident.since;
-            data.incident.time = response.data.last_incident.time;
-            data.incident.type = response.data.last_incident.type;
-            data.incident.display_address = response.data.last_incident.display_address;
+        data.incident.id = response.data.last_incident.id;
+        data.incident.since = response.data.last_incident.since;
+        data.incident.time = response.data.last_incident.time;
+        data.incident.type = response.data.last_incident.type;
+        data.incident.display_address = response.data.last_incident.display_address;
 
-            let device = await openDevice();
-            if (!device) return;
-            await fadeToColor(device, pink_color);
-            await sleep(1000);
-            await fadeToColor(device, black_color);
-            await sleep(1000);
-            await fadeToColor(device, pink_color);
-            await sleep(1000);
-            await fadeToColor(device, black_color);
+        let device = await openDevice();
+        if (!device) return;
+        await fadeToColor(device, pink_color);
+        await sleep(1000);
+        await fadeToColor(device, black_color);
+        await sleep(1000);
+        await fadeToColor(device, pink_color);
+        await sleep(1000);
+        await fadeToColor(device, black_color);
 
-        }).catch(function (error) {
+    }).catch(function (error) {
             if (error.response) {
                 data.dialog_message = t('message.last_event');
                 data.dialog = true;
@@ -408,6 +424,9 @@ function updateLocale(lang) {
                     {{ $t('message.domestic_violence_in_st_petersburg') }} {{ props.city }} {{ props.state }}</p>
 
 
+                <p>
+                    Receive notifications?
+                </p>
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
                     <p>{{ data.incident['time'] }}</p>
                     <p>{{ data.incident['type'] }}</p>
