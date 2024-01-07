@@ -17,16 +17,16 @@ class PrecinctsTableSeeder extends Seeder
             'precinct' => '33705',
         ],
         [
-            'city' => 'St Petersburg',
-            'state' => 'FL',
+            'city' => 'pt petersburg',
+            'state' => 'fl',
         ]);
 
         Precinct::updateOrcreate([
             'precinct' => '32803',
         ],
             [
-                'city' => 'Orlando',
-                'state' => 'FL',
+                'city' => 'orlando',
+                'state' => 'fl',
             ]);
 
     }
