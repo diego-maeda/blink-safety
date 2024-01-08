@@ -10,14 +10,23 @@ class LastRunResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
+     * TODO LEAVE THIS CODE LIKE THIS FOR NOW, BUT IT HAS TO BE UPDATED TO BE BETTER ACOMMODATE
+     *  FUTURE PDS.
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
-        return [
-            'created_at' => $this->created_at,
-            'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(5),
-        ];
+        if($this->precinct == '32803') {
+            return [
+                'created_at' => $this->created_at,
+                'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(1),
+            ];
+        } else {
+            return [
+                'created_at' => $this->created_at,
+                'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(5),
+            ];
+        }
+
     }
 }
