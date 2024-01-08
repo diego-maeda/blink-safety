@@ -422,10 +422,6 @@ function updateLocale(lang) {
                        target="_blank" class="underline">{{ $t('message.police_report') }}</a>
                     {{ $t('message.domestic_violence_in_st_petersburg') }} {{ props.city }} {{ props.state }}</p>
 
-
-                <p>
-                    Receive notifications?
-                </p>
                 <div class="bg-purple-300 p-6 rounded-lg max-w-72 my-5">
                     <p>{{ data.incident['time'] }}</p>
                     <p>{{ data.incident['type'] }}</p>
