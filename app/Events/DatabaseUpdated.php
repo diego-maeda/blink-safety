@@ -17,14 +17,18 @@ class DatabaseUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public string $pd_zipcode;
+
     public LastRunResource $run;
 
     /**
-     * Create a new event instance.
+     * Create a new event instance
+     * @param String $pd_zipcode
      * @param LastRunResource $run
      */
-    public function __construct(LastRunResource $run)
+    public function __construct($pd_zipcode, LastRunResource $run)
     {
+        $this->pd_zipcode = $pd_zipcode;
         $this->run = $run;
     }
 
@@ -36,7 +40,7 @@ class DatabaseUpdated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('run'),
+            new Channel('run.' . $this->pd_zipcode),
         ];
     }
 }

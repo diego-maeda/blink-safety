@@ -190,8 +190,8 @@ async function fadeToColor(device, [r, g, b]) {
 /**
  * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
  */
-Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (event) => {
-    console.log('Connected to the channel #33705')
+Echo.channel('police-department.' + props.precinct).listen('DomesticAbuseDetected', async (event) => {
+    console.log('Connected to the channel #' . props.precinct)
 
     data.incident.id = event.id;
     data.incident.since = event.since;
@@ -223,7 +223,7 @@ Echo.channel(`police-department.33705`).listen('DomesticAbuseDetected', async (e
 /**
  * Everytime the database is updated we update the clock countdown
  */
-Echo.channel('run').listen('DatabaseUpdated', async (event) => {
+Echo.channel('run.' + props.precinct).listen('DatabaseUpdated', async (event) => {
     console.log('Database has been updated!');
 
     // Update the last run data
@@ -249,7 +249,6 @@ function sleep(ms) {
  * @returns {Promise<void>}
  */
 async function previousEvent() {
-
     axios.post('/api/find-previous-event', {
         id: data.incident['id'],
         precinct: props.precinct

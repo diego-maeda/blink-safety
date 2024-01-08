@@ -30,8 +30,10 @@ class DomesticAbuseDetected implements ShouldBroadcast
 
     /**
      * Create a new event instance.
+     * @param string $pd_zipcode
+     * @param LastIncidentResource$event
      */
-    public function __construct($pd_zipcode, $event)
+    public function __construct(String $pd_zipcode, LastIncidentResource $event)
     {
         $this->pd_zipcode = $pd_zipcode;
         $this->event = $event;
