@@ -23,10 +23,10 @@ class DatabaseUpdated implements ShouldBroadcast
 
     /**
      * Create a new event instance
-     * @param String $pd_zipcode
+     * @param string $pd_zipcode
      * @param LastRunResource $run
      */
-    public function __construct($pd_zipcode, LastRunResource $run)
+    public function __construct(string $pd_zipcode, LastRunResource $run)
     {
         $this->pd_zipcode = $pd_zipcode;
         $this->run = $run;

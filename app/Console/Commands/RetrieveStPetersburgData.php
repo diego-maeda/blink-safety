@@ -104,7 +104,7 @@ class RetrieveStPetersburgData extends Command
                 'precinct' => '33705',
                 'command' => 'app:retrieve-st-petersburg-data'
             ]);
-            DatabaseUpdated::dispatch(new LastRunResource($run));
+            DatabaseUpdated::dispatch('33705', new LastRunResource($run));
 
 
             $this->info('Command successful.');

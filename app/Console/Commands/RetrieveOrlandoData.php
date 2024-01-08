@@ -94,7 +94,7 @@ class RetrieveOrlandoData extends Command
                 'precinct' => '32803',
                 'command' => 'app:retrieve-orlando-data',
             ]);
-            DatabaseUpdated::dispatch(new LastRunResource($run));
+            DatabaseUpdated::dispatch('32803', new LastRunResource($run));
 
             $this->info('Command Sucessful.');
         } catch (Exception $exception) {
