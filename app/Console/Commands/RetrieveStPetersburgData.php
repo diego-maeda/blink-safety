@@ -62,30 +62,32 @@ class RetrieveStPetersburgData extends Command
 
                 foreach ($response->json() as $event) {
 
-                    // Try to locate the event and make sure it's new
-                    $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
+                    if(in_array($event['type_of_engagement'], ['DOMESTIC BRAWL', 'DOMESTIC BATTERY'])){
+                        // Try to locate the event and make sure it's new
+                        $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
 
-                    // If the event is new we store it and create a new dispatch a new broadcast
-                    if (empty($db_event)) {
-                        $this->event = Event::create([
-                            'precinct' => '33705',
-                            'event_id' => $event['id'],
-                            'event_number' => $event['event_number'],
-                            'type_of_engagement' => $event['type_of_engagement'],
-                            'sub_engagement' => $event['sub_engagement'],
-                            'classification' => $event['classification'],
-                            'display_address' => (array_key_exists('display_address', $event)) ? $event['display_address'] : 'No display address available.',
-                            'crime_date' => $event['crime_date'],
-                            'crime_time' => $event['crime_time'],
-                            'latitude' => $event['latitude'],
-                            'longitude' => $event['longitude'],
-                            'neighborhood_name' => (array_key_exists('neighborhood_name', $event)) ? $event['neighborhood_name'] : '',
-                            'council_district' => (array_key_exists('council_district', $event)) ? $event['council_district'] : '',
-                            'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
-                        ]);
+                        // If the event is new we store it and create a new dispatch a new broadcast
+                        if (empty($db_event)) {
+                            $this->event = Event::create([
+                                'precinct' => '33705',
+                                'event_id' => $event['id'],
+                                'event_number' => $event['event_number'],
+                                'type_of_engagement' => $event['type_of_engagement'],
+                                'sub_engagement' => $event['sub_engagement'],
+                                'classification' => $event['classification'],
+                                'display_address' => (array_key_exists('display_address', $event)) ? $event['display_address'] : 'No display address available.',
+                                'crime_date' => $event['crime_date'],
+                                'crime_time' => $event['crime_time'],
+                                'latitude' => $event['latitude'],
+                                'longitude' => $event['longitude'],
+                                'neighborhood_name' => (array_key_exists('neighborhood_name', $event)) ? $event['neighborhood_name'] : '',
+                                'council_district' => (array_key_exists('council_district', $event)) ? $event['council_district'] : '',
+                                'event_subtype_type_of_event' => $event['event_subtype_type_of_event'],
+                            ]);
 
-                        // We update this counter to make sure only to broadcast one notification per run
-                        $new_events++;
+                            // We update this counter to make sure only to broadcast one notification per run
+                            $new_events++;
+                        }
                     }
                 }
             }
