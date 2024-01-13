@@ -205,7 +205,7 @@ Echo.channel('police-department.' + props.precinct).listen('DomesticAbuseDetecte
   await sleep(1000);
   await fadeToColor(device, purple_color);
 
-}).listen('EmptyResultsDetected', async (event) => {
+}).listen('EmptyResultsDetected', async () => {
   //If no results are detected
   let device = await openDevice();
   if (!device) return;
@@ -314,9 +314,10 @@ async function nextEvent() {
 function calculateElapsedIncident() {
   let date_from_iso = DateTime.fromISO(props.last_incident.time);
 
+  let relative_date = date_from_iso.setLocale(locale.value).toRelative();
+
   // if possible the first letter should be capitalized
-  data.time_incident_elapsed = date_from_iso.setLocale(locale.value).toRelative().charAt(0).toUpperCase()
-      + date_from_iso.setLocale(locale.value).toRelative().slice(1);
+  data.time_incident_elapsed = relative_date.replace(' ago', '').charAt(0).toUpperCase() + relative_date.slice(1);
 }
 
 calculateElapsedIncident();
