@@ -294,7 +294,7 @@ async function nextEvent() {
 function calculateElapsedIncident() {
   let date_from_iso = DateTime.fromISO(props.last_incident.time);
 
-  let relative_date = date_from_iso.setLocale(locale.value).toRelative();
+  let relative_date = date_from_iso.setLocale(locale.value).toRelative({unit: ['hours', 'minutes']});
 
   // if possible the first letter should be capitalized
   data.time_incident_elapsed = relative_date.charAt(0).toUpperCase() + relative_date.slice(1).replace(' ago', '');
