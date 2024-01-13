@@ -9,6 +9,7 @@ use App\Http\Resources\LastIncidentResource;
 use App\Http\Resources\LastRunResource;
 use App\Models\Event;
 use App\Models\Run;
+use DateTimeZone;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -46,7 +47,7 @@ class RetrieveStPetersburgData extends Command
     public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subDay()->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subDays(2)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
             Log::info('Start date: ' . $start_date);
@@ -68,6 +69,11 @@ class RetrieveStPetersburgData extends Command
 
                         // If the event is new we store it and create a new dispatch a new broadcast
                         if (empty($db_event)) {
+
+                            // The API will return something like 2024-01-11T11:56:33.000
+                            // We create a new date, shift the timezone to the local time and then change it to UTC to standardize the database
+                            $crime_date = Carbon::createFromDate($event['crime_date'])->shiftTimezone('EST')->setTimezone('UTC');
+
                             $this->event = Event::create([
                                 'precinct' => '33705',
                                 'event_id' => $event['id'],
@@ -76,8 +82,8 @@ class RetrieveStPetersburgData extends Command
                                 'sub_engagement' => $event['sub_engagement'],
                                 'classification' => $event['classification'],
                                 'display_address' => (array_key_exists('display_address', $event)) ? $event['display_address'] : 'No display address available.',
-                                'crime_date' => $event['crime_date'],
-                                'crime_time' => $event['crime_time'],
+                                'crime_date' => $crime_date,
+                                'crime_time' => $crime_date->format('H:i:s'),
                                 'latitude' => $event['latitude'],
                                 'longitude' => $event['longitude'],
                                 'neighborhood_name' => (array_key_exists('neighborhood_name', $event)) ? $event['neighborhood_name'] : '',

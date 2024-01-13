@@ -18,13 +18,13 @@ class LastRunResource extends JsonResource
     {
         if($this->precinct == '32803') {
             return [
-                'created_at' => $this->created_at,
-                'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(1),
+                'created_at' => $this->created_at->format('c'),
+                'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(1)->format('c'),
             ];
         } else {
             return [
-                'created_at' => $this->created_at,
-                'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(5),
+                'created_at' => $this->created_at->format('c'),
+                'next_run' => Carbon::createFromDate($this->created_at)->addMinutes(5)->format('c'),
             ];
         }
 

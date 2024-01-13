@@ -14,17 +14,13 @@ use Inertia\Response;
 
 class HomeController extends Controller
 {
-//    public function index(): Response
-//    {
-//        $event = Event::where('precinct', '33705')->latest('crime_date')->first();
-//        $run = Run::where('precinct', '33705')->latest('created_at')->first();
-//
-//        return Inertia::render('New', [
-//            'last_incident' => new LastIncidentResource($event),
-//            'last_run' => new LastRunResource($run),
-//        ]);
-//    }
 
+    /**
+     * This function will return the last incident and last run from a specific city
+     * @param $state
+     * @param $city
+     * @return Response
+     */
     public function city($state = null, $city = null): Response
     {
         // We need to decode the city to handle multiple word cities like St Petersburg.

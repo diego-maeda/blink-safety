@@ -59,6 +59,11 @@ class RetrieveOrlandoData extends Command
 
                     // If the event is new we store it
                     if (empty($db_event)) {
+
+                        // The API will return something like 2024-01-11T11:56:33.000
+                        // We create a new date, shift the timezone to the local time and then change it to UTC to standardize the database
+                        $crime_date = Carbon::createFromDate($incident['DATE'])->shiftTimezone('EST')->setTimezone('UTC');
+
                         $this->event = Event::create([
                             'precinct' => '32803',
                             'event_id' => $incident['@attributes']['incident'],
@@ -67,7 +72,8 @@ class RetrieveOrlandoData extends Command
                             'sub_engagement' => 'Unknown',
                             'classification' => 'Unknown',
                             'display_address' => $incident['LOCATION'],
-                            'crime_date' => Carbon::createFromDate($incident['DATE']),
+                            'crime_date' => $crime_date,
+                            'crime_time' => $crime_date->format('H:i:s'),
                             'latitude' => 'Unknown',
                             'longitude' => 'Unknown',
                             'neighborhood_name' => 'Unknown',
