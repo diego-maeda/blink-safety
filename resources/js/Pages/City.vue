@@ -317,7 +317,7 @@ function calculateElapsedIncident() {
   let relative_date = date_from_iso.setLocale(locale.value).toRelative();
 
   // if possible the first letter should be capitalized
-  data.time_incident_elapsed = relative_date.replace(' ago', '').charAt(0).toUpperCase() + relative_date.slice(1);
+  data.time_incident_elapsed = relative_date.charAt(0).toUpperCase() + relative_date.slice(1).replace(' ago', '');
 }
 
 calculateElapsedIncident();
