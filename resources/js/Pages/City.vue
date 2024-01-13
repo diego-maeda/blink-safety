@@ -252,16 +252,6 @@ async function previousEvent() {
     data.incident.display_address = response.data.last_incident.display_address;
     calculateCrimeTime()
 
-    let device = await openDevice();
-    if (!device) return;
-    await fadeToColor(device, pink_color);
-    await sleep(1000);
-    await fadeToColor(device, black_color);
-    await sleep(1000);
-    await fadeToColor(device, pink_color);
-    await sleep(1000);
-    await fadeToColor(device, black_color);
-
   }).catch(function (error) {
         if (error.response) {
           data.dialog_message = t('message.first_event');
@@ -286,16 +276,6 @@ async function nextEvent() {
     data.incident.type = response.data.last_incident.type;
     data.incident.display_address = response.data.last_incident.display_address;
     calculateCrimeTime()
-
-    let device = await openDevice();
-    if (!device) return;
-    await fadeToColor(device, pink_color);
-    await sleep(1000);
-    await fadeToColor(device, black_color);
-    await sleep(1000);
-    await fadeToColor(device, pink_color);
-    await sleep(1000);
-    await fadeToColor(device, black_color);
 
   }).catch(function (error) {
         if (error.response) {
