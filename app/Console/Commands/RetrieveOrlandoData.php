@@ -8,12 +8,17 @@ use App\Events\EmptyResultsDetected;
 use App\Http\Resources\LastIncidentResource;
 use App\Http\Resources\LastRunResource;
 use App\Models\Event;
+use App\Models\LastEventTriggered;
+use App\Models\Precinct;
 use App\Models\Run;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * This is the command responsible for retrieving the data from orlando PD
+ */
 class RetrieveOrlandoData extends Command
 {
     /**
@@ -49,13 +54,15 @@ class RetrieveOrlandoData extends Command
 
             $new_events = 0;
 
+            $precinct = Precinct::where(['precinct' => '32803'])->first();
+
             //'Domestic disturbance',
             foreach ($array['CALL'] as $incident) {
                 // First we filter the cases for domestic disturbance
                 if (in_array($incident['DESC'], ['Domestic disturbance'])) {
 
                     // Try to locate the event and make sure it's new
-                    $db_event = Event::where(['event_id' => $incident['@attributes']['incident'], 'precinct' => '32803'])->first();
+                    $db_event = Event::where(['event_id' => $incident['@attributes']['incident'], 'precinct' => $precinct->precinct])->first();
 
                     // If the event is new we store it
                     if (empty($db_event)) {
@@ -65,7 +72,7 @@ class RetrieveOrlandoData extends Command
                         $crime_date = Carbon::createFromDate($incident['DATE'])->shiftTimezone('EST')->setTimezone('UTC');
 
                         $this->event = Event::create([
-                            'precinct' => '32803',
+                            'precinct' => $precinct->precinct,
                             'event_id' => $incident['@attributes']['incident'],
                             'event_number' => $incident['@attributes']['incident'],
                             'type_of_engagement' => strtoupper($incident['DESC']),
@@ -89,18 +96,20 @@ class RetrieveOrlandoData extends Command
 
             // If any new events where created we retrieve the last one and update the UI broadcasting an event
             if ($new_events > 0) {
-                DomesticAbuseDetected::dispatch('32803', new LastIncidentResource($this->event));
-            // Otherwise we notify the UI to turn off the lights
-            } else {
-                EmptyResultsDetected::dispatch('32803');
+                DomesticAbuseDetected::dispatch($precinct->precinct, new LastIncidentResource($this->event));
+                LastEventTriggered::updateOrCreate([
+                    'precinct_id' => $precinct->id
+                ], [
+                    'event_id' => $this->event->id,
+                ]);
             }
 
             // After we finish running we update the UI notifying to update the next run as well
             $run = Run::create([
-                'precinct' => '32803',
+                'precinct' => $precinct->precinct,
                 'command' => 'app:retrieve-orlando-data',
             ]);
-            DatabaseUpdated::dispatch('32803', new LastRunResource($run));
+            DatabaseUpdated::dispatch($precinct->precinct, new LastRunResource($run));
 
             $this->info('Command Sucessful.');
         } catch (Exception $exception) {

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\EventMonitorCommand;
 use App\Console\Commands\RetrieveOrlandoData;
 use App\Console\Commands\RetrieveStPetersburgData;
 use Illuminate\Console\Scheduling\Schedule;
@@ -14,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command(EventMonitorCommand::class)->everyMinute();
         $schedule->command(RetrieveStPetersburgData::class)->everyFiveMinutes();
         $schedule->command(RetrieveOrlandoData::class)->everyMinute();
     }

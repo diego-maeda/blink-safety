@@ -8,6 +8,8 @@ use App\Events\EmptyResultsDetected;
 use App\Http\Resources\LastIncidentResource;
 use App\Http\Resources\LastRunResource;
 use App\Models\Event;
+use App\Models\LastEventTriggered;
+use App\Models\Precinct;
 use App\Models\Run;
 use DateTimeZone;
 use Exception;
@@ -47,13 +49,12 @@ class RetrieveStPetersburgData extends Command
     public function handle(): void
     {
         try {
-            $start_date = Carbon::now()->subDays(2)->format('Y-m-d\TH:i:s');
+            $start_date = Carbon::now()->subDays(3)->format('Y-m-d\TH:i:s');
             $end_date = Carbon::now()->format('Y-m-d\TH:i:s');
 
-            Log::info('Start date: ' . $start_date);
-            Log::info('End date: ' . $end_date);
-
             $new_events = 0;
+
+            $precinct = Precinct::where(['precinct' => '33705'])->first();
 
             $response = Http::withHeaders([
                 'X-App-Token' => 'e4VAbacu29Rs5RFhaDtjwFtmB',
@@ -63,9 +64,9 @@ class RetrieveStPetersburgData extends Command
 
                 foreach ($response->json() as $event) {
 
-                    if(in_array($event['type_of_engagement'], ['DOMESTIC BRAWL', 'DOMESTIC BATTERY'])){
+                    if (in_array($event['type_of_engagement'], ['DOMESTIC BRAWL', 'DOMESTIC BATTERY'])) {
                         // Try to locate the event and make sure it's new
-                        $db_event = Event::where(['event_id' => $event['id'], 'precinct' => '33705'])->first();
+                        $db_event = Event::where(['event_id' => $event['id'], 'precinct' => $precinct->precinct])->first();
 
                         // If the event is new we store it and create a new dispatch a new broadcast
                         if (empty($db_event)) {
@@ -75,7 +76,7 @@ class RetrieveStPetersburgData extends Command
                             $crime_date = Carbon::createFromDate($event['crime_date'])->shiftTimezone('EST')->setTimezone('UTC');
 
                             $this->event = Event::create([
-                                'precinct' => '33705',
+                                'precinct' => $precinct->precinct,
                                 'event_id' => $event['id'],
                                 'event_number' => $event['event_number'],
                                 'type_of_engagement' => $event['type_of_engagement'],
@@ -100,19 +101,21 @@ class RetrieveStPetersburgData extends Command
 
 
             // If any new events where created we retrieve the last one and update the UI broadcasting an event
-            if($new_events > 0){
-                DomesticAbuseDetected::dispatch('33705', new LastIncidentResource($this->event));
-            // Otherwise we notify the UI to turn off the lights
-            } else {
-                EmptyResultsDetected::dispatch('33705');
+            if ($new_events > 0) {
+                DomesticAbuseDetected::dispatch($precinct->precinct, new LastIncidentResource($this->event));
+                LastEventTriggered::updateOrCreate([
+                    'precinct_id' => $precinct->id
+                ], [
+                    'event_id' => $this->event->id,
+                ]);
             }
 
             // After we finish running we update the UI notifying to update the next run as well
             $run = Run::create([
-                'precinct' => '33705',
+                'precinct' => $precinct->precinct,
                 'command' => 'app:retrieve-st-petersburg-data'
             ]);
-            DatabaseUpdated::dispatch('33705', new LastRunResource($run));
+            DatabaseUpdated::dispatch($precinct->precinct, new LastRunResource($run));
 
 
             $this->info('Command successful.');
