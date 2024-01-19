@@ -46,8 +46,8 @@ class DomesticAbuseDetected implements ShouldBroadcast
         // Create a browser notification for the web
         try {
             $push_notifications = new PushNotifications([
-                "instanceId" => "f25f92d2-c8a5-42f2-92e7-d20701f3a6e8",
-                "secretKey" => "A94F24DF6DC2F4BF166F479A62652D850B782D27AAB33F4DDE0F37A691B6EE14",
+                "instanceId" => env('PUSHER_BEAMS_INSTANCE_ID'),
+                "secretKey" => env('PUSHER_BEAMS_SECRET_KEY'),
             ]);
 
             $push_notifications = $push_notifications->publishToInterests(

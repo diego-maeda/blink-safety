@@ -10,7 +10,7 @@ const {t, locale} = useI18n({useScope: "global"});
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 const beamsClient = new PusherPushNotifications.Client({
-    instanceId: 'f25f92d2-c8a5-42f2-92e7-d20701f3a6e8',
+    instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
 });
 
 const props = defineProps({
