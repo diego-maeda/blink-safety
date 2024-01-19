@@ -321,7 +321,7 @@ async function calculateElapsedTime() {
 }
 
 calculateElapsedTime();
-setInterval(calculateElapsedTime, 60 * 1000);
+setInterval(calculateElapsedTime, 1000);
 
 /**
  * Calculate the time for the next run
@@ -333,7 +333,7 @@ function calculateNextRunTime() {
 }
 
 calculateNextRunTime();
-setInterval(calculateNextRunTime, 60 * 1000);
+setInterval(calculateNextRunTime, 1000);
 
 /**
  * Updates the translation according to the selected country flag
