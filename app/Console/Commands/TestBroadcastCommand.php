@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Events\DomesticAbuseDetected;
 use App\Http\Resources\LastIncidentResource;
 use App\Models\Event;
+use App\Models\Precinct;
 use Illuminate\Console\Command;
 
 class TestBroadcastCommand extends Command
@@ -29,6 +30,7 @@ class TestBroadcastCommand extends Command
     public function handle(): void
     {
         $event = Event::first();
-        DomesticAbuseDetected::dispatch('33705', new LastIncidentResource($event));
+        $precinct = Precinct::where('precinct', 32803)->first();
+        DomesticAbuseDetected::dispatch($precinct, new LastIncidentResource($event));
     }
 }

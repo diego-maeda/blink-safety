@@ -96,7 +96,7 @@ class RetrieveOrlandoData extends Command
 
             // If any new events where created we retrieve the last one and update the UI broadcasting an event
             if ($new_events > 0) {
-                DomesticAbuseDetected::dispatch($precinct->precinct, new LastIncidentResource($this->event));
+                DomesticAbuseDetected::dispatch($precinct, new LastIncidentResource($this->event));
                 LastEventTriggered::updateOrCreate([
                     'precinct_id' => $precinct->id
                 ], [

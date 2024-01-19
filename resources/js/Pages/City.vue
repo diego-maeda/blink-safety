@@ -2,7 +2,7 @@
 import {Head} from '@inertiajs/vue3';
 import logo from '/resources/img/blink-safety-logo.svg';
 import axios from 'axios';
-import {reactive, computed} from 'vue'
+import {reactive} from 'vue'
 
 // Favicon import
 import appleTouchIcon from '/resources/img/apple-touch-icon.png';
@@ -17,25 +17,15 @@ import {useI18n} from "vue-i18n";
 const {t, locale} = useI18n({useScope: "global"});
 
 import {DateTime} from "luxon";
-import en from '/resources/img/icons/english.svg';
-import es from '/resources/img/icons/spanish.svg';
-import pt from '/resources/img/icons/portuguese.svg';
 
-// Firebase imports
-// import {getMessaging, getToken, onMessage} from 'firebase/messaging';
-// import firebaseApp from '../firebase';
-//
-// // Initialize Firebase Cloud Messaging and get a reference to the service
-// const messaging = getMessaging(firebaseApp);
-// getToken(messaging, {vapidKey: "BCuD_-ZBQkXBWmrecTWCiSeK1xHvi0mrOJpl8wwi37Qs74R_KcutzYm9ZtlzRCH1lQUIb-__qRrW8F1Y1jo76OQ"});
-//
-// onMessage(messaging, (payload) => {
-//     console.log('Message received. ', payload);
-//     // ...
-// });
+import Configurations from "@/Components/Configurations.vue";
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
-// Add the public key generated from the console here.
-// End - Firebase imports
+const beamsClient = new PusherPushNotifications.Client({
+    instanceId: 'f25f92d2-c8a5-42f2-92e7-d20701f3a6e8',
+});
+
+beamsClient.start();
 
 const props = defineProps({
         precinct: String,
@@ -246,7 +236,7 @@ async function previousEvent() {
     axios.post('/api/find-previous-event', {
         id: data.incident.id,
         precinct: props.precinct
-    }).then(async(response) => {
+    }).then(async (response) => {
         data.incident.id = response.data.last_incident.id;
         data.incident.time = response.data.last_incident.time;
         data.incident.type = response.data.last_incident.type;
@@ -273,7 +263,7 @@ async function nextEvent() {
     axios.post('/api/find-next-event', {
         id: data.incident.id,
         precinct: props.precinct
-    }).then(async(response) => {
+    }).then(async (response) => {
         data.incident.id = response.data.last_incident.id;
         data.incident.time = response.data.last_incident.time;
         data.incident.type = response.data.last_incident.type;
@@ -370,43 +360,43 @@ function updateLocale(lang) {
     <v-app>
         <!-- MAIN -->
         <v-main>
-
             <!-- LANG MENU-->
-            <div class="fixed top-0 right-0">
-                <v-menu>
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                            icon
-                            flat
-                            v-bind="props"
-                        >
-                            <img :src="en" alt="USA flag" height="25" width="25" v-if="$i18n.locale === 'en'">
-                            <img :src="pt" alt="Brazilian flag" height="25" width="25"
-                                 v-else-if="$i18n.locale === 'pt-br'">
-                            <img :src="es" alt="Mexican flag" height="25" width="25" v-else-if="$i18n.locale === 'es'">
-                        </v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-item class="border-b border-gray-100" @click="updateLocale('en')">
-                            <template v-slot:prepend>
-                                <img :src="en" alt="USA flag" height="25" width="25" class="mr-3">
-                            </template>
-                            <v-list-item-title><strong>{{ $t('message.english') }}</strong></v-list-item-title>
-                        </v-list-item>
-                        <v-list-item class="border-b border-gray-100" @click="updateLocale('pt-br')">
-                            <template v-slot:prepend>
-                                <img :src="pt" alt="Brazilian flag" height="25" width="25" class="mr-3">
-                            </template>
-                            <v-list-item-title><strong>{{ $t('message.portuguese') }}</strong></v-list-item-title>
-                        </v-list-item>
-                        <v-list-item @click="updateLocale('es')">
-                            <template v-slot:prepend>
-                                <img :src="es" alt="Mexican flag" height="25" width="25" class="mr-3">
-                            </template>
-                            <v-list-item-title><strong>{{ $t('message.spanish') }}</strong></v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
+            <div class="fixed top-0 right-0 flex">
+                <!--                <v-menu>-->
+                <!--                    <template v-slot:activator="{ props }">-->
+                <!--                        <v-btn-->
+                <!--                            icon-->
+                <!--                            flat-->
+                <!--                            v-bind="props"-->
+                <!--                        >-->
+                <!--                            <img :src="en" alt="USA flag" height="25" width="25" v-if="$i18n.locale === 'en'">-->
+                <!--                            <img :src="pt" alt="Brazilian flag" height="25" width="25"-->
+                <!--                                 v-else-if="$i18n.locale === 'pt-br'">-->
+                <!--                            <img :src="es" alt="Mexican flag" height="25" width="25" v-else-if="$i18n.locale === 'es'">-->
+                <!--                        </v-btn>-->
+                <!--                    </template>-->
+                <!--                    <v-list>-->
+                <!--                        <v-list-item class="border-b border-gray-100" @click="updateLocale('en')">-->
+                <!--                            <template v-slot:prepend>-->
+                <!--                                <img :src="en" alt="USA flag" height="25" width="25" class="mr-3">-->
+                <!--                            </template>-->
+                <!--                            <v-list-item-title><strong>{{ $t('message.english') }}</strong></v-list-item-title>-->
+                <!--                        </v-list-item>-->
+                <!--                        <v-list-item class="border-b border-gray-100" @click="updateLocale('pt-br')">-->
+                <!--                            <template v-slot:prepend>-->
+                <!--                                <img :src="pt" alt="Brazilian flag" height="25" width="25" class="mr-3">-->
+                <!--                            </template>-->
+                <!--                            <v-list-item-title><strong>{{ $t('message.portuguese') }}</strong></v-list-item-title>-->
+                <!--                        </v-list-item>-->
+                <!--                        <v-list-item @click="updateLocale('es')">-->
+                <!--                            <template v-slot:prepend>-->
+                <!--                                <img :src="es" alt="Mexican flag" height="25" width="25" class="mr-3">-->
+                <!--                            </template>-->
+                <!--                            <v-list-item-title><strong>{{ $t('message.spanish') }}</strong></v-list-item-title>-->
+                <!--                        </v-list-item>-->
+                <!--                    </v-list>-->
+                <!--                </v-menu>-->
+                <Configurations :precinct="$page.props.precinct"></Configurations>
             </div>
             <!-- LANG MENU-->
             <!-- CONTENT-->
