@@ -19,6 +19,8 @@ const {t, locale} = useI18n({useScope: "global"});
 import {DateTime} from "luxon";
 
 import Configurations from "@/Components/Configurations.vue";
+
+//Notification system
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 const beamsClient = new PusherPushNotifications.Client({
