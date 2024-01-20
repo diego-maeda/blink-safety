@@ -362,41 +362,7 @@ function updateLocale(lang) {
         <!-- MAIN -->
         <v-main class="bg-[#fbf2fe]">
             <!-- LANG MENU-->
-            <div class="fixed top-0 right-0 flex ">
-                <!--                <v-menu>-->
-                <!--                    <template v-slot:activator="{ props }">-->
-                <!--                        <v-btn-->
-                <!--                            icon-->
-                <!--                            flat-->
-                <!--                            v-bind="props"-->
-                <!--                        >-->
-                <!--                            <img :src="en" alt="USA flag" height="25" width="25" v-if="$i18n.locale === 'en'">-->
-                <!--                            <img :src="pt" alt="Brazilian flag" height="25" width="25"-->
-                <!--                                 v-else-if="$i18n.locale === 'pt-br'">-->
-                <!--                            <img :src="es" alt="Mexican flag" height="25" width="25" v-else-if="$i18n.locale === 'es'">-->
-                <!--                        </v-btn>-->
-                <!--                    </template>-->
-                <!--                    <v-list>-->
-                <!--                        <v-list-item class="border-b border-gray-100" @click="updateLocale('en')">-->
-                <!--                            <template v-slot:prepend>-->
-                <!--                                <img :src="en" alt="USA flag" height="25" width="25" class="mr-3">-->
-                <!--                            </template>-->
-                <!--                            <v-list-item-title><strong>{{ $t('message.english') }}</strong></v-list-item-title>-->
-                <!--                        </v-list-item>-->
-                <!--                        <v-list-item class="border-b border-gray-100" @click="updateLocale('pt-br')">-->
-                <!--                            <template v-slot:prepend>-->
-                <!--                                <img :src="pt" alt="Brazilian flag" height="25" width="25" class="mr-3">-->
-                <!--                            </template>-->
-                <!--                            <v-list-item-title><strong>{{ $t('message.portuguese') }}</strong></v-list-item-title>-->
-                <!--                        </v-list-item>-->
-                <!--                        <v-list-item @click="updateLocale('es')">-->
-                <!--                            <template v-slot:prepend>-->
-                <!--                                <img :src="es" alt="Mexican flag" height="25" width="25" class="mr-3">-->
-                <!--                            </template>-->
-                <!--                            <v-list-item-title><strong>{{ $t('message.spanish') }}</strong></v-list-item-title>-->
-                <!--                        </v-list-item>-->
-                <!--                    </v-list>-->
-                <!--                </v-menu>-->
+            <div class="fixed top-0 right-0 flex">
                 <Configurations :precinct="$page.props.precinct"></Configurations>
             </div>
             <!-- LANG MENU-->
@@ -433,6 +399,10 @@ function updateLocale(lang) {
                        v-if="data.connected">{{ $t('message.disconnect') }}</a>
                     <a @click="handleConnectClick" class="cursor-pointer"
                        v-if="!data.connected">{{ $t('message.connect') }}</a>
+                    |
+                    <a href=" https://docs.google.com/forms/d/e/1FAIpQLSfrK5S0jI1YYNWX79Ae04395gOcPAxyVoKvZ07NOddt22WMJw/viewform?usp=sf_link" target="_blank">
+                        {{$t('message.email')}}
+                    </a>
                 </div>
 
                 <div class="text-gray-600 text-center mt-3">
