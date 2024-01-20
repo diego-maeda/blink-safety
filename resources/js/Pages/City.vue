@@ -308,7 +308,6 @@ async function calculateCrimeTime() {
     data.crime_time_with_tz = date_from_iso.setLocale(locale.value).toLocaleString(DateTime.DATETIME_SHORT);
 
 }
-
 calculateCrimeTime()
 
 /**
@@ -361,9 +360,9 @@ function updateLocale(lang) {
 
     <v-app>
         <!-- MAIN -->
-        <v-main>
+        <v-main class="bg-[#fbf2fe]">
             <!-- LANG MENU-->
-            <div class="fixed top-0 right-0 flex">
+            <div class="fixed top-0 right-0 flex ">
                 <!--                <v-menu>-->
                 <!--                    <template v-slot:activator="{ props }">-->
                 <!--                        <v-btn-->
