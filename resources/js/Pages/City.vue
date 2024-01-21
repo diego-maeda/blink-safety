@@ -388,11 +388,11 @@ function updateLocale(lang) {
                 </div>
 
                 <div class="mb-3 ">
-                    <v-btn color="purple" class="mr-1 text-none" tonal rounded @click="previousEvent">&lt; {{
-                            $t('message.prev')
-                        }}
+                    <v-btn color="purple" class="mr-1 text-none" tonal rounded @click="previousEvent">
+                        &lt; {{ $t('message.prev') }}
                     </v-btn>
-                    <v-btn color="purple" class="ml-1 text-none" tonal rounded @click="nextEvent">{{ $t('message.next') }} &gt;
+                    <v-btn color="purple" class="ml-1 text-none" tonal rounded @click="nextEvent">
+                        {{ $t('message.next') }} &gt;
                     </v-btn>
                 </div>
 
