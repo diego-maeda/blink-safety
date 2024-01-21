@@ -388,11 +388,11 @@ function updateLocale(lang) {
                 </div>
 
                 <div class="mb-3 ">
-                    <v-btn color="purple" class="mr-1" tonal rounded @click="previousEvent">&lt; {{
+                    <v-btn color="purple" class="mr-1 text-none" tonal rounded @click="previousEvent">&lt; {{
                             $t('message.prev')
                         }}
                     </v-btn>
-                    <v-btn color="purple" class="ml-1" tonal rounded @click="nextEvent">{{ $t('message.next') }} &gt;
+                    <v-btn color="purple" class="ml-1 text-none" tonal rounded @click="nextEvent">{{ $t('message.next') }} &gt;
                     </v-btn>
                 </div>
 
@@ -425,7 +425,9 @@ function updateLocale(lang) {
             >
                 <v-card>
                     <v-toolbar color="primary">
-                        <v-toolbar-title>{{ $t('message.connect_dialog_title') }}</v-toolbar-title>
+                        <v-toolbar-title>
+                            <span class="text-base">{{ $t('message.connect_dialog_title') }}</span>
+                        </v-toolbar-title>
 
                         <v-spacer></v-spacer>
 
@@ -434,17 +436,18 @@ function updateLocale(lang) {
                         </v-btn>
                     </v-toolbar>
                     <v-card-text class="bg-[#fbf2fe]">
-                        <div class="flex justify-center pb-4">
-                            <v-img :src="connect_modal" width="90" height="90"></v-img>
-                            <div class="flex flex-col justify-center pl-8 max-w-lg">
+                        <div class="flex flex-col items-center md:flex-row  md:justify-center pb-4">
+                            <v-img :src="connect_modal" width="90" height="90" class="mb-3 md:mb-0"></v-img>
+                            <div class="flex flex-col justify-center md:pl-8 max-w-lg">
                                 <p class="font-weight-bold text-sm text-gray-600 mb-3">
                                     {{ $t('message.connect_dialog_subtitle') }}</p>
                                 <p class="font-weight-light text-sm text-gray-600 ">
                                     {{ $t('message.connect_dialog_text') }}</p>
 
                                 <div class="mt-4">
-                                    <v-btn flat color="primary" class="text-none font-weight-bold" @click="handleConnectClick">{{ $t('message.connect_dialog_connect_button') }}</v-btn>
-              x                      <v-btn variant="outlined" class="ml-2 text-none"
+                                    <v-btn flat color="primary" class="mt-2 mr-2 text-none font-weight-bold"
+                                           @click="handleConnectClick">{{ $t('message.connect_dialog_connect_button') }}</v-btn>
+                                    <v-btn variant="outlined" class="mt-2 text-none"
                                            href="https://www.amazon.com/ThingM-Blink-USB-RGB-BLINK1MK3/dp/B07Q8944QK/ref=sr_1_2?crid=135Z5Q85GIXX0&dib=eyJ2IjoiMSJ9.LkARrNq9PWnmvREU6k-vCzcvpDqcCRs70LKz4kSTCU5vmzH7iz4XsDdZB07QUmtsibUV02kAU3CurgA28jt7iW6TGFUAl7N--psWy_7n5fbtt8Ypr9JT5dDnJ3wjIx17H9BfOPw6aMpqCK5Sn7lKISW_B8HVTOXkCD3Usd4SfSPrgC85R8PjGhhq4uqWRqWX50-Jg_yJx9oqMSksQHV6UHMiEPxHF1K9QM0rVeXEEj8.OsemDN9LVYXJ3DE7cGX3YVSaWg4jqQi5dGYBqJt71Dg&dib_tag=se&keywords=blink%281%29&qid=1705847390&sprefix=blink+1+%2Caps%2C209&sr=8-2">
                                         {{$t('message.connect_dialog_amazon_referral_button')}}
                                     </v-btn>
