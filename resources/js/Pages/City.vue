@@ -440,11 +440,11 @@ function updateLocale(lang) {
                                 <p class="font-weight-bold text-sm text-gray-600 mb-3">
                                     {{ $t('message.connect_dialog_subtitle') }}</p>
                                 <p class="font-weight-light text-sm text-gray-600 ">
-                                    {{ $t('message.connect_dialog_text') }}}</p>
+                                    {{ $t('message.connect_dialog_text') }}</p>
 
                                 <div class="mt-4">
                                     <v-btn flat color="primary" class="text-none font-weight-bold" @click="handleConnectClick">{{ $t('message.connect_dialog_connect_button') }}</v-btn>
-                                    <v-btn variant="outlined" class="ml-2 text-none"
+              x                      <v-btn variant="outlined" class="ml-2 text-none"
                                            href="https://www.amazon.com/ThingM-Blink-USB-RGB-BLINK1MK3/dp/B07Q8944QK/ref=sr_1_2?crid=135Z5Q85GIXX0&dib=eyJ2IjoiMSJ9.LkARrNq9PWnmvREU6k-vCzcvpDqcCRs70LKz4kSTCU5vmzH7iz4XsDdZB07QUmtsibUV02kAU3CurgA28jt7iW6TGFUAl7N--psWy_7n5fbtt8Ypr9JT5dDnJ3wjIx17H9BfOPw6aMpqCK5Sn7lKISW_B8HVTOXkCD3Usd4SfSPrgC85R8PjGhhq4uqWRqWX50-Jg_yJx9oqMSksQHV6UHMiEPxHF1K9QM0rVeXEEj8.OsemDN9LVYXJ3DE7cGX3YVSaWg4jqQi5dGYBqJt71Dg&dib_tag=se&keywords=blink%281%29&qid=1705847390&sprefix=blink+1+%2Caps%2C209&sr=8-2">
                                         {{$t('message.connect_dialog_amazon_referral_button')}}
                                     </v-btn>
