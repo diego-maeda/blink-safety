@@ -1,6 +1,7 @@
 <script setup>
 import {Head} from '@inertiajs/vue3';
 import logo from '/resources/img/blink-safety-logo.svg';
+import connect_modal from '/resources/img/connect_modal.jpg';
 import axios from 'axios';
 import {reactive} from 'vue'
 
@@ -54,6 +55,8 @@ const data = reactive({
     last_run: props.last_run,
     time_elapsed: '',
     next_update: '',
+    // Connect dialog
+    connect_dialog: false,
     // Dialog options - Prev/Next Functions
     dialog: false,
     dialog_message: '',
@@ -308,6 +311,7 @@ async function calculateCrimeTime() {
     data.crime_time_with_tz = date_from_iso.setLocale(locale.value).toLocaleString(DateTime.DATETIME_SHORT);
 
 }
+
 calculateCrimeTime()
 
 /**
@@ -397,11 +401,14 @@ function updateLocale(lang) {
                     |
                     <a @click="handleDisconnectClick" class="cursor-pointer"
                        v-if="data.connected">{{ $t('message.disconnect') }}</a>
-                    <a @click="handleConnectClick" class="cursor-pointer"
+
+
+                    <a @click="data.connect_dialog = true" class="cursor-pointer"
                        v-if="!data.connected">{{ $t('message.connect') }}</a>
                     |
-                    <a href=" https://docs.google.com/forms/d/e/1FAIpQLSfrK5S0jI1YYNWX79Ae04395gOcPAxyVoKvZ07NOddt22WMJw/viewform?usp=sf_link" target="_blank">
-                        {{$t('message.email')}}
+                    <a href=" https://docs.google.com/forms/d/e/1FAIpQLSfrK5S0jI1YYNWX79Ae04395gOcPAxyVoKvZ07NOddt22WMJw/viewform?usp=sf_link"
+                       target="_blank">
+                        {{ $t('message.email') }}
                     </a>
                 </div>
 
@@ -411,7 +418,44 @@ function updateLocale(lang) {
                 </div>
             </div>
             <!-- CONTENT-->
-            <!-- DIALOG -->
+            <!-- CONNECT DIALOG -->
+            <v-dialog
+                v-model="data.connect_dialog"
+                width="auto"
+            >
+                <v-card>
+                    <v-toolbar color="primary">
+                        <v-toolbar-title>{{ $t('message.connect_dialog_title') }}</v-toolbar-title>
+
+                        <v-spacer></v-spacer>
+
+                        <v-btn icon="true" @click="data.connect_dialog = false">
+                            <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+                    <v-card-text class="bg-[#fbf2fe]">
+                        <div class="flex justify-center pb-4">
+                            <v-img :src="connect_modal" width="90" height="90"></v-img>
+                            <div class="flex flex-col justify-center pl-8 max-w-lg">
+                                <p class="font-weight-bold text-sm text-gray-600 mb-3">
+                                    {{ $t('message.connect_dialog_subtitle') }}</p>
+                                <p class="font-weight-light text-sm text-gray-600 ">
+                                    {{ $t('message.connect_dialog_text') }}}</p>
+
+                                <div class="mt-4">
+                                    <v-btn flat color="primary" class="text-none font-weight-bold" @click="handleConnectClick">{{ $t('message.connect_dialog_connect_button') }}</v-btn>
+                                    <v-btn variant="outlined" class="ml-2 text-none"
+                                           href="https://www.amazon.com/ThingM-Blink-USB-RGB-BLINK1MK3/dp/B07Q8944QK/ref=sr_1_2?crid=135Z5Q85GIXX0&dib=eyJ2IjoiMSJ9.LkARrNq9PWnmvREU6k-vCzcvpDqcCRs70LKz4kSTCU5vmzH7iz4XsDdZB07QUmtsibUV02kAU3CurgA28jt7iW6TGFUAl7N--psWy_7n5fbtt8Ypr9JT5dDnJ3wjIx17H9BfOPw6aMpqCK5Sn7lKISW_B8HVTOXkCD3Usd4SfSPrgC85R8PjGhhq4uqWRqWX50-Jg_yJx9oqMSksQHV6UHMiEPxHF1K9QM0rVeXEEj8.OsemDN9LVYXJ3DE7cGX3YVSaWg4jqQi5dGYBqJt71Dg&dib_tag=se&keywords=blink%281%29&qid=1705847390&sprefix=blink+1+%2Caps%2C209&sr=8-2">
+                                        {{$t('message.connect_dialog_amazon_referral_button')}}
+                                    </v-btn>
+                                </div>
+                            </div>
+                        </div>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
+            <!-- CONNECT DIALOG -->
+            <!-- FIRST/LAST EVENTS' DIALOG -->
             <v-dialog
                 v-model="data.dialog"
                 width="auto"
