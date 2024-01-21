@@ -145,6 +145,7 @@ jobs:
             ln -s -n -f ${BASE_DIR}/.env ${RELEASES_DIR}/${GITHUB_SHA}
 
             echo "Running database migrations and seeding the database"
+            cd ${RELEASES_DIR}/${GITHUB_SHA}
             php artisan migrate --force
             php artisan db:seed --force
 
