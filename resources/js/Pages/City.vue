@@ -349,7 +349,7 @@ function updateLocale(lang) {
 
 <template>
     <Head>
-        <title>Welcome to</title>
+        <title>Domestic Violence Incident Alerts by Blink Safety</title>
         <meta head-key="description" name="description" content="Blink-Safety bringing awareness to Domestic Violence"/>
         <link rel="apple-touch-icon" sizes="180x180" :href="appleTouchIcon">
         <link rel="icon" type="image/png" sizes="32x32" :href="favicon32">
