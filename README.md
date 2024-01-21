@@ -1,10 +1,13 @@
 
 <img src="https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg" width="250"/>
 
-
 ![License Badge](https://img.shields.io/badge/License-MIT-green)
 ![Laravel Badge](https://img.shields.io/badge/Laravel-10-red)
 ![Node Badge](https://img.shields.io/badge/Node.js-20-blue)
+
+Domestic violence is a social issue that will take all of us working together to fix. Due to the stigma surrounding domestic violence, it continues to happen at alarming rates.  We are trying to change that through public education and engagement.
+
+Blink-Safety emerges as a beacon of awareness, a project dedicated to shedding light on this dark reality. In this blog post, we'll explore the vision of Blink-Safety and the collective efforts to raise awareness about domestic violence crimes.
 
 ___
 ## Summary
