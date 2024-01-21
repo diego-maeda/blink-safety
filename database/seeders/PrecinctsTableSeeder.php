@@ -19,6 +19,7 @@ class PrecinctsTableSeeder extends Seeder
         [
             'city' => 'pt petersburg',
             'state' => 'fl',
+            'link' => 'https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4'
         ]);
 
         Precinct::updateOrcreate([
@@ -27,6 +28,7 @@ class PrecinctsTableSeeder extends Seeder
             [
                 'city' => 'orlando',
                 'state' => 'fl',
+                'link' => 'https://www1.cityoforlando.net/opd/activecalls/activecadpolice.xml'
             ]);
 
     }

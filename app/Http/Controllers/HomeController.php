@@ -42,7 +42,7 @@ class HomeController extends Controller
         $run = Run::where('precinct', $precinct->precinct)->latest('created_at')->first();
 
         return Inertia::render('City', [
-            'precinct' => $precinct->precinct,
+            'precinct' => $precinct,
             'city' => $city,
             'state' => $state,
             'last_incident' => new LastIncidentResource($event),

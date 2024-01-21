@@ -16,5 +16,6 @@ class Precinct extends Model
         'precinct',
         'city',
         'state',
+        'link',
     ];
 }

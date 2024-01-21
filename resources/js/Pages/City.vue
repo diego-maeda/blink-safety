@@ -30,7 +30,7 @@ const beamsClient = new PusherPushNotifications.Client({
 beamsClient.start();
 
 const props = defineProps({
-        precinct: String,
+        precinct: Object,
         city: String,
         state: String,
         last_incident: Object,
@@ -178,8 +178,8 @@ async function fadeToColor(device, [r, g, b]) {
 /**
  * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
  */
-Echo.channel('police-department.' + props.precinct).listen('DomesticAbuseDetected', async (event) => {
-    console.log('Connected to the channel #' + props.precinct)
+Echo.channel('police-department.' + props.precinct.precinct).listen('DomesticAbuseDetected', async (event) => {
+    console.log('Connected to the channel #' + props.precinct.precinct)
 
     data.incident = event.event;
 
@@ -209,7 +209,7 @@ Echo.channel('police-department.' + props.precinct).listen('DomesticAbuseDetecte
 /**
  * Everytime the database is updated we update the clock countdown
  */
-Echo.channel('run.' + props.precinct).listen('DatabaseUpdated', async (event) => {
+Echo.channel('run.' + props.precinct.precinct).listen('DatabaseUpdated', async (event) => {
     console.log('Database has been updated!');
 
     // Update the last run data
@@ -237,7 +237,7 @@ function sleep(ms) {
 async function previousEvent() {
     axios.post('/api/find-previous-event', {
         id: data.incident.id,
-        precinct: props.precinct
+        precinct: props.precinct.precinct
     }).then(async (response) => {
         data.incident.id = response.data.last_incident.id;
         data.incident.time = response.data.last_incident.time;
@@ -264,7 +264,7 @@ async function nextEvent() {
 
     axios.post('/api/find-next-event', {
         id: data.incident.id,
-        precinct: props.precinct
+        precinct: props.precinct.precinct
     }).then(async (response) => {
         data.incident.id = response.data.last_incident.id;
         data.incident.time = response.data.last_incident.time;
@@ -363,7 +363,7 @@ function updateLocale(lang) {
         <v-main class="bg-[#fbf2fe]">
             <!-- LANG MENU-->
             <div class="fixed top-0 right-0 flex">
-                <Configurations :precinct="$page.props.precinct"></Configurations>
+                <Configurations :precinct="$page.props.precinct.precinct"></Configurations>
             </div>
             <!-- LANG MENU-->
             <!-- CONTENT-->
@@ -373,7 +373,7 @@ function updateLocale(lang) {
 
                 <p class="max-w-60 text-center text-lg"><strong>{{ data.time_incident_elapsed }}</strong>
                     {{ $t('message.since_the_last') }}
-                    <a href="https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4"
+                    <a :href="$page.props.precinct.link"
                        target="_blank" class="underline">{{ $t('message.police_report') }}</a>
                     {{ $t('message.domestic_violence_in_st_petersburg') }} {{ props.city }} {{ props.state }}</p>
 
