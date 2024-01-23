@@ -17,6 +17,7 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'city']);
 Route::get('/{state}/{city}', [HomeController::class, 'city']);
+Route::get('/test', [HomeController::class, 'test']);
 
 Route::get('/v2', function(){
     return Inertia::render('Welcome');

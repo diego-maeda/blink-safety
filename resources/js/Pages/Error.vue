@@ -3,23 +3,28 @@ import {Head} from "@inertiajs/vue3";
 import {computed} from 'vue'
 import error from '/resources/img/errors/error.webp';
 
+//Locale imports
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n({useScope: "global"});
+
 const props = defineProps({status: Number})
 
 const title = computed(() => {
     return {
-        503: '503 Service Unavailable',
-        500: '500 Server Error',
-        404: '404 Page Not Found',
-        403: '403 Forbidden',
+        503: t('error.503_title'),
+        500: t('error.500_title'),
+        404: t('error.404_title'),
+        403: t('error.403_title'),
     }[props.status]
 })
 
 const description = computed(() => {
     return {
-        503: 'Sorry, we are doing some maintenance. Please check back soon.',
-        500: 'Whoops, something went wrong on our servers.',
-        404: 'Sorry, the page you are looking for could not be found.',
-        403: 'Sorry, you are forbidden from accessing this page.',
+        503: t('error.503_description'),
+        500: t('error.500_description'),
+        404: t('error.404_description'),
+        403: t('error.503_description'),
     }[props.status]
 })
 </script>

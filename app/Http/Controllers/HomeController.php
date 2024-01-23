@@ -49,4 +49,9 @@ class HomeController extends Controller
             'last_run' => new LastRunResource($run),
         ]);
     }
+
+    public function test() : Response
+    {
+        return Inertia::render('Test');
+    }
 }

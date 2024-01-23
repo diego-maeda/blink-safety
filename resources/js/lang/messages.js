@@ -33,6 +33,16 @@ export default {
             notifications: 'Notifications',
             push_notifications: 'Push Notifications',
             receive_messages: 'Receive messages on your browser'
+        },
+        error: {
+            '503_title': '503 Service Unavailable',
+            '500_title': '500 Server Error',
+            '404_title': '404 Page Not Found',
+            '403_title': '403 Forbidden',
+            '503_description': 'Sorry, we are doing some maintenance. Please check back soon.',
+            '500_description': 'Whoops, something went wrong on our servers.',
+            '404_description': 'Sorry, the page you are looking for could not be found.',
+            '403_description': 'Sorry, you are forbidden from accessing this page.',
         }
     },
     'es': {
@@ -69,6 +79,16 @@ export default {
             notifications: 'Notificaciones',
             push_notifications: 'Notificaciones Push',
             receive_messages: 'Recibe mensajes en tu navegador'
+        },
+        error: {
+            '503_title': '503 Servicio No Disponible',
+            '500_title': '500 Error del Servidor',
+            '404_title': '404 Página no encontrada',
+            '403_title': '403 Prohibido',
+            '503_description': 'Lo sentimos, estamos haciendo algo de mantenimiento. Por favor, revise luego.',
+            '500_description': 'Vaya, algo salió mal en nuestros servidores.',
+            '404_description': 'Lo sentimos, no se pudo encontrar la página que estás buscando.',
+            '403_description': 'Lo sentimos, tienes prohibido acceder a esta página.',
         }
     },
     'pt-br': {
@@ -105,6 +125,16 @@ export default {
             notifications: 'Notificações',
             push_notifications: 'Notificações Push',
             receive_messages: 'Receba mensagens no seu navegador'
+        },
+        error: {
+            '503_title': '503 Serviço não disponível',
+            '500_title': '500 Erro de servidor',
+            '404_title': '404 Página não encontrada',
+            '403_title': '403 Proibido',
+            '503_description': 'Desculpe, nós estamos fazendo algumas manutenções. Por favor, retorne em breve.',
+            '500_description': 'Oops, alguma coisa de errado ocorreu em nossos servidores.',
+            '404_description': 'Desculpe, a página que está procurando não pode ser encontrada.',
+            '403_description': 'Desculpe, você não pode acessar essa página.',
         }
     }
 }
