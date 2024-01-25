@@ -16,6 +16,7 @@ Blink-Safety emerges as a beacon of awareness, a project dedicated to shedding l
 ___
 ## Summary
 * [Meet Blink-Safety](#purpleheart-meet-blink-safety)
+* [Blog Post](#blog-post)
 * [Project Progress](#chartwithupwardstrend-project-progress)
 * [Blink-safety Background](#book-blink-safety-background)
 * [Technology Stack](#computer-technology-stack)
@@ -23,7 +24,7 @@ ___
 * [Covered Police Departments](#oncomingpolicecar-covered-police-departments)
 * [How to install the project](#hammerandwrench-how-to-install-the-project)
 * [Roadmap](#construction-roadmap)
-* [Blog Post](#blog-post)
+
 
 ___
 
@@ -31,6 +32,10 @@ ___
 Blink-Safety is an open-source initiative empowering communities to break the silence on domestic violence. Through educational resources, survivor support platforms, and creative advocacy campaigns, Blink-Safety aims to educate the public, challenge societal norms, and ultimately prevent future abuse. Join us in building a safer world, one blink at a time. Get involved by sharing your story, volunteering your skills, or contributing to the project's codebase.
 ___
 
+### :newspaper: Blog Post
+[Blink-Safety: Illuminating the Shadows of Domestic Violence](https://medium.com/@diegomaeda/blink-safety-illuminating-the-shadows-of-domestic-violence-c87454599383)
+
+---
 ### :chart_with_upwards_trend: Project Progress
 Currently, the project is actively underway, with various tasks being worked on. New features are being developed, and improvements are continually being made to enhance the overall project.
 
@@ -130,6 +135,3 @@ ___
 - Implement a Google Maps with a Heat map of the last occurrences
 
 ---
-# :newspaper: Blog Post
-[Blink-Safety: Illuminating the Shadows of Domestic Violence](https://medium.com/@diegomaeda/blink-safety-illuminating-the-shadows-of-domestic-violence-c87454599383)
-
