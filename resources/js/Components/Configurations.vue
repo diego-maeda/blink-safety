@@ -104,7 +104,6 @@ function changeLang(language) {
                 <v-toolbar-title>{{ $t('message.settings') }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
-            {{form.notifications}}
             <v-list
                 lines="two"
                 subheader
