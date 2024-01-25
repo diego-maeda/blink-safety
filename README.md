@@ -5,9 +5,13 @@
 ![Laravel Badge](https://img.shields.io/badge/Laravel-10-red)
 ![Node Badge](https://img.shields.io/badge/Node.js-20-blue)
 
+*Original concept by [Chris Bennett](https://www.linkedin.com/in/chrisbennett1981/). Project development by [Diego Maeda](https://www.linkedin.com/in/diego-maeda-iavarone/).*
+
 Domestic violence is a social issue that will take all of us working together to fix. Due to the stigma surrounding domestic violence, it continues to happen at alarming rates.  We are trying to change that through public education and engagement.
 
 Blink-Safety emerges as a beacon of awareness, a project dedicated to shedding light on this dark reality. In this blog post, we'll explore the vision of Blink-Safety and the collective efforts to raise awareness about domestic violence crimes.
+
+-Diego
 
 ___
 ## Summary
@@ -33,7 +37,7 @@ This status indicates that the project is in an active phase, with ongoing devel
 ___
 
 ### :book: Blink-Safety Background
-It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of CASA (Community Action Stops Abuse), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
+It all began with Chris Bennett, a successful entrepreneur and the creator of Callyo, who identified a pressing issue in raising awareness for a cause close to his heart. As a dedicated Board Member of [CASA (Community Action Stops Abuse)](https://www.casapinellas.org/), he recognized the need to leverage technology for greater outreach. In his pursuit, he crossed paths with Diego Maeda, a skilled programmer from Brazil, enthusiastic about embarking on this meaningful journey. Together, they envisioned an open-source approach to champion this initiative.
 ___
 
 ### :computer: Technology Stack
