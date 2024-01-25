@@ -50,7 +50,7 @@ class DomesticAbuseDetected implements ShouldBroadcast
                 "secretKey" => env('PUSHER_BEAMS_SECRET_KEY'),
             ]);
 
-            $push_notifications = $push_notifications->publishToInterests(
+            $push_notifications->publishToInterests(
                 ['debug-' . $precinct->precinct, $precinct->precinct],
                 ['web' => [
                     'notification' => [
