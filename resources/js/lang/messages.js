@@ -78,7 +78,8 @@ export default {
             spanish: 'Español',
             // Settings - Notifications
             notifications: 'Notificaciones',
-            push_notifications: 'Notificaciones Push',
+            subscribe_st_petersburg_pd: 'Suscríbete a la policía de St. Petersburgo',
+            subscribe_orlando_pd: 'Suscríbete a la policía de Orlando',
             receive_messages: 'Recibe mensajes en tu navegador'
         },
         error: {
@@ -124,7 +125,8 @@ export default {
             spanish: 'Espanhol',
             // Config - Notifications
             notifications: 'Notificações',
-            push_notifications: 'Notificações Push',
+            subscribe_st_petersburg_pd: 'Receba notificações da polícia de St. Petersburgo',
+            subscribe_orlando_pd: 'Receba notificações da polícia de Orlando',
             receive_messages: 'Receba mensagens no seu navegador'
         },
         error: {
