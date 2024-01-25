@@ -13,13 +13,14 @@ const beamsClient = new PusherPushNotifications.Client({
     instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
 });
 
+
 const props = defineProps({
     precinct: String
 })
 
 let form = useForm({
     dialog: false,
-    notifications: false,
+    notifications: [],
     language: locale.value
 })
 
@@ -37,26 +38,27 @@ function visit(city) {
  * Check if the user is subscribed to the pusher notification for this channel already
  */
 function checkForNotificationStatus() {
+    beamsClient.start();
     let interests = beamsClient.getDeviceInterests();
     interests.then(function (i) {
-        form.notifications = i.includes(props.precinct);
-    })
+        form.notifications = i;
+    });
 }
 checkForNotificationStatus()
-
 
 /**
  * Toggle the notifications on and off
  */
-function toggleNotification() {
+function toggleNotification(value) {
     beamsClient.start();
 
-    if (!form.notifications) {
-        beamsClient.addDeviceInterest('debug-' + props.precinct)
-            .then(() => console.log('Subscribed @ ' + props.precinct + '!'))
+    if (form.notifications.includes(value)) {
+        beamsClient.removeDeviceInterest(value)
+            .then(() => console.log('Unsubscribed @ ' + value + '!'))
     } else {
-        beamsClient.removeDeviceInterest('debug-' + props.precinct)
-            .then(() => console.log('Unsubscribed @ ' + props.precinct + '!'))
+        beamsClient.addDeviceInterest(value)
+            .then(() => console.log('Subscribed @ ' + value + '!'))
+
     }
 }
 
@@ -102,6 +104,7 @@ function changeLang(language) {
                 <v-toolbar-title>{{ $t('message.settings') }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
+            {{form.notifications}}
             <v-list
                 lines="two"
                 subheader
@@ -146,18 +149,27 @@ function changeLang(language) {
                 </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list
-                lines="two"
-                subheader
-            >
+            <v-list lines="two" density="compact">
                 <v-list-subheader>{{ $t('message.notifications') }}</v-list-subheader>
-                <v-list-item :title="$t('message.push_notifications')" :subtitle="$t('message.receive_messages')">
+                <v-list-item :title="$t('message.subscribe_st_petersburg_pd')" :subtitle="$t('message.receive_messages')">
                     <template v-slot:prepend>
                         <v-checkbox
                             v-model="form.notifications"
                             color="primary"
-                            class="pt-3"
-                            @click="toggleNotification"
+                            class="pt-4"
+                            value="33705"
+                            @click="toggleNotification('33705')"
+                        ></v-checkbox>
+                    </template>
+                </v-list-item>
+                <v-list-item :title="$t('message.subscribe_orlando_pd')" :subtitle="$t('message.receive_messages')">
+                    <template v-slot:prepend>
+                        <v-checkbox
+                            v-model="form.notifications"
+                            color="primary"
+                            class="pt-4"
+                            value="32803"
+                            @click="toggleNotification('32803')"
                         ></v-checkbox>
                     </template>
                 </v-list-item>

@@ -54,9 +54,9 @@ class DomesticAbuseDetected implements ShouldBroadcast
                 ['debug-' . $precinct->precinct, $precinct->precinct],
                 ['web' => [
                     'notification' => [
-                        'title' => 'A new domestic violence incident was detected',
+                        'title' => 'A new DV incident was detected',
                         'body' => 'Near ' . $event->display_address,
-                        'icon' => 'https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg', //TODO ask Chris about this
+                        'icon' => 'https://blink-safety.com/build/assets/blink-safety-logo-312d4928.svg',
                         'deep_link' => 'https://blink-safety.com/' . $precinct->state . '/' . str_replace(' ', '_', $precinct->city),
                         'hide_notification_if_site_has_focus' => true
                     ],

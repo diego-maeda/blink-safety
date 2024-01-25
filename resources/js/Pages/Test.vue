@@ -2,6 +2,12 @@
 
 let data = getBrowserName();
 
+let is_hid_available = detectHID();
+
+function detectHID() {
+    return !!navigator.hid;
+}
+
 function getBrowserName() {
     let browserInfo = navigator.userAgent;
     let browser;
@@ -25,6 +31,6 @@ function getBrowserName() {
 
 <template>
     <div>
-        {{data}}
+        {{ data }} - {{is_hid_available}}
     </div>
 </template>

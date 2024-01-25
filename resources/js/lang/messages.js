@@ -31,8 +31,9 @@ export default {
             spanish: 'Spanish',
             // Settings - Notifications
             notifications: 'Notifications',
-            push_notifications: 'Push Notifications',
-            receive_messages: 'Receive messages on your browser'
+            subscribe_st_petersburg_pd: 'Subscribe to St. Petersburg PD',
+            subscribe_orlando_pd: 'Subscribe to Orlando PD',
+            receive_messages: 'Receive notifications in your browser'
         },
         error: {
             '503_title': '503 Service Unavailable',

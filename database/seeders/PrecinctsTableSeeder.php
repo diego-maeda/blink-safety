@@ -17,7 +17,7 @@ class PrecinctsTableSeeder extends Seeder
             'precinct' => '33705',
         ],
         [
-            'city' => 'pt petersburg',
+            'city' => 'st petersburg',
             'state' => 'fl',
             'link' => 'https://stat.stpete.org/Government/St-Petersburg-Police-Department-Calls-for-Service-/6nse-tdf4'
         ]);
