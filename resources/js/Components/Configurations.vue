@@ -180,7 +180,7 @@ function changeLang(language) {
                     <v-col class="text-center text-gray-300 mt-4" cols="12">
                         <span class="text-gray-300">
                               Made with <v-icon class="text-red-600">mdi-heart</v-icon> by <a
-                            href="https://github.com/diego-maeda/blink-safety"
+                            href="https://github.com/saintpete/blink-safety"
                             target="_blank"><strong>Blink Safety</strong></a> in {{ new Date().getFullYear() }}
                         </span>
                     </v-col>

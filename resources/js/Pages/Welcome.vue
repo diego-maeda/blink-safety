@@ -205,7 +205,7 @@ function togglePrecinctList(precinct) {
                 Want to support this cause?
                 Donate to CASA
             </a>
-            <a href="https://github.com/diego-maeda/blink-safety" target="_blank" class="mr-5">
+            <a href="https://github.com/saintpete /blink-safety" target="_blank" class="mr-5">
                 <v-icon icon="mdi-github" size="x-large" variant="text"></v-icon>
             </a>
         </v-app-bar>
