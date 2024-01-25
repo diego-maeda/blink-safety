@@ -28,7 +28,18 @@ const beamsClient = new PusherPushNotifications.Client({
     instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
 });
 
-beamsClient.start();
+function requestPermission() {
+    console.log('Requesting permission...');
+    Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+            beamsClient.start();
+        } else {
+            console.log('Notifications are not allowed by the user.');
+        }
+    });
+}
+
+requestPermission();
 
 const props = defineProps({
         precinct: Object,
