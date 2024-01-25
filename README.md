@@ -9,7 +9,7 @@
 
 Domestic violence is a social issue that will take all of us working together to fix. Due to the stigma surrounding domestic violence, it continues to happen at alarming rates.  We are trying to change that through public education and engagement.
 
-Blink-Safety emerges as a beacon of awareness, a project dedicated to shedding light on this dark reality. In this blog post, we'll explore the vision of Blink-Safety and the collective efforts to raise awareness about domestic violence crimes.
+Blink-Safety emerges as a beacon of awareness, a project dedicated to shedding light on this dark reality. We'll explore the vision of Blink-Safety and the collective efforts to raise awareness about domestic violence crimes.
 
 -Diego
 
@@ -23,6 +23,7 @@ ___
 * [Covered Police Departments](#oncomingpolicecar-covered-police-departments)
 * [How to install the project](#hammerandwrench-how-to-install-the-project)
 * [Roadmap](#construction-roadmap)
+* [Blog Post](#blog-post)
 
 ___
 
@@ -127,4 +128,8 @@ ___
 # :construction: Roadmap
 - Implement all florida PDs
 - Implement a Google Maps with a Heat map of the last occurrences
+
+---
+# :newspaper: Blog Post
+[Blink-Safety: Illuminating the Shadows of Domestic Violence](https://medium.com/@diegomaeda/blink-safety-illuminating-the-shadows-of-domestic-violence-c87454599383)
 
