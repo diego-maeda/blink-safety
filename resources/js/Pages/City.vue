@@ -22,24 +22,24 @@ import {DateTime} from "luxon";
 import Configurations from "@/Components/Configurations.vue";
 
 //Notification system
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
+// import * as PusherPushNotifications from "@pusher/push-notifications-web";
+//
+// const beamsClient = new PusherPushNotifications.Client({
+//     instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
+// });
 
-const beamsClient = new PusherPushNotifications.Client({
-    instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
-});
-
-function requestPermission() {
-    console.log('Requesting permission...');
-    Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-            beamsClient.start();
-        } else {
-            console.log('Notifications are not allowed by the user.');
-        }
-    });
-}
-
-requestPermission();
+// function requestPermission() {
+//     console.log('Requesting permission...');
+//     Notification.requestPermission().then((permission) => {
+//         if (permission === 'granted') {
+//             beamsClient.start();
+//         } else {
+//             console.log('Notifications are not allowed by the user.');
+//         }
+//     });
+// }
+//
+// requestPermission();
 
 const props = defineProps({
         precinct: Object,

@@ -7,11 +7,11 @@ import {useI18n} from "vue-i18n";
 const {t, locale} = useI18n({useScope: "global"});
 
 // Notifications
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
-
-const beamsClient = new PusherPushNotifications.Client({
-    instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
-});
+// import * as PusherPushNotifications from "@pusher/push-notifications-web";
+//
+// const beamsClient = new PusherPushNotifications.Client({
+//     instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
+// });
 
 
 const props = defineProps({
@@ -37,30 +37,30 @@ function visit(city) {
 /**
  * Check if the user is subscribed to the pusher notification for this channel already
  */
-function checkForNotificationStatus() {
-    beamsClient.start();
-    let interests = beamsClient.getDeviceInterests();
-    interests.then(function (i) {
-        form.notifications = i;
-    });
-}
-checkForNotificationStatus()
+// function checkForNotificationStatus() {
+//     beamsClient.start();
+//     let interests = beamsClient.getDeviceInterests();
+//     interests.then(function (i) {
+//         form.notifications = i;
+//     });
+// }
+// checkForNotificationStatus()
 
-/**
- * Toggle the notifications on and off
- */
-function toggleNotification(value) {
-    beamsClient.start();
-
-    if (form.notifications.includes(value)) {
-        beamsClient.removeDeviceInterest(value)
-            .then(() => console.log('Unsubscribed @ ' + value + '!'))
-    } else {
-        beamsClient.addDeviceInterest(value)
-            .then(() => console.log('Subscribed @ ' + value + '!'))
-
-    }
-}
+// /**
+//  * Toggle the notifications on and off
+//  */
+// function toggleNotification(value) {
+//     beamsClient.start();
+//
+//     if (form.notifications.includes(value)) {
+//         beamsClient.removeDeviceInterest(value)
+//             .then(() => console.log('Unsubscribed @ ' + value + '!'))
+//     } else {
+//         beamsClient.addDeviceInterest(value)
+//             .then(() => console.log('Subscribed @ ' + value + '!'))
+//
+//     }
+// }
 
 // Language Config
 import en from "../../img/icons/english.svg";
