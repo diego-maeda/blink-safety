@@ -93,17 +93,21 @@ let black_color = [0, 0, 0];
  */
 async function handleConnectClick() {
     // Try to open the device
-    let device = await openDevice();
+    if(!!navigator.hid){
+        let device = await openDevice();
 
-    // Signal to the user that the device connected
-    await fadeToColor(device, purple_color);
-    await sleep(500);
-    await fadeToColor(device, black_color);
-    await sleep(500);
-    await fadeToColor(device, purple_color);
-    await sleep(500);
-    await fadeToColor(device, black_color);
-    await sleep(500);
+        // Signal to the user that the device connected
+        await fadeToColor(device, purple_color);
+        await sleep(500);
+        await fadeToColor(device, black_color);
+        await sleep(500);
+        await fadeToColor(device, purple_color);
+        await sleep(500);
+        await fadeToColor(device, black_color);
+        await sleep(500);
+    } else {
+        alert('Sorry this feature is not available on your device!');
+    }
 }
 
 /**
@@ -276,7 +280,6 @@ async function previousEvent() {
  * @returns {Promise<void>}
  */
 async function nextEvent() {
-
     axios.post('/api/find-next-event', {
         id: data.incident.id,
         precinct: props.precinct.precinct

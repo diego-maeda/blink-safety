@@ -1,1 +1,12 @@
-{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+{
+    "name": "Blink-safety.com",
+    "short_name": "Blink-safety.com",
+    "display": "standalone",
+    "description": "Domestic Violence Incident Alerts by Blink Safety",
+    "background_color": "#fff",
+    "related_applications": [
+        {
+        "platform": "web"
+        }
+    ]
+}
