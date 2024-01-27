@@ -24,9 +24,9 @@ import Configurations from "@/Components/Configurations.vue";
 //Notification system
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
-// const beamsClient = new PusherPushNotifications.Client({
-//     instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
-// });
+const beamsClient = new PusherPushNotifications.Client({
+    instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
+});
 
 // function requestPermission() {
 //     console.log('Requesting permission...');
