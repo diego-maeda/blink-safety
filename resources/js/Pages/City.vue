@@ -31,8 +31,6 @@ if (browserInfo.includes('Opera') || browserInfo.includes('Opr') || browserInfo.
         instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
     });
     requestPermission(beamsClient);
-} else {
-    alert('This feature is not allowed in your browser.');
 }
 
 function requestPermission(beamsClient) {
