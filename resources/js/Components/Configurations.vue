@@ -29,11 +29,7 @@ if (browserInfo.includes('Opera') || browserInfo.includes('Opr') || browserInfo.
     });
     checkForNotificationStatus(beamsClient);
     form.beamsClient = beamsClient
-} else {
-    alert('This feature is not allowed in your browser.');
 }
-
-
 
 // City config
 /**
