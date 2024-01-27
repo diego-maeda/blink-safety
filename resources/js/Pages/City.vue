@@ -87,158 +87,162 @@ let red_color = [255, 0, 0];
 // Off Color
 let black_color = [0, 0, 0];
 
-/**
- * Handle the connection with the blink1 device
- * @returns {Promise<void>}
- */
-async function handleConnectClick() {
-    // Try to open the device
-    if(!!navigator.hid){
-        let device = await openDevice();
-
-        // Signal to the user that the device connected
-        await fadeToColor(device, purple_color);
-        await sleep(500);
-        await fadeToColor(device, black_color);
-        await sleep(500);
-        await fadeToColor(device, purple_color);
-        await sleep(500);
-        await fadeToColor(device, black_color);
-        await sleep(500);
-    } else {
-        alert('Sorry this feature is not available on your device!');
-    }
-}
-
-/**
- * Handle the disconnect with the blink1 device
- * @returns {Promise<void>}
- */
-async function handleDisconnectClick() {
-    let device = await openDevice();
-    if (!device) return;
-
-    console.log('Disconnecting...')
-
-    await fadeToColor(device, red_color);
-    await sleep(500);
-    await fadeToColor(device, black_color);
-    await sleep(500);
-    await fadeToColor(device, red_color);
-    await sleep(500);
-    await fadeToColor(device, black_color);
-    await device.close();
-
-    data.connected = false;
-}
-
-/**
- * Open the device connection preparing it for the next connection
- * @returns {Promise<*|null>}
- */
-async function openDevice() {
-    const vendorId = 0x27b8; // blink1 vid
-    const productId = 0x01ed;  // blink1 pid
-    //TODO CREATE A VARIABLE FOR HID VERIFICATION
-
-    // Await the devices connected to the navigator
-    const device_list = await navigator.hid.getDevices();
-
-    // List all the devices
-    let device = device_list.find(d => d.vendorId === vendorId && d.productId === productId);
-
-    if (!device) {
-        // This returns an array now
-        let devices = await navigator.hid.requestDevice({
-            filters: [{vendorId, productId}],
-        });
-
-        // Selects the first device on the list
-        device = devices[0];
-
-        // If no device is found
-        if (!device) return null;
-    }
-
-    // Open the device if no device is open
-    if (!device.opened) {
-        await device.open();
-    }
-
-    data.connected = true;
-
-    // Update the device status
-    console.log('Blink(1) device connected!');
-    device_status = 'Blink(1) device connected!';
-
-    // Returns the device selected
-    return device;
-}
-
-/**
- * This function converts the color to send to the device
- * @param device
- * @param r
- * @param g
- * @param b
- * @returns {Promise<void>}
- */
-async function fadeToColor(device, [r, g, b]) {
-    if (!device) return;
-    const reportId = 1;
-    const data = Uint8Array.from([0x63, r, g, b, 0x00, 0x10, 0x00, 0x00]);
-    try {
-        await device.sendFeatureReport(reportId, data);
-    } catch (error) {
-        console.error('fadeToColor: failed:', error);
-    }
-}
-
-/**
- * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
- */
-Echo.channel('police-department.' + props.precinct.precinct).listen('DomesticAbuseDetected', async (event) => {
-    console.log('Connected to the channel #' + props.precinct.precinct)
-
-    data.incident = event.event;
-
-    await calculateElapsedIncident();
-    await calculateCrimeTime();
-
-    let device = await openDevice();
-    if (!device) return;
-    await fadeToColor(device, purple_color);
-    await sleep(1000);
-    await fadeToColor(device, black_color);
-    await sleep(1000);
-    await fadeToColor(device, purple_color);
-    await sleep(1000);
-    await fadeToColor(device, black_color);
-    await sleep(1000);
-    await fadeToColor(device, purple_color);
-
-}).listen('EmptyResultsDetected', async () => {
-    //If no results are detected
-    let device = await openDevice();
-    if (!device) return;
-    await fadeToColor(device, black_color);
-    await sleep(1000);
-});
-
-/**
- * Everytime the database is updated we update the clock countdown
- */
-Echo.channel('run.' + props.precinct.precinct).listen('DatabaseUpdated', async (event) => {
-    console.log('Database has been updated!');
-
-    // Update the last run data
-    data.last_run.created_at = event.run.created_at;
-    data.last_run.next_run = event.run.next_run;
-
-    // Recalculate the elapsed time
-    await calculateElapsedTime();
-    await calculateNextRunTime();
-})
+// /**
+//  * Handle the connection with the blink1 device
+//  * @returns {Promise<void>}
+//  */
+// async function handleConnectClick() {
+//     // Try to open the device
+//     if(!!navigator.hid){
+//         let device = await openDevice();
+//
+//         // Signal to the user that the device connected
+//         await fadeToColor(device, purple_color);
+//         await sleep(500);
+//         await fadeToColor(device, black_color);
+//         await sleep(500);
+//         await fadeToColor(device, purple_color);
+//         await sleep(500);
+//         await fadeToColor(device, black_color);
+//         await sleep(500);
+//     } else {
+//         alert('Sorry this feature is not available on your device!');
+//     }
+// }
+//
+// /**
+//  * Handle the disconnect with the blink1 device
+//  * @returns {Promise<void>}
+//  */
+// async function handleDisconnectClick() {
+//     let device = await openDevice();
+//     if (!device) return;
+//
+//     console.log('Disconnecting...')
+//
+//     await fadeToColor(device, red_color);
+//     await sleep(500);
+//     await fadeToColor(device, black_color);
+//     await sleep(500);
+//     await fadeToColor(device, red_color);
+//     await sleep(500);
+//     await fadeToColor(device, black_color);
+//     await device.close();
+//
+//     data.connected = false;
+// }
+//
+// /**
+//  * Open the device connection preparing it for the next connection
+//  * @returns {Promise<*|null>}
+//  */
+// async function openDevice() {
+//     if(!!navigator.hid){
+//         const vendorId = 0x27b8; // blink1 vid
+//         const productId = 0x01ed;  // blink1 pid
+//         //TODO CREATE A VARIABLE FOR HID VERIFICATION
+//
+//         // Await the devices connected to the navigator
+//         const device_list = await navigator.hid.getDevices();
+//
+//         // List all the devices
+//         let device = device_list.find(d => d.vendorId === vendorId && d.productId === productId);
+//
+//         if (!device) {
+//             // This returns an array now
+//             let devices = await navigator.hid.requestDevice({
+//                 filters: [{vendorId, productId}],
+//             });
+//
+//             // Selects the first device on the list
+//             device = devices[0];
+//
+//             // If no device is found
+//             if (!device) return null;
+//         }
+//
+//         // Open the device if no device is open
+//         if (!device.opened) {
+//             await device.open();
+//         }
+//
+//         data.connected = true;
+//
+//         // Update the device status
+//         console.log('Blink(1) device connected!');
+//         device_status = 'Blink(1) device connected!';
+//
+//         // Returns the device selected
+//         return device;
+//     } else{
+//         alert('Sorry this feature is not available on your device!');
+//     }
+// }
+//
+// /**
+//  * This function converts the color to send to the device
+//  * @param device
+//  * @param r
+//  * @param g
+//  * @param b
+//  * @returns {Promise<void>}
+//  */
+// async function fadeToColor(device, [r, g, b]) {
+//     if (!device) return;
+//     const reportId = 1;
+//     const data = Uint8Array.from([0x63, r, g, b, 0x00, 0x10, 0x00, 0x00]);
+//     try {
+//         await device.sendFeatureReport(reportId, data);
+//     } catch (error) {
+//         console.error('fadeToColor: failed:', error);
+//     }
+// }
+//
+// /**
+//  * Detects new changes on the specific channel, when it detects a new event it will trigger a random color blink.
+//  */
+// Echo.channel('police-department.' + props.precinct.precinct).listen('DomesticAbuseDetected', async (event) => {
+//     console.log('Connected to the channel #' + props.precinct.precinct)
+//
+//     data.incident = event.event;
+//
+//     await calculateElapsedIncident();
+//     await calculateCrimeTime();
+//
+//     let device = await openDevice();
+//     if (!device) return;
+//     await fadeToColor(device, purple_color);
+//     await sleep(1000);
+//     await fadeToColor(device, black_color);
+//     await sleep(1000);
+//     await fadeToColor(device, purple_color);
+//     await sleep(1000);
+//     await fadeToColor(device, black_color);
+//     await sleep(1000);
+//     await fadeToColor(device, purple_color);
+//
+// }).listen('EmptyResultsDetected', async () => {
+//     //If no results are detected
+//     let device = await openDevice();
+//     if (!device) return;
+//     await fadeToColor(device, black_color);
+//     await sleep(1000);
+// });
+//
+// /**
+//  * Everytime the database is updated we update the clock countdown
+//  */
+// Echo.channel('run.' + props.precinct.precinct).listen('DatabaseUpdated', async (event) => {
+//     console.log('Database has been updated!');
+//
+//     // Update the last run data
+//     data.last_run.created_at = event.run.created_at;
+//     data.last_run.next_run = event.run.next_run;
+//
+//     // Recalculate the elapsed time
+//     await calculateElapsedTime();
+//     await calculateNextRunTime();
+// })
 
 /**
  * Creates a new sleep function which stops the app from closing
