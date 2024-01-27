@@ -24,22 +24,27 @@ import Configurations from "@/Components/Configurations.vue";
 //Notification system
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
-const beamsClient = new PusherPushNotifications.Client({
-    instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
-});
+let browserInfo = navigator.userAgent;
 
-// function requestPermission() {
-//     console.log('Requesting permission...');
-//     Notification.requestPermission().then((permission) => {
-//         if (permission === 'granted') {
-//             beamsClient.start();
-//         } else {
-//             console.log('Notifications are not allowed by the user.');
-//         }
-//     });
-// }
-//
-// requestPermission();
+if (browserInfo.includes('Opera') || browserInfo.includes('Opr') || browserInfo.includes('Edg') || browserInfo.includes('Chrome') || browserInfo.includes('Firefox')) {
+    const beamsClient = new PusherPushNotifications.Client({
+        instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
+    });
+    requestPermission(beamsClient);
+} else {
+    alert('This feature is not allowed in your browser.');
+}
+
+function requestPermission(beamsClient) {
+    console.log('Requesting permission...');
+    Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+            beamsClient.start();
+        } else {
+            console.log('Notifications are not allowed by the user.');
+        }
+    });
+}
 
 const props = defineProps({
         precinct: Object,

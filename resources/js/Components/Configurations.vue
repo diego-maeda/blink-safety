@@ -1,28 +1,39 @@
 <script setup>
 import {router} from '@inertiajs/vue3'
-import {useForm} from "@inertiajs/vue3";
-import {useI18n} from "vue-i18n";
 
 // Localization
+import {useI18n} from "vue-i18n";
 const {t, locale} = useI18n({useScope: "global"});
-
-// Notifications
-// import * as PusherPushNotifications from "@pusher/push-notifications-web";
-//
-// const beamsClient = new PusherPushNotifications.Client({
-//     instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
-// });
-
 
 const props = defineProps({
     precinct: String
 })
 
+// Form
+import {useForm} from "@inertiajs/vue3";
 let form = useForm({
     dialog: false,
     notifications: [],
     language: locale.value
 })
+
+
+// Notifications
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+
+let browserInfo = navigator.userAgent;
+
+if (browserInfo.includes('Opera') || browserInfo.includes('Opr') || browserInfo.includes('Edg') || browserInfo.includes('Chrome') || browserInfo.includes('Firefox')) {
+    const beamsClient = new PusherPushNotifications.Client({
+        instanceId: import.meta.env.VITE_PUSHER_BEAMS_INSTANCE_ID,
+    });
+    checkForNotificationStatus(beamsClient);
+    form.beamsClient = beamsClient
+} else {
+    alert('This feature is not allowed in your browser.');
+}
+
+
 
 // City config
 /**
@@ -37,30 +48,29 @@ function visit(city) {
 /**
  * Check if the user is subscribed to the pusher notification for this channel already
  */
-// function checkForNotificationStatus() {
-//     beamsClient.start();
-//     let interests = beamsClient.getDeviceInterests();
-//     interests.then(function (i) {
-//         form.notifications = i;
-//     });
-// }
-// checkForNotificationStatus()
+function checkForNotificationStatus(beamsClient) {
+    beamsClient.start();
+    let interests = beamsClient.getDeviceInterests();
+    interests.then(function (i) {
+        form.notifications = i;
+    });
+}
 
-// /**
-//  * Toggle the notifications on and off
-//  */
-// function toggleNotification(value) {
-//     beamsClient.start();
-//
-//     if (form.notifications.includes(value)) {
-//         beamsClient.removeDeviceInterest(value)
-//             .then(() => console.log('Unsubscribed @ ' + value + '!'))
-//     } else {
-//         beamsClient.addDeviceInterest(value)
-//             .then(() => console.log('Subscribed @ ' + value + '!'))
-//
-//     }
-// }
+/**
+ * Toggle the notifications on and off
+ */
+function toggleNotification(value) {
+    form.beamsClient.start();
+
+    if (form.notifications.includes(value)) {
+        form.beamsClient.removeDeviceInterest(value)
+            .then(() => console.log('Unsubscribed @ ' + value + '!'))
+    } else {
+        form.beamsClient.addDeviceInterest(value)
+            .then(() => console.log('Subscribed @ ' + value + '!'))
+
+    }
+}
 
 // Language Config
 import en from "../../img/icons/english.svg";
