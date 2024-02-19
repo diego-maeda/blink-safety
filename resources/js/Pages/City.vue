@@ -1,5 +1,6 @@
 <script setup>
-import {Head} from '@inertiajs/vue3';
+import { computed } from 'vue';
+import {Head, Link, usePage} from '@inertiajs/vue3';
 import logo from '/resources/img/blink-safety-logo.svg';
 import connect_modal from '/resources/img/connect_modal.jpg';
 import axios from 'axios';
@@ -373,6 +374,9 @@ function updateLocale(lang) {
     calculateElapsedTime();
     calculateNextRunTime();
 }
+
+const page = usePage()
+const user = computed(() => page.props.auth.user)
 </script>
 
 <template>
@@ -390,12 +394,14 @@ function updateLocale(lang) {
         <!-- MAIN -->
         <v-main class="bg-[#fbf2fe]">
             <!-- LANG MENU-->
-            <div class="fixed top-0 right-0 flex">
+            <div class="fixed top-0 right-0 flex items-center">
+                <Link :href="route('dashboard')" class="text-gray-600 font-semibold" v-if="user">Dashboard</Link>
+                <Link :href="route('login')" class="text-gray-600 font-semibold" v-else>Login</Link>
                 <Configurations :precinct="$page.props.precinct.precinct"></Configurations>
             </div>
             <!-- LANG MENU-->
             <!-- CONTENT-->
-            <div class="h-full w-full flex flex-col justify-center items-center">
+            <div class="h-full w-full flex flex-col justify-center items-center mt-5">
 
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
