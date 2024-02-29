@@ -4,6 +4,16 @@ import {Link} from '@inertiajs/vue3';
 import logo from "../../img/blink-safety-logo.svg";
 import {ComputerDesktopIcon, UserCircleIcon, ShieldCheckIcon, ArrowRightStartOnRectangleIcon} from "@heroicons/vue/24/outline";
 const showingNavigationDropdown = ref(false);
+
+
+//Locale imports
+import {useI18n} from "vue-i18n";
+import { usePage } from '@inertiajs/vue3';
+
+const {t, locale} = useI18n({useScope: "global"});
+
+const page = usePage();
+locale.value = page.props.language.language;
 </script>
 
 <template>
@@ -18,6 +28,7 @@ const showingNavigationDropdown = ref(false);
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <img :src="logo" height="45" width="100" alt="Blink-Safety Logo">
+
                                 </Link>
                             </div>
                         </div>
@@ -33,7 +44,7 @@ const showingNavigationDropdown = ref(false);
                                             <span class="absolute -inset-1.5"></span>
                                             <span class="sr-only">Open user menu</span>
                                             <img class="h-8 w-8 rounded-full"
-                                                 :src="$page.props.auth.user.photo"
+                                                 :src=" '/storage/' + $page.props.auth.user.photo"
                                                  :alt="$page.props.auth.user.name + ' photo'">
                                         </button>
                                     </template>
@@ -42,25 +53,24 @@ const showingNavigationDropdown = ref(false);
                                             <Link :href="route('dashboard')"
                                                   class="flex items-center px-4 py-2 !text-sm text-gray-700 cursor-pointer">
                                                 <ComputerDesktopIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                                                Your Dashboard
+                                                {{$t('general.navigation.dashboard')}}
                                             </Link>
                                             <Link :href="route('profile')"
                                                   class="flex items-center px-4 py-2 !text-sm text-gray-700 cursor-pointer">
                                                 <UserCircleIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                                                Your Profile
+                                                {{$t('general.navigation.profile')}}
                                             </Link>
                                             <Link :href="route('security')" :active="route().current('security')"
                                                   class="flex items-center px-4 py-2 !text-sm text-gray-700 cursor-pointer">
                                                 <ShieldCheckIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                                                Security options
+                                                {{$t('general.navigation.security')}}
                                             </Link>
-
                                         </v-list-item>
                                         <v-list-item class="border-t border-gray-100">
                                             <Link :href="route('logout')" method="post"
                                                   class="flex items-center px-4 py-2 !text-sm text-gray-700 cursor-pointer" as="button">
                                                 <ArrowRightStartOnRectangleIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                                                Log Out
+                                                {{$t('general.navigation.log_out')}}
                                             </Link>
                                         </v-list-item>
                                     </v-list>
@@ -119,19 +129,19 @@ const showingNavigationDropdown = ref(false);
                     <div class="pt-4 pb-3 px-3 border-t border-gray-200 flex flex-col">
                         <Link :href="route('dashboard')" :active="route().current('dashboard')" class="flex items-center">
                             <ComputerDesktopIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                            Dashboard
+                            {{$t('general.navigation.dashboard')}}
                         </Link>
                         <Link :href="route('profile')" :active="route().current('profile')" class="flex items-center">
                             <UserCircleIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                            Your Profile
+                            {{$t('general.navigation.profile')}}
                         </Link>
                         <Link :href="route('security')" :active="route().current('security')" class="flex items-center">
                             <ShieldCheckIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                            Security options
+                            {{$t('general.navigation.security')}}
                         </Link>
                         <Link :href="route('logout')" method="post" as="button" class="flex items-center">
                             <ArrowRightStartOnRectangleIcon class="mr-3 h-5 w-5 text-gray-500" aria-hidden="true"/>
-                            Log Out
+                            {{$t('general.navigation.log_out')}}
                         </Link>
                     </div>
                 </div>

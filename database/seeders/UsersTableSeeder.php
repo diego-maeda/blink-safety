@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::updateOrcreate(
+        $user = User::updateOrcreate(
             [
                 'email' => 'maeda.diego@gmail.com',
             ],
@@ -22,5 +22,9 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => '2024-02-10 13:55:02',
             ]
         );
+
+        $user->language()->create([
+            'language' => 'en',
+        ]);
     }
 }

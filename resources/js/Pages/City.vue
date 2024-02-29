@@ -144,7 +144,6 @@ async function openDevice() {
     if(!!navigator.hid){
         const vendorId = 0x27b8; // blink1 vid
         const productId = 0x01ed;  // blink1 pid
-        //TODO CREATE A VARIABLE FOR HID VERIFICATION
 
         // Await the devices connected to the navigator
         const device_list = await navigator.hid.getDevices();
@@ -394,10 +393,11 @@ const user = computed(() => page.props.auth.user)
         <!-- MAIN -->
         <v-main class="bg-[#fbf2fe]">
             <!-- LANG MENU-->
-            <div class="fixed top-0 right-0 flex items-center">
-                <Link :href="route('dashboard')" class="text-gray-600 font-semibold" v-if="user">Dashboard</Link>
-                <Link :href="route('login')" class="text-gray-600 font-semibold" v-else>Login</Link>
+            <div class="fixed top-0 right-0 p-4 flex items-center">
                 <Configurations :precinct="$page.props.precinct.precinct"></Configurations>
+                <Link :href="route('login')" class="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900 mr-3" v-if="!user">Log In</Link>
+                <Link :href="route('register')" class="rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600" v-if="!user">Register</Link>
+                <Link :href="route('dashboard')" class="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900" v-if="user">Dashboard</Link>
             </div>
             <!-- LANG MENU-->
             <!-- CONTENT-->

@@ -62,10 +62,10 @@ function toggleConfirmationPassword(){
                         <div>
                             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                             <div class="mt-2">
-                                <input id="name" name="name" type="text" autocomplete="email" required
+                                <input id="name" name="name" type="text" autocomplete="firstname"
                                        v-model="form.name"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                                <span class="mt-1">{{form.errors.email}}</span>
+                                <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 
@@ -73,10 +73,10 @@ function toggleConfirmationPassword(){
                             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
                                 address</label>
                             <div class="mt-2">
-                                <input id="email" name="email" type="email" autocomplete="email" required
+                                <input id="email" name="email" type="email" autocomplete="email"
                                        v-model="form.email"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                                <span class="mt-1">{{form.errors.email}}</span>
+                                <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 
@@ -88,14 +88,14 @@ function toggleConfirmationPassword(){
                             <div class="mt-1">
                                 <div class="flex items-center w-full bg-white rounded-md border-0 py-px text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
                                     <input id="password" name="password" :type="form.password_type" autocomplete="current-password"
-                                           required v-model="form.password"
+                                           v-model="form.password"
                                            class="h-full flex-fill  mx-px rounded-md">
                                     <Transition name="fade" mode="out-in" class="mr-3">
                                         <v-icon color="grey" @click.prevent="togglePassword" v-if="form.password_type === 'password'">mdi-eye-outline</v-icon>
                                         <v-icon color="grey" @click.prevent="togglePassword" v-else-if="form.password_type === 'text'">mdi-eye-closed</v-icon>
                                     </Transition>
-                                    <span class="mt-1">{{form.errors.email}}</span>
                                 </div>
+                                <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 
@@ -107,14 +107,14 @@ function toggleConfirmationPassword(){
                             <div class="mt-1">
                                 <div class="flex items-center w-full bg-white rounded-md border-0 py-px text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
                                     <input id="password" name="password" :type="form.password_confirmation_type" autocomplete="current-password"
-                                           required v-model="form.password_confirmation"
+                                           v-model="form.password_confirmation"
                                            class="h-full flex-fill  mx-px rounded-md">
                                     <Transition name="fade" mode="out-in" class="mr-3">
                                         <v-icon color="grey" @click.prevent="toggleConfirmationPassword" v-if="form.password_confirmation_type === 'password'">mdi-eye-outline</v-icon>
                                         <v-icon color="grey" @click.prevent="toggleConfirmationPassword" v-else-if="form.password_confirmation_type === 'text'">mdi-eye-closed</v-icon>
                                     </Transition>
-                                    <span class="mt-1">{{form.errors.email}}</span>
                                 </div>
+                                <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 

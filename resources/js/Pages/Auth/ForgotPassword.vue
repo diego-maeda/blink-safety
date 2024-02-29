@@ -15,7 +15,7 @@ defineProps({
 
 
 const form = useForm({
-    email: '',
+    email: 'maeda.diego@gmail.com',
 });
 
 const submit = () => {
@@ -26,7 +26,7 @@ const submit = () => {
 </script>
 
 <template>
-    <head>
+    <Head>
         <title>Forgot Password</title>
         <meta head-key="description" name="description" content="Blink-Safety bringing awareness to Domestic Violence"/>
         <link rel="apple-touch-icon" sizes="180x180" :href="appleTouchIcon">
@@ -34,7 +34,7 @@ const submit = () => {
         <link rel="icon" type="image/png" sizes="16x16" :href="favicon16">
         <link rel="icon" type="image/png" sizes="16x16" :href="favicon">
         <link rel="manifest" :href="siteManifest">
-    </head>
+    </Head>
     <v-app>
         <v-main>
             <div class="flex min-h-dvh flex-col justify-center px-6 py-12 lg:px-8 bg-[#fbf2fe]">
@@ -49,17 +49,17 @@ const submit = () => {
                             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
                                 address</label>
                             <div class="mt-2">
-                                <input id="email" name="email" type="email" autocomplete="email" required
+                                <input id="email" name="email" type="email" autocomplete="email"
                                        v-model="form.email"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                                <span class="mt-1">{{form.errors.email}}</span>
+                                <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 
                         <div class="mt-2">
                             <button type="submit"
                                     class="flex w-full justify-center rounded-md bg-purple-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">
-                                Sign in
+                                Send me a reset email
                             </button>
                         </div>
                     </form>

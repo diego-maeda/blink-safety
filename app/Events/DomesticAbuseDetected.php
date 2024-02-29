@@ -24,7 +24,7 @@ class DomesticAbuseDetected implements ShouldBroadcast
      * Police department precinct
      * @var Precinct
      */
-    protected Precinct $precinct;
+    public Precinct $precinct;
 
     /**
      * The domestic violence case
@@ -60,9 +60,6 @@ class DomesticAbuseDetected implements ShouldBroadcast
                         'deep_link' => 'https://blink-safety.com/' . $precinct->state . '/' . str_replace(' ', '_', $precinct->city),
                         'hide_notification_if_site_has_focus' => true
                     ],
-                    'data' => [
-                        'some' => 'some',
-                    ]
                 ]
                 ],
             );

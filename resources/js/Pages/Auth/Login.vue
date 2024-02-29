@@ -57,7 +57,7 @@ function togglePassword(){
                                 <input id="email" name="email" type="email" autocomplete="email" required
                                        v-model="form.email"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                                <span class="mt-1">{{form.errors.email}}</span>
+                                <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@ function togglePassword(){
                                         <v-icon color="grey" @click.prevent="togglePassword" v-else-if="form.password_type === 'text'">mdi-eye-closed</v-icon>
                                     </Transition>
                                 </div>
-                              <span class="mt-1">{{form.errors.email}}</span>
+                              <span class="text-red-500 text-sm">{{form.errors.email}}</span>
                             </div>
                         </div>
 

@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Security;
+namespace App\Http\Requests\Profile;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class passwordChangeRequest extends FormRequest
+/**
+ * This validates if the Language was sent
+ */
+class LanguageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,14 +21,12 @@ class passwordChangeRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            'current_password' => 'required|current_password:web',
-            'new_password' => 'required|min:6|confirmed',
-            'new_password_confirmation' => 'required',
+            'language' => 'required',
         ];
     }
 }

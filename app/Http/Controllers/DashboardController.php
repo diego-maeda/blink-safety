@@ -10,6 +10,11 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 
+/**
+ * This controller handles interactions with LIFX smart lights within a web application.
+ * It primarily manages user authentication, lamp retrieval, and enabling/disabling blink-safety notifications.
+ * @author Diego Maeda maeda.diego@gmail.com
+ */
 class DashboardController extends Controller
 {
     /**
@@ -95,7 +100,7 @@ class DashboardController extends Controller
             Lamp::updateOrCreate([
                 'lamp_id' => $lamp->id,
                 'user_id' => auth()->user()->id,
-            ],[
+            ], [
                 'label' => $lamp->label,
                 'power' => $lamp->power === 'on',
                 'connected' => $lamp->connected,
@@ -114,7 +119,7 @@ class DashboardController extends Controller
      * We will disable the lamps as well otherwise it might throw an error because the key is no longer present.
      * @return RedirectResponse
      */
-    public function deleteToken()
+    public function deleteToken(): RedirectResponse
     {
         $user = auth()->user();
 
@@ -130,7 +135,7 @@ class DashboardController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function setLamp($id)
+    public function setLamp($id): RedirectResponse
     {
         $lamp = Lamp::where(['lamp_id' => $id])->first();
 
@@ -157,7 +162,7 @@ class DashboardController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function unsetLamp($id)
+    public function unsetLamp($id): RedirectResponse
     {
         $lamp = Lamp::where(['lamp_id' => $id])->first();
 

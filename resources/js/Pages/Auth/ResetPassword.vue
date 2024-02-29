@@ -8,45 +8,45 @@ import favicon from "../../../img/favicon.ico";
 import siteManifest from "../../../img/site.webmanifest";
 
 const props = defineProps({
-  email: {
-    type: String,
-    required: true,
-  },
-  token: {
-    type: String,
-    required: true,
-  },
+    email: {
+        type: String,
+        required: true,
+    },
+    token: {
+        type: String,
+        required: true,
+    },
 });
 
 const form = useForm({
-  token: props.token,
-  email: props.email,
-  password: '',
-  password_confirmation: '',
-  password_type: 'password',
-  password_confirmation_type: 'password'
+    token: props.token,
+    email: props.email,
+    password: '',
+    password_confirmation: '',
+    password_type: 'password',
+    password_confirmation_type: 'password'
 });
 
-function togglePassword(){
-  if(form.password_type === 'password'){
-    form.password_type = 'text';
-  } else {
-    form.password_type = 'password';
-  }
+function togglePassword() {
+    if (form.password_type === 'password') {
+        form.password_type = 'text';
+    } else {
+        form.password_type = 'password';
+    }
 }
 
-function toggleConfirmationPassword(){
-  if(form.password_confirmation_type === 'password'){
-    form.password_confirmation_type = 'text';
-  } else {
-    form.password_confirmation_type = 'password';
-  }
+function toggleConfirmationPassword() {
+    if (form.password_confirmation_type === 'password') {
+        form.password_confirmation_type = 'text';
+    } else {
+        form.password_confirmation_type = 'password';
+    }
 }
 
 const submit = () => {
-  form.post(route('password.store'), {
-    onFinish: () => form.reset('password', 'password_confirmation'),
-  });
+    form.post(route('password.store'), {
+        onFinish: () => form.reset('password', 'password_confirmation'),
+    });
 };
 </script>
 
@@ -65,7 +65,8 @@ const submit = () => {
             <div class="flex min-h-dvh flex-col justify-center px-6 py-12 lg:px-8 bg-[#fbf2fe]">
                 <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img :src="logo" height="80" width="177" class="mb-7 mx-auto" alt="Blink-Safety Logo">
-                    <h2 class="mt-10 text-center text-2xl font-semibold leading-9 tracking-tight text-gray-900">Forgot password</h2>
+                    <h2 class="mt-10 text-center text-2xl font-semibold leading-9 tracking-tight text-gray-900">Forgot
+                        password</h2>
                 </div>
 
                 <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -77,47 +78,60 @@ const submit = () => {
                                 <input id="email" name="email" type="email" autocomplete="email" required
                                        v-model="form.email"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                                <span class="mt-1">{{form.errors.email}}</span>
+                                <span class="text-red-500 text-sm">{{ form.errors.email }}</span>
                             </div>
                         </div>
 
-                      <div class="mt-2">
-                        <div class="flex items-center justify-between">
-                          <label for="password"
-                                 class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                        <div class="mt-2">
+                            <div class="flex items-center justify-between">
+                                <label for="password"
+                                       class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                            </div>
+                            <div class="mt-1">
+                                <div
+                                    class="flex items-center w-full bg-white rounded-md border-0 py-px text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
+                                    <input id="password" name="password" :type="form.password_type"
+                                           autocomplete="current-password"
+                                           required v-model="form.password"
+                                           class="h-full flex-fill  mx-px rounded-md">
+                                    <Transition name="fade" mode="out-in" class="mr-3">
+                                        <v-icon color="grey" @click.prevent="togglePassword"
+                                                v-if="form.password_type === 'password'">mdi-eye-outline
+                                        </v-icon>
+                                        <v-icon color="grey" @click.prevent="togglePassword"
+                                                v-else-if="form.password_type === 'text'">mdi-eye-closed
+                                        </v-icon>
+                                    </Transition>
+                                </div>
+                                <span class="text-red-500 text-sm">{{ form.errors.email }}</span>
+                            </div>
                         </div>
-                        <div class="mt-1">
-                          <div class="flex items-center w-full bg-white rounded-md border-0 py-px text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                            <input id="password" name="password" :type="form.password_type" autocomplete="current-password"
-                                   required v-model="form.password"
-                                   class="h-full flex-fill  mx-px rounded-md">
-                            <Transition name="fade" mode="out-in" class="mr-3">
-                              <v-icon color="grey" @click.prevent="togglePassword" v-if="form.password_type === 'password'">mdi-eye-outline</v-icon>
-                              <v-icon color="grey" @click.prevent="togglePassword" v-else-if="form.password_type === 'text'">mdi-eye-closed</v-icon>
-                            </Transition>
-                            <span class="mt-1">{{form.errors.email}}</span>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div class="mt-2">
-                        <div class="flex items-center justify-between">
-                          <label for="password"
-                                 class="block text-sm font-medium leading-6 text-gray-900">Password Confirmation</label>
+                        <div class="mt-2">
+                            <div class="flex items-center justify-between">
+                                <label for="password"
+                                       class="block text-sm font-medium leading-6 text-gray-900">Password
+                                    Confirmation</label>
+                            </div>
+                            <div class="mt-1">
+                                <div
+                                    class="flex items-center w-full bg-white rounded-md border-0 py-px text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
+                                    <input id="password" name="password" :type="form.password_confirmation_type"
+                                           autocomplete="current-password"
+                                           v-model="form.password_confirmation"
+                                           class="h-full flex-fill  mx-px rounded-md">
+                                    <Transition name="fade" mode="out-in" class="mr-3">
+                                        <v-icon color="grey" @click.prevent="toggleConfirmationPassword"
+                                                v-if="form.password_confirmation_type === 'password'">mdi-eye-outline
+                                        </v-icon>
+                                        <v-icon color="grey" @click.prevent="toggleConfirmationPassword"
+                                                v-else-if="form.password_confirmation_type === 'text'">mdi-eye-closed
+                                        </v-icon>
+                                    </Transition>
+                                </div>
+                                <span class="text-red-500 text-sm">{{ form.errors.password_confirmation }}</span>
+                            </div>
                         </div>
-                        <div class="mt-1">
-                          <div class="flex items-center w-full bg-white rounded-md border-0 py-px text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                            <input id="password" name="password" :type="form.password_confirmation_type" autocomplete="current-password"
-                                   required v-model="form.password"
-                                   class="h-full flex-fill  mx-px rounded-md">
-                            <Transition name="fade" mode="out-in" class="mr-3">
-                              <v-icon color="grey" @click.prevent="toggleConfirmationPassword" v-if="form.password_confirmation_type === 'password'">mdi-eye-outline</v-icon>
-                              <v-icon color="grey" @click.prevent="toggleConfirmationPassword" v-else-if="form.password_confirmation_type === 'text'">mdi-eye-closed</v-icon>
-                            </Transition>
-                            <span class="mt-1">{{form.errors.email}}</span>
-                          </div>
-                        </div>
-                      </div>
 
                         <div class="mt-2">
                             <button type="submit"
@@ -129,7 +143,8 @@ const submit = () => {
 
                     <p class="mt-10 text-center text-sm text-gray-500">
                         Want to log in?
-                        <Link href="/login" class="font-semibold text-purple-600 hover:text-purple-500">Sign in now!</Link>
+                        <Link href="/login" class="font-semibold text-purple-600 hover:text-purple-500">Sign in now!
+                        </Link>
                     </p>
                 </div>
             </div>

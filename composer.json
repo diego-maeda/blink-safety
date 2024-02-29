@@ -13,6 +13,8 @@
         "laravel/tinker": "^2.8",
         "pusher/pusher-php-server": "^7.2",
         "pusher/pusher-push-notifications": "^2.0",
+        "symfony/http-client": "^7.0",
+        "symfony/mailgun-mailer": "^7.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

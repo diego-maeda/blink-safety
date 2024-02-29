@@ -7,7 +7,9 @@ import favicon16 from "../../../img/favicon-16x16.png";
 import favicon from "../../../img/favicon.ico";
 import siteManifest from "../../../img/site.webmanifest";
 
-const form = useForm({});
+const form = useForm({
+    email: '',
+});
 
 const submit = () => {
   form.post(route('verification.send'));
@@ -49,10 +51,10 @@ const submit = () => {
               <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
                 address</label>
               <div class="mt-2">
-                <input id="email" name="email" type="email" autocomplete="email" required
+                <input id="email" name="email" type="email" autocomplete="email"
                        v-model="form.email"
                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 bg-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6">
-                <span class="mt-1">{{ form.errors.email }}</span>
+                <span class="text-red-500 text-sm">{{ form.errors.email }}</span>
               </div>
             </div>
 
