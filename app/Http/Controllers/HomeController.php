@@ -12,6 +12,11 @@ use App\Models\Run;
 use Inertia\Inertia;
 use Inertia\Response;
 
+/**
+ * This controller handles rendering the city view with information about the last incident and last API run
+ * within a specific location.
+ * @author Diego Maeda maeda.diego@gmail.com
+ */
 class HomeController extends Controller
 {
 
@@ -48,10 +53,5 @@ class HomeController extends Controller
             'last_incident' => new LastIncidentResource($event),
             'last_run' => new LastRunResource($run),
         ]);
-    }
-
-    public function test() : Response
-    {
-        return Inertia::render('Test');
     }
 }

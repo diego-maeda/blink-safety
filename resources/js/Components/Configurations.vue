@@ -1,10 +1,11 @@
 <script setup>
 import {router} from '@inertiajs/vue3'
+import {Cog8ToothIcon} from "@heroicons/vue/24/outline";
 
 // Localization
 import {useI18n} from "vue-i18n";
 
-const {t, locale} = useI18n({useScope: "global"});
+const {t, locale} = useI18n();
 
 const props = defineProps({
   precinct: String
@@ -97,8 +98,9 @@ function changeLang(language) {
           variant="text"
           icon
           v-bind="props"
+          class="flex items-center justify-center mr-3"
       >
-        <v-icon>mdi-cog-outline</v-icon>
+          <Cog8ToothIcon class="h-5 w-5 text-purple-500"></Cog8ToothIcon>
       </v-btn>
     </template>
     <v-card>
@@ -193,11 +195,11 @@ function changeLang(language) {
       <v-footer class="flex justify-center px-4 py-2 text-center w-100">
         <v-row>
           <v-col class="text-center text-gray-300 mt-4" cols="12">
-                        <span class="text-gray-300">
-                              Made with <v-icon class="text-red-600">mdi-heart</v-icon> by <a
-                            href="https://github.com/saintpete/blink-safety"
-                            target="_blank"><strong>Blink Safety</strong></a> in {{ new Date().getFullYear() }}
-                        </span>
+            <span class="text-gray-300">
+                  Made with <v-icon class="text-red-600">mdi-heart</v-icon> by <a
+                href="https://github.com/saintpete/blink-safety"
+                target="_blank"><strong>Blink Safety</strong></a> in {{ new Date().getFullYear() }}
+            </span>
           </v-col>
         </v-row>
       </v-footer>

@@ -39,7 +39,7 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const i18n = createI18n({
-            legacy: false,
+            legacy: false, // you must set `false`, to use Composition API
             locale: 'en', // user locale by props
             fallbackLocale: "en", // set fallback locale
             messages: messages, // set locale messages
