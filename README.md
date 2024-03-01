@@ -11,7 +11,7 @@ Domestic violence is a social issue that will take all of us working together to
 
 Blink-Safety emerges as a beacon of awareness, a project dedicated to shedding light on this dark reality. Read more about how we built Blink-Safety on my [medium post](https://medium.com/@diegomaeda/blink-safety-illuminating-the-shadows-of-domestic-violence-c87454599383) or visit the [Blink-Safety website](https://blink-safety.com.br) to view the final result.
 
--Diego
+- Diego
 
 ___
 ## Summary
