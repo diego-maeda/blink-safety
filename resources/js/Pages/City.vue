@@ -393,15 +393,22 @@ const user = computed(() => page.props.auth.user)
         <!-- MAIN -->
         <v-main class="bg-[#fbf2fe]">
             <!-- LANG MENU-->
-            <div class="fixed top-0 right-0 p-4 flex items-center">
+            <v-toolbar color="transparent" class="px-3">
+                <v-spacer></v-spacer>
                 <Configurations :precinct="$page.props.precinct.precinct"></Configurations>
-                <Link :href="route('login')" class="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900 mr-3" v-if="!user">Log In</Link>
+                <Link :href="route('login')" class="text-sm font-semibold leading-6 text-gray-900 mr-5" v-if="!user">Log In</Link>
                 <Link :href="route('register')" class="rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600" v-if="!user">Register</Link>
                 <Link :href="route('dashboard')" class="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900" v-if="user">Dashboard</Link>
-            </div>
+            </v-toolbar>
+<!--            <div class="fixed top-0 right-0 p-4 flex items-center">-->
+<!--                <Configurations :precinct="$page.props.precinct.precinct"></Configurations>-->
+<!--                <Link :href="route('login')" class="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900 mr-3" v-if="!user">Log In</Link>-->
+<!--                <Link :href="route('register')" class="rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600" v-if="!user">Register</Link>-->
+<!--                <Link :href="route('dashboard')" class="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900" v-if="user">Dashboard</Link>-->
+<!--            </div>-->
             <!-- LANG MENU-->
             <!-- CONTENT-->
-            <div class="h-full w-full flex flex-col justify-center items-center mt-5">
+            <div class="h-full w-full flex flex-col justify-start items-center">
 
                 <img :src="logo" height="80" width="177" class="mb-7" alt="Blink-Safety Logo">
 
