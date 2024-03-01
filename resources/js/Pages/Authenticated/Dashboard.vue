@@ -95,10 +95,13 @@ const {t} = useI18n();
 
                 </div>
                 <div class="mx-4 my-4">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/eeSCOkIBVyQ?si=kXER6L1RLNlVqqIG"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
+                    <v-responsive class="border pa-4">
+                        <iframe class="youtube-class"
+                                src="https://www.youtube.com/embed/MwjhkhtqUCg?si=EGLUc-ugXVhM50Be"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                    </v-responsive>
                 </div>
 
                 <div id="step-footer" class="flex justify-end mx-4">
@@ -117,5 +120,8 @@ const {t} = useI18n();
 </template>
 
 <style scoped>
-
+.youtube-class {
+    aspect-ratio: 16/9;
+    width: 100%;
+}
 </style>

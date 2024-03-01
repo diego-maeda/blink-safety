@@ -39,14 +39,16 @@ locale.value = page.props.language.language;
                                 <v-menu>
                                     <template v-slot:activator="{ props }">
                                         <button v-bind="props" type="button"
-                                                class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-800"
+                                                class="relative flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-800"
                                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                             <span class="absolute -inset-1.5"></span>
                                             <span class="sr-only">Open user menu</span>
                                             <img class="h-8 w-8 rounded-full"
-                                                 :src=" '/storage/' + $page.props.auth.user.photo"
+                                                 :src="($page.props.auth.user.photo)? '/storage/' + $page.props.auth.user.photo : '/storage/images/blink-safety.jpeg'"
                                                  :alt="$page.props.auth.user.name + ' photo'">
+                                            <span class="ml-3 mr-2">{{ $page.props.auth.user.name }}</span>
                                         </button>
+
                                     </template>
                                     <v-list density="compact" class="w-56">
                                         <v-list-item>
@@ -114,7 +116,7 @@ locale.value = page.props.language.language;
                     <div class="pt-2 pb-3 space-y-1 border-t border-gray-200">
                         <div class="flex items-center px-4">
                             <img class="h-10 w-10 rounded-full bg-gray-50"
-                                 :src="$page.props.auth.user.photo"
+                                 :src="($page.props.auth.user.photo)? '/storage/' + $page.props.auth.user.photo : '/storage/images/blink-safety.jpeg'"
                                  :alt="$page.props.auth.user.name + ' photo'">
                             <div class="ml-3">
                                 <div class="font-medium text-base text-gray-800">
