@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     public function preferredLocale(): string
     {
-        $language = $this->language->language;
+        $language = $this->language()->language;
 
         if($language == 'pt-br'){
             return 'pt_BR';
