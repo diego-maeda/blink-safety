@@ -146,6 +146,9 @@ jobs:
             php artisan migrate --force
             php artisan db:seed --force
 
+            echo "Binding public storage"
+            php artisan storage:link
+
             echo "Activating the new release"
             ln -s -n -f ${RELEASES_DIR}/${GITHUB_SHA} ${ACTIVE_RELEASE_DIR}
 
